@@ -115,7 +115,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (110, 'XANTHAN GUM
 insert into `ingredients` (`id`, `name`, `product_id`) values (111, 'CETYL ALCOHOL', 4);
 insert into `ingredients` (`id`, `name`, `product_id`) values (112, 'POLYSORBATE 20', 4);
 insert into `ingredients` (`id`, `name`, `product_id`) values (113, 'ETHYLHEXYLGLYCERIN', 4);
-insert into `ingredients` (`id`, `name`, `product_id`) values (115, '(FOR REFILLED PRODUCTS IN THE STORE', 4);
 insert into `ingredients` (`id`, `name`, `product_id`) values (177, 'AQUA/WATER/EAU', 6);
 insert into `ingredients` (`id`, `name`, `product_id`) values (178, 'COCAMIDOPROPYL HYDROXYSULTAINE', 6);
 insert into `ingredients` (`id`, `name`, `product_id`) values (179, 'GLYCERIN', 6);
@@ -143,7 +142,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (200, 'HYDROLYZED 
 insert into `ingredients` (`id`, `name`, `product_id`) values (201, 'PHYTOSPHINGOSINE', 6);
 insert into `ingredients` (`id`, `name`, `product_id`) values (202, 'XANTHAN GUM', 6);
 insert into `ingredients` (`id`, `name`, `product_id`) values (203, 'ETHYLHEXYLGLYCERIN', 6);
-insert into `ingredients` (`id`, `name`, `product_id`) values (205, '(FOR REFILLED PRODUCTS IN THE STORE', 6);
 insert into `ingredients` (`id`, `name`, `product_id`) values (207, 'SALICYLIC ACID 2%', 7);
 insert into `ingredients` (`id`, `name`, `product_id`) values (208, 'WATER', 7);
 insert into `ingredients` (`id`, `name`, `product_id`) values (209, 'SODIUM LAUROYL SARCOSINATE', 7);
@@ -171,7 +169,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (230, 'XANTHAN GUM
 insert into `ingredients` (`id`, `name`, `product_id`) values (231, 'HECTORITE', 7);
 insert into `ingredients` (`id`, `name`, `product_id`) values (232, 'PHYTOSPHINGOSINE', 7);
 insert into `ingredients` (`id`, `name`, `product_id`) values (233, 'BENZOIC ACID', 7);
-insert into `ingredients` (`id`, `name`, `product_id`) values (235, '(FOR REFILLED PRODUCTS IN THE STORE', 7);
 insert into `ingredients` (`id`, `name`, `product_id`) values (237, 'BENZOYL PEROXIDE 4%', 8);
 insert into `ingredients` (`id`, `name`, `product_id`) values (238, 'WATER', 8);
 insert into `ingredients` (`id`, `name`, `product_id`) values (239, 'GLYCERIN', 8);
@@ -200,7 +197,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (261, 'DIETHYLHEXY
 insert into `ingredients` (`id`, `name`, `product_id`) values (262, 'PHYTOSPHINGOSINE', 8);
 insert into `ingredients` (`id`, `name`, `product_id`) values (263, 'ETHYLHEXYLGLYCERIN', 8);
 insert into `ingredients` (`id`, `name`, `product_id`) values (264, 'BENZOIC ACID', 8);
-insert into `ingredients` (`id`, `name`, `product_id`) values (266, '(FOR REFILLED PRODUCTS IN THE STORE', 8);
 insert into `ingredients` (`id`, `name`, `product_id`) values (268, 'ETHYLHEXYL PALMITATE', 9);
 insert into `ingredients` (`id`, `name`, `product_id`) values (269, 'POLYETHYLENE', 9);
 insert into `ingredients` (`id`, `name`, `product_id`) values (270, 'PEG-20 GLYCERYL TRIISOSTEARATE', 9);
@@ -270,7 +266,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (335, 'PHYTOSPHING
 insert into `ingredients` (`id`, `name`, `product_id`) values (336, 'XANTHAN GUM', 11);
 insert into `ingredients` (`id`, `name`, `product_id`) values (337, 'ACRYLATES/C10-30 ALKYL ACRYLATE CROSSPOLYMER', 11);
 insert into `ingredients` (`id`, `name`, `product_id`) values (338, 'BENZOIC ACID', 11);
-insert into `ingredients` (`id`, `name`, `product_id`) values (340, '(FOR REFILLED PRODUCTS IN THE STORE', 11);
 insert into `ingredients` (`id`, `name`, `product_id`) values (342, 'AQUA / WATER / EAU', 12);
 insert into `ingredients` (`id`, `name`, `product_id`) values (343, 'PARAFFINUM LIQUIDUM / MINERAL OIL / HUILE MINERALE', 12);
 insert into `ingredients` (`id`, `name`, `product_id`) values (344, 'PEG-40 STEARATE', 12);
@@ -300,7 +295,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (367, 'PHYTOSPHING
 insert into `ingredients` (`id`, `name`, `product_id`) values (368, 'BUTYLENE GLYCOL', 12);
 insert into `ingredients` (`id`, `name`, `product_id`) values (369, 'ETHYLHEXYLGLYCERIN', 12);
 insert into `ingredients` (`id`, `name`, `product_id`) values (370, 'POLYACRYLAMIDE', 12);
-insert into `ingredients` (`id`, `name`, `product_id`) values (372, '(FOR REFILLED PRODUCTS IN THE STORE', 12);
 insert into `ingredients` (`id`, `name`, `product_id`) values (374, 'AQUA / WATER / EAU', 13);
 insert into `ingredients` (`id`, `name`, `product_id`) values (375, 'GLYCERIN', 13);
 insert into `ingredients` (`id`, `name`, `product_id`) values (376, 'NIACINAMIDE', 13);
@@ -428,16 +422,9 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (501, 'PHYTOSPHING
 insert into `ingredients` (`id`, `name`, `product_id`) values (502, 'XANTHAN GUM', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (503, 'POLYSORBATE 20', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (504, 'POLYGLYCERYL-3 DIISOSTEARATE', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (506, '(FOR REFILLED PRODUCTS IN THE STORE', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (508, 'MOISTURIZES AND HELPS RESTORE THE SKIN’S PROTECTIVE BARRIER', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (509, 'LIGHTWEIGHT AND NON-GREASY', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (510, 'THIS PATENTED DELIVERY SYSTEM CONTINUALLY RELEASES MOISTURIZING INGREDIENTS FOR 24-HOUR HYDRATION', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (511, 'HELP RESTORE AND MAINTAIN THE SKIN’S NATURAL BARRIER', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (512, 'HELPS RETAIN THE SKIN’S NATURAL MOISTURE', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (513, 'NON-COMEDOGENIC', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (514, 'OIL-FREE AND FRAGRANCE-FREE', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (515, 'DEVELOPED WITH DERMATOLOGISTS', 17);
-insert into `ingredients` (`id`, `name`, `product_id`) values (516, 'ACCEPTED BY THE NATIONAL ECZEMA ASSOCIATION', 17);
 insert into `ingredients` (`id`, `name`, `product_id`) values (517, 'AQUA / WATER / EAU', 18);
 insert into `ingredients` (`id`, `name`, `product_id`) values (518, 'PROPANEDIOL', 18);
 insert into `ingredients` (`id`, `name`, `product_id`) values (519, 'GLYCERIN', 18);
@@ -511,7 +498,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (587, 'XANTHAN GUM
 insert into `ingredients` (`id`, `name`, `product_id`) values (588, 'DEXTRAN', 19);
 insert into `ingredients` (`id`, `name`, `product_id`) values (589, 'ETHYLHEXYLGLYCERIN', 19);
 insert into `ingredients` (`id`, `name`, `product_id`) values (590, 'BUTYLENE GLYCOL', 19);
-insert into `ingredients` (`id`, `name`, `product_id`) values (592, '(FOR REFILLED PRODUCTS IN THE STORE', 19);
 insert into `ingredients` (`id`, `name`, `product_id`) values (594, 'AQUA / WATER / EAU', 20);
 insert into `ingredients` (`id`, `name`, `product_id`) values (595, 'NIACINAMIDE', 20);
 insert into `ingredients` (`id`, `name`, `product_id`) values (596, 'CETYL ALCOHOL', 20);
@@ -577,7 +563,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (656, 'CITRIC ACID
 insert into `ingredients` (`id`, `name`, `product_id`) values (657, 'XANTHAN GUM', 21);
 insert into `ingredients` (`id`, `name`, `product_id`) values (658, 'PHYTOSPHINGOSINE', 21);
 insert into `ingredients` (`id`, `name`, `product_id`) values (659, 'ETHYLHEXYLGLYCERIN', 21);
-insert into `ingredients` (`id`, `name`, `product_id`) values (661, '(FOR PRODUCTS REFILLED IN-STORE', 21);
 insert into `ingredients` (`id`, `name`, `product_id`) values (663, 'AVOBENZONE 3%', 22);
 insert into `ingredients` (`id`, `name`, `product_id`) values (664, 'HOMOSALATE 10%', 22);
 insert into `ingredients` (`id`, `name`, `product_id`) values (665, 'OCTISALATE 5%', 22);
@@ -604,7 +589,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (685, 'PHYTOSPHING
 insert into `ingredients` (`id`, `name`, `product_id`) values (686, 'XANTHUM GUM', 22);
 insert into `ingredients` (`id`, `name`, `product_id`) values (687, 'T-BUTYL ALCOHOL', 22);
 insert into `ingredients` (`id`, `name`, `product_id`) values (688, 'ETHYLHEXYLGLYCERIN', 22);
-insert into `ingredients` (`id`, `name`, `product_id`) values (690, '(FOR REFILLED PRODUCTS IN THE STORE', 22);
 insert into `ingredients` (`id`, `name`, `product_id`) values (692, 'OCTINOXATE 7.5%', 23);
 insert into `ingredients` (`id`, `name`, `product_id`) values (693, 'ZINC OXIDE 10.5%', 23);
 insert into `ingredients` (`id`, `name`, `product_id`) values (694, 'WATER', 23);
@@ -650,7 +634,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (733, 'POLYSILICON
 insert into `ingredients` (`id`, `name`, `product_id`) values (734, 'POLYSORBATE 60', 23);
 insert into `ingredients` (`id`, `name`, `product_id`) values (735, 'ETHYLHEXYLGLYCERIN', 23);
 insert into `ingredients` (`id`, `name`, `product_id`) values (736, 'POLYSORBATE 20', 23);
-insert into `ingredients` (`id`, `name`, `product_id`) values (738, '(FOR REFILLED PRODUCTS IN THE STORE', 23);
 insert into `ingredients` (`id`, `name`, `product_id`) values (740, 'CAPRYLIC/CAPRIC TRIGLYCERIDE', 24);
 insert into `ingredients` (`id`, `name`, `product_id`) values (741, 'C12-15 ALKYL BENZOATE', 24);
 insert into `ingredients` (`id`, `name`, `product_id`) values (742, 'ETHYLHEXYL PALMITATE', 24);
@@ -684,7 +667,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (769, 'PENTYLENE G
 insert into `ingredients` (`id`, `name`, `product_id`) values (770, 'CETYL ALCOHOL', 24);
 insert into `ingredients` (`id`, `name`, `product_id`) values (771, 'ETHYLHEXYLGLYCERIN', 24);
 insert into `ingredients` (`id`, `name`, `product_id`) values (772, 'ORYZA SATIVA BRAN EXTRACT / RICE BRAN EXTRACT', 24);
-insert into `ingredients` (`id`, `name`, `product_id`) values (774, '(FOR REFILLED PRODUCTS IN THE STORE', 24);
 insert into `ingredients` (`id`, `name`, `product_id`) values (776, 'AQUA/WATER/EAU', 25);
 insert into `ingredients` (`id`, `name`, `product_id`) values (777, 'PROPANEDIOL', 25);
 insert into `ingredients` (`id`, `name`, `product_id`) values (778, 'DIMETHICONE', 25);
@@ -718,7 +700,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (805, 'PHYTOSPHING
 insert into `ingredients` (`id`, `name`, `product_id`) values (806, 'XANTHAN GUM', 25);
 insert into `ingredients` (`id`, `name`, `product_id`) values (807, 'POLYSORBATE 20', 25);
 insert into `ingredients` (`id`, `name`, `product_id`) values (808, 'ETHYLHEXYLGLYCERIN', 25);
-insert into `ingredients` (`id`, `name`, `product_id`) values (810, '(FOR REFILLED PRODUCTS IN THE STORE', 25);
 insert into `ingredients` (`id`, `name`, `product_id`) values (812, 'AQUA / WATER / EAU', 26);
 insert into `ingredients` (`id`, `name`, `product_id`) values (813, 'GLYCERIN', 26);
 insert into `ingredients` (`id`, `name`, `product_id`) values (814, 'CETEARYL ETHYLHEXANOATE', 26);
@@ -747,7 +728,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (836, 'TRISODIUM E
 insert into `ingredients` (`id`, `name`, `product_id`) values (837, 'XANTHAN GUM', 26);
 insert into `ingredients` (`id`, `name`, `product_id`) values (838, 'PHYTOSPHINGOSINE', 26);
 insert into `ingredients` (`id`, `name`, `product_id`) values (839, 'BENZOIC ACID', 26);
-insert into `ingredients` (`id`, `name`, `product_id`) values (841, '(FOR REFILLED PRODUCTS IN THE STORE', 26);
 insert into `ingredients` (`id`, `name`, `product_id`) values (843, 'WATER', 27);
 insert into `ingredients` (`id`, `name`, `product_id`) values (844, 'ASCORBIC ACID', 27);
 insert into `ingredients` (`id`, `name`, `product_id`) values (845, 'GLYCERIN', 27);
@@ -798,7 +778,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (890, 'CITRIC ACID
 insert into `ingredients` (`id`, `name`, `product_id`) values (891, 'XANTHAN GUM', 28);
 insert into `ingredients` (`id`, `name`, `product_id`) values (892, 'PHYTOSPHINGOSINE', 28);
 insert into `ingredients` (`id`, `name`, `product_id`) values (893, 'ETHYLHEXYLGLYCERIN', 28);
-insert into `ingredients` (`id`, `name`, `product_id`) values (895, '(FOR PRODUCTS REFILLED IN-STORE', 28);
 insert into `ingredients` (`id`, `name`, `product_id`) values (897, 'AQUA/WATER/EAU', 29);
 insert into `ingredients` (`id`, `name`, `product_id`) values (898, 'GLYCERIN', 29);
 insert into `ingredients` (`id`, `name`, `product_id`) values (899, 'CAPRYLIC/CAPRIC TRIGLYCERIDE', 29);
@@ -836,7 +815,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (930, 'XANTHAN GUM
 insert into `ingredients` (`id`, `name`, `product_id`) values (931, 'PHYTOSPHINGOSINE', 29);
 insert into `ingredients` (`id`, `name`, `product_id`) values (932, 'BUTYROSPERMUM PARKII BUTTER / SHEA BUTTER', 29);
 insert into `ingredients` (`id`, `name`, `product_id`) values (933, 'ETHYLHEXYLGLYCERIN', 29);
-insert into `ingredients` (`id`, `name`, `product_id`) values (935, '(FOR REFILLED PRODUCTS IN THE STORE', 29);
 insert into `ingredients` (`id`, `name`, `product_id`) values (937, 'CAPRYLIC/CAPRIC TRIGLYCERIDE', 30);
 insert into `ingredients` (`id`, `name`, `product_id`) values (938, 'C12-15 ALKYL BENZOATE', 30);
 insert into `ingredients` (`id`, `name`, `product_id`) values (939, 'ETHYLHEXYL PALMITATE', 30);
@@ -870,7 +848,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (966, 'PENTYLENE G
 insert into `ingredients` (`id`, `name`, `product_id`) values (967, 'CETYL ALCOHOL', 30);
 insert into `ingredients` (`id`, `name`, `product_id`) values (968, 'ETHYLHEXYLGLYCERIN', 30);
 insert into `ingredients` (`id`, `name`, `product_id`) values (969, 'ORYZA SATIVA BRAN EXTRACT / RICE BRAN EXTRACT', 30);
-insert into `ingredients` (`id`, `name`, `product_id`) values (971, '(FOR REFILLED PRODUCTS IN THE STORE', 30);
 insert into `ingredients` (`id`, `name`, `product_id`) values (973, 'SALICYLIC ACID 2%', 31);
 insert into `ingredients` (`id`, `name`, `product_id`) values (974, 'WATER', 31);
 insert into `ingredients` (`id`, `name`, `product_id`) values (975, 'GLYCERIN', 31);
@@ -895,11 +872,10 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (993, 'CAPRYLYL GL
 insert into `ingredients` (`id`, `name`, `product_id`) values (994, 'XANTHAN GUM', 31);
 insert into `ingredients` (`id`, `name`, `product_id`) values (995, 'PHYTOSPHINGOSINE', 31);
 insert into `ingredients` (`id`, `name`, `product_id`) values (996, 'BENZOIC ACID', 31);
-insert into `ingredients` (`id`, `name`, `product_id`) values (998, '(FOR REFILLED PRODUCTS IN THE STORE', 31);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1000, 'HOMOSALATE 6% ................................................................... SUNSCREEN', 32);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1001, 'OCTISALATE 5% ...................................................................... SUNSCREEN', 32);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1002, 'OCTOCRYLENE 5% ................................................................... SUNSCREEN', 32);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1003, 'ZINC OXIDE 7%...................................................................... SUNSCREEN', 32);
+insert into `ingredients` (`id`, `name`, `product_id`) values (1003, 'ZINC OXIDE 7%', 32);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1004, 'WATER', 32);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1005, 'GLYCERIN', 32);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1006, 'COCO-CAPRYLATE/CAPRATE', 32);
@@ -992,7 +968,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1094, 'PHYTOSPHIN
 insert into `ingredients` (`id`, `name`, `product_id`) values (1095, 'XANTHUM GUM', 34);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1096, 'T-BUTYL ALCOHOL', 34);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1097, 'ETHYLHEXYLGLYCERIN', 34);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1099, '(FOR REFILLED PRODUCTS IN THE STORE', 34);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1101, 'TITANIUM DIOXIDE (6%)', 35);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1102, 'ZINC OXIDE (5%)', 35);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1103, 'WATER', 35);
@@ -1034,7 +1009,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1138, 'PHYTOSPHIN
 insert into `ingredients` (`id`, `name`, `product_id`) values (1139, 'POLYHYDROXYSTEARIC ACID', 35);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1140, 'POLYSORBATE 60', 35);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1141, 'ETHYLHEXYLGLYCERIN', 35);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1143, '(FOR REFILLED PRODUCTS IN THE STORE', 35);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1145, 'TITANIUM DIOXIDE (9%)', 36);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1146, 'ZINC OXIDE (7%)', 36);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1147, 'WATER', 36);
@@ -1079,7 +1053,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1185, 'PHYTOSPHIN
 insert into `ingredients` (`id`, `name`, `product_id`) values (1186, 'POLYHYDROXYSTEARIC ACID', 36);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1187, 'POLYSORBATE 60', 36);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1188, 'ETHYLHEXYLGLYCERIN', 36);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1190, '(FOR REFILLED PRODUCTS IN THE STORE', 36);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1192, 'TITANIUM DIOXIDE (6%)', 37);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1193, 'ZINC OXIDE (5%)', 37);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1194, 'WATER', 37);
@@ -1124,7 +1097,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1232, 'PHYTOSPHIN
 insert into `ingredients` (`id`, `name`, `product_id`) values (1233, 'POLYHYDROXYSTEARIC ACID', 37);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1234, 'POLYSORBATE 60', 37);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1235, 'ETHYLHEXYLGLYCERIN', 37);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1237, '(FOR REFILLED PRODUCTS IN THE STORE', 37);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1239, 'TITANIUM DIOXIDE (9%)', 38);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1240, 'ZINC OXIDE (7%)', 38);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1241, 'WATER', 38);
@@ -1171,7 +1143,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1281, 'PHYTOSPHIN
 insert into `ingredients` (`id`, `name`, `product_id`) values (1282, 'POLYHYDROXYSTEARIC ACID', 38);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1283, 'POLYSORBATE 60', 38);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1284, 'ETHYLHEXYLGLYCERIN', 38);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1286, '(FOR REFILLED PRODUCTS IN THE STORE', 38);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1288, 'TITANIUM DIOXIDE (5.5%)', 39);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1289, 'ZINC OXIDE (10%)', 39);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1290, 'WATER', 39);
@@ -1222,7 +1193,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1334, 'XANTHAN GU
 insert into `ingredients` (`id`, `name`, `product_id`) values (1335, 'PHYTOSPHINGOSINE', 39);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1336, 'POLYHYDROXYSTEARIC ACID', 39);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1337, 'ETHYLHEXYLGLYCERIN', 39);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1339, '(FOR REFILLED PRODUCTS IN THE STORE', 39);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1341, 'OCTINOXATE 7.5%', 40);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1342, 'ZINC OXIDE 10.5%', 40);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1343, 'WATER', 40);
@@ -1268,7 +1238,6 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1382, 'POLYSILICO
 insert into `ingredients` (`id`, `name`, `product_id`) values (1383, 'POLYSORBATE 60', 40);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1384, 'ETHYLHEXYLGLYCERIN', 40);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1385, 'POLYSORBATE 20', 40);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1387, '(FOR REFILLED PRODUCTS IN THE STORE', 40);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1389, 'TITANIUM DIOXIDE (6%)', 41);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1390, 'ZINC OXIDE (4.7%)', 41);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1391, 'C12-15 ALKYL BENZOATE', 41);
@@ -1296,4 +1265,3 @@ insert into `ingredients` (`id`, `name`, `product_id`) values (1412, 'TRIETHOXYC
 insert into `ingredients` (`id`, `name`, `product_id`) values (1413, 'ISOSTEARIC ACID', 41);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1414, 'SODIUM LAUROYL LACTYLATE', 41);
 insert into `ingredients` (`id`, `name`, `product_id`) values (1415, 'XANTHAN GUM', 41);
-insert into `ingredients` (`id`, `name`, `product_id`) values (1417, '(FOR REFILLED PRODUCTS IN THE STORE', 41);
