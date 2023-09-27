@@ -15,4 +15,16 @@ DELETE FROM ingredients WHERE name LIKE 'PLEASE%';
 DELETE FROM ingredients WHERE name LIKE 'THE MOST%';
 
 UPDATE ingredients SET name = TRIM(TRAILING '.' FROM name);
+
+DELETE FROM ingredients WHERE name LIKE '(FOR %';
+
+DELETE FROM ingredients WHERE name LIKE 'HELP%';
+
+DELETE FROM ingredients WHERE name LIKE 'DEVELOPED%';
+
+DELETE FROM ingredients WHERE name LIKE 'ACCEPTED%';
+
+DELETE FROM ingredients WHERE name LIKE 'MOISTURIZES%';
+
+DELETE FROM ingredients WHERE name LIKE 'LIGHT%';
 ```
