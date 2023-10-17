@@ -96,6 +96,23 @@ func sourceInfo(ingredients []Ingredient) ([]Ingredient, error) {
 	return ingredients, nil
 }
 
+// setupDBConnection - Create the database connection and necessary tables
+func setupDBConnection() {
+
+}
+
+// trackIngredientAttributes - track
+func trackIngredientAttributes(ingredients []Ingredient) {
+
+}
+
+// getIngredients - Get the ingredients from the database
+func getIngredients() []string {
+	var ingredients = make([]string, 0)
+
+	return ingredients
+}
+
 func trackIngredients(ingredients []Ingredient) {
 	fmt.Println(ingredients)
 }
