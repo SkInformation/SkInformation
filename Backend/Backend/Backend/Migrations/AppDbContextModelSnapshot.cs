@@ -56,8 +56,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')");
 
                     b.Property<string>("Url")
                         .IsRequired()

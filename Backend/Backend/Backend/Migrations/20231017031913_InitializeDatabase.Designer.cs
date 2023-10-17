@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231017023556_InitializeDatabase")]
+    [Migration("20231017031913_InitializeDatabase")]
     partial class InitializeDatabase
     {
         /// <inheritdoc />
@@ -59,8 +59,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')");
 
                     b.Property<string>("Url")
                         .IsRequired()

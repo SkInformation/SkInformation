@@ -1,4 +1,5 @@
-using Backend_Models.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend_Models.Models
 {
@@ -7,7 +8,9 @@ namespace Backend_Models.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ProductType Type { get; set; }
+        [Required]
+        [Column(TypeName = "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')")]
+        public string Type { get; set; }
         public string Url { get; set; }
         public byte[] Image { get; set; } = Array.Empty<byte>();
     }
