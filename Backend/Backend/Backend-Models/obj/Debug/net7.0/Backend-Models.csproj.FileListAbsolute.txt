@@ -1,0 +1,12 @@
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/bin/Debug/net7.0/Backend-Models.deps.json
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/bin/Debug/net7.0/Backend-Models.dll
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/bin/Debug/net7.0/Backend-Models.pdb
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.csproj.AssemblyReference.cache
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.AssemblyInfoInputs.cache
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.AssemblyInfo.cs
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.csproj.CoreCompileInputs.cache
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.dll
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/refint/Backend-Models.dll
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/Backend-Models.pdb
+/Users/admin/Sync/Masters/COMP584/TermProject/Backend/Backend/Backend-Models/obj/Debug/net7.0/ref/Backend-Models.dll
