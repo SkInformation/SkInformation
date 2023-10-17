@@ -9,6 +9,11 @@ namespace Backend
             using (var context =
                    new AppDbContext(serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>()))
             {
+                if (context.Products.Any())
+                {
+                    return;
+                }
+                
                 context.Database.EnsureCreated();
                 string seedDataDirectory = "Database/Data";
                 string[] sqlFilesNames = {"products_import.sql", "ingredients_import.sql"};
