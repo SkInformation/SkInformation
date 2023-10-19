@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Backend.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -31,6 +31,13 @@ namespace Backend.Controllers
             return View("Error!");
         }
 
-        
+        public IActionResult All()
+        {
+            var products = _appDbContext.Products.ToList();
+
+            return Json(new { products });
+        }
+
+
     }
 }
