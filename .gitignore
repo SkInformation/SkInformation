@@ -1,3 +1,6 @@
+# Untrack development config file
+appsettings.Development.json
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
