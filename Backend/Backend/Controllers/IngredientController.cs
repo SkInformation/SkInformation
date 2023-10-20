@@ -37,5 +37,16 @@ namespace Backend.Controllers
 
             return Json( new { ingredients });
         }
+
+        public IActionResult Search(string term)
+        {
+            var ingredients = _appDbContext.Ingredients
+                .Select(i => i.Name)
+                .Where(i => i.Contains(term))
+                .Distinct()
+                .ToList();
+
+            return Json(new { ingredients });
+        }
     }
 }
