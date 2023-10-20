@@ -7,6 +7,7 @@ namespace Backend
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<IngredientAttribute> IngredientAttributes { get; set; }
         
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
