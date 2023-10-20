@@ -38,6 +38,12 @@ namespace Backend.Controllers
             return Json(new { products });
         }
 
+        public IActionResult Search(string term) {
+            var products = _appDbContext.Products.Where(p => p.Name.Contains(term)).ToList();
+
+            return Json(new { products });
+        }
+
 
     }
 }
