@@ -30,5 +30,12 @@ namespace Backend.Controllers
         {
             return View("Error!");
         }
+
+        public IActionResult All()
+        {
+            var ingredients = _appDbContext.Ingredients.ToList();
+
+            return Json( new { ingredients });
+        }
     }
 }
