@@ -165,10 +165,36 @@ func trackIngredientAttributes(ingredients []Ingredient) {
 }
 
 // getIngredients - Get the ingredients from the database
-func getIngredients() []string {
+func getIngredients() ([]string, error) {
+	// Query to retrieve unique values from the 'name' field
+	query := "SELECT DISTINCT name FROM ingredients"
+
+	// Execute the query
+	rows, err := db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
 	var ingredients = make([]string, 0)
 
-	return ingredients
+	// Iterate through the result set and print the unique names
+	for rows.Next() {
+		var name string
+		err := rows.Scan(&name)
+		if err != nil {
+			return nil, err
+		}
+
+		ingredients = append(ingredients, name)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return ingredients, nil
 }
 
 func trackIngredients(ingredients []Ingredient) {
