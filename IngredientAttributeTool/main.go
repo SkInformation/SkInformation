@@ -166,7 +166,7 @@ func setupDBConnection() (*sql.DB, error) {
 // trackIngredientAttributes - track
 func trackIngredientAttributes(ingredients []Ingredient) {
 	for _, ingredient := range ingredients {
-		query := "INSERT INTO IngredientAttributes (Name, Usage, EyeIrritant, DriesSkin, ReducesRedness, Hydrating, NonComedogenic, SafeForPregnancy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		query := "INSERT INTO IngredientAttributes (Name, `Usage`, EyeIrritant, DriesSkin, ReducesRedness, Hydrating, NonComedogenic, SafeForPregnancy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 		_, err := db.Exec(query, ingredient.Name, ingredient.Usage, ingredient.EyeIrritant, ingredient.DriesSkin, ingredient.ReducesRedness, ingredient.Hydrating, ingredient.NonComedogenic, ingredient.SafeForPregnancy)
 		if err != nil {
 			fmt.Println("Error inserting data:", err)
