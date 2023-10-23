@@ -30,7 +30,7 @@ var db *sql.DB
 // Constants for database seed
 const (
 	SQL_HOST = "127.0.0.1"
-	SQL_DB   = "skincare"
+	SQL_DB   = "comp584"
 	SQL_USER = "admin"
 	SQL_PASS = "changeme"
 )
@@ -73,6 +73,8 @@ func process(ingredients []string, batchSize int) {
 	n := len(ingredients)
 	i := 0
 
+	fmt.Println("Processing", len(ingredients), "ingredients in sizes of", batchSize)
+
 	// While there are elements
 	for i < n {
 		// Grab up to `batchSize` ingredients
@@ -85,10 +87,12 @@ func process(ingredients []string, batchSize int) {
 			j += 1
 		}
 
+		fmt.Println("Got batch size", j, ". Requesting info.")
 		updatedIngredients, err := sourceInfo(batch)
 		if err != nil {
 			fmt.Print(err)
 		} else {
+			fmt.Println("Updating the database...")
 			trackIngredientAttributes(updatedIngredients)
 		}
 	}
@@ -177,7 +181,7 @@ func trackIngredientAttributes(ingredients []Ingredient) {
 // getIngredients - Get the ingredients from the database
 func getIngredients() ([]string, error) {
 	// Query to retrieve unique values from the 'name' field
-	query := "SELECT DISTINCT name FROM ingredients"
+	query := "SELECT DISTINCT name FROM Ingredients"
 
 	// Execute the query
 	rows, err := db.Query(query)
