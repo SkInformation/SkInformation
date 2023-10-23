@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/ayush6624/go-chatgpt"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
 )
@@ -22,8 +24,27 @@ type Ingredient struct {
 
 var chatGPT *chatgpt.Client
 
+// The database connection
+var db *sql.DB
+
+// Constants for database seed
+const (
+	SQL_HOST = "127.0.0.1"
+	SQL_DB   = "skincare"
+	SQL_USER = "admin"
+	SQL_PASS = "changeme"
+)
+
 // Main entry point
 func main() {
+	tempDb, err := setupDBConnection()
+	if err != nil {
+		log.Fatalf("Failed to setup database: %v\n", err)
+	}
+
+	db = tempDb
+	defer db.Close()
+
 	tempClient, err := setupChatGPT()
 	if err != nil {
 		log.Fatal(err)
@@ -105,8 +126,37 @@ func sourceInfo(ingredients []Ingredient) ([]Ingredient, error) {
 }
 
 // setupDBConnection - Create the database connection and necessary tables
-func setupDBConnection() {
+func setupDBConnection() (*sql.DB, error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/", SQL_USER, SQL_PASS, SQL_HOST)
 
+	tempDb, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tempDb.Ping(); err != nil {
+		return nil, err
+	}
+
+	_, err = tempDb.Exec("CREATE DATABASE IF NOT EXISTS " + SQL_DB)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Printf("Connected to the MySQL server and created database %s!\n", SQL_DB)
+
+	_, err = tempDb.Exec("USE " + SQL_DB)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create the products table
+	_, err = tempDb.Exec("CREATE TABLE IF NOT EXISTS `IngredientAttributes` (`Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL, `Usage` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL, `EyeIrritant` tinyint(1) NOT NULL, `DriesSkin` tinyint(1) NOT NULL, `ReducesRedness` tinyint(1) NOT NULL,  `Hydrating` tinyint(1) NOT NULL,  `NonComedogenic` tinyint(1) NOT NULL, `SafeForPregnancy` tinyint(1) NOT NULL, PRIMARY KEY (`Name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;")
+	if err != nil {
+		return nil, err
+	}
+
+	return tempDb, nil
 }
 
 // trackIngredientAttributes - track
