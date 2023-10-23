@@ -52,9 +52,13 @@ func main() {
 
 	chatGPT = tempClient
 
-	sample := make([]string, 0)
-	sample = append(sample, "Glycerin")
-	process(sample, 2)
+	ingredients, err := getIngredients()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	process(ingredients, 10)
 }
 
 // setupChatGPT - set up the chatGPT client
@@ -85,7 +89,7 @@ func process(ingredients []string, batchSize int) {
 		if err != nil {
 			fmt.Print(err)
 		} else {
-			trackIngredients(updatedIngredients)
+			trackIngredientAttributes(updatedIngredients)
 		}
 	}
 }
@@ -161,7 +165,13 @@ func setupDBConnection() (*sql.DB, error) {
 
 // trackIngredientAttributes - track
 func trackIngredientAttributes(ingredients []Ingredient) {
-
+	for _, ingredient := range ingredients {
+		query := "INSERT INTO IngredientAttributes (Name, Usage, EyeIrritant, DriesSkin, ReducesRedness, Hydrating, NonComedogenic, SafeForPregnancy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		_, err := db.Exec(query, ingredient.Name, ingredient.Usage, ingredient.EyeIrritant, ingredient.DriesSkin, ingredient.ReducesRedness, ingredient.Hydrating, ingredient.NonComedogenic, ingredient.SafeForPregnancy)
+		if err != nil {
+			fmt.Println("Error inserting data:", err)
+		}
+	}
 }
 
 // getIngredients - Get the ingredients from the database
@@ -195,8 +205,4 @@ func getIngredients() ([]string, error) {
 	}
 
 	return ingredients, nil
-}
-
-func trackIngredients(ingredients []Ingredient) {
-	fmt.Println(ingredients)
 }
