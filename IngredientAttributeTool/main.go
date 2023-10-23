@@ -10,12 +10,14 @@ import (
 )
 
 type Ingredient struct {
-	Name                string `json:"name"`
-	Usage               string `json:"usage"`
-	PossibleEyeIrritant bool   `json:"possibleEyeIrritant"`
-	PossibleDriesSkin   bool   `json:"possibleDriesSkin"`
-	ReducesRedness      bool   `json:"reducesRedness"`
-	ImprovesMoisture    bool   `json:"improvesMoisture"`
+	Name             string
+	Usage            string
+	EyeIrritant      bool
+	DriesSkin        bool
+	ReducesRedness   bool
+	Hydrating        bool
+	NonComedogenic   bool
+	SafeForPregnancy bool
 }
 
 var chatGPT *chatgpt.Client
@@ -75,8 +77,14 @@ func sourceInfo(ingredients []Ingredient) ([]Ingredient, error) {
 
 	ctx := context.Background()
 
-	prompt := "For each ingredient in the json array below, update all properties. " +
-		"\nFor example, the usage is what the ingredient is used for, if it causes eye irritation, if it helps reduce redness and dryness. " +
+	prompt := "For each json object in the json array below, update all properties based on the ingredient name field:" +
+		"\nUsage: a short description of what the ingredient does" +
+		"\nEyeIrritant: if the ingredient causes eye irritation" +
+		"\nDriesSkin: if the ingredient dries out the skin" +
+		"\nReducesRedness: if the ingredient reduces redness" +
+		"\nHydrating: if the ingredient has a hydrating effect on the skin" +
+		"\nNonComedogenic: if the ingredient is noncomedogenic" +
+		"\nSafeForPregnancy: if the ingredient can safely be used while pregnant or nursing" +
 		"\nReturn the response as a parsable JSON only. Do not include explanations or other formatting." +
 		"\nInput: " + string(jsonStr)
 
