@@ -80,10 +80,6 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("longblob");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");

@@ -12,8 +12,6 @@ namespace Backend_Models.Models
         [Column(TypeName = "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')")]
         public string Type { get; set; }
         public string Url { get; set; }
-        [Column(TypeName = "longblob")]
-        public byte[] Image { get; set; }
     }
 }
 
