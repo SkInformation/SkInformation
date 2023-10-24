@@ -13,5 +13,12 @@ namespace Backend
         {
             
         }
+        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<IngredientAttribute>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
+        }
     }
 }

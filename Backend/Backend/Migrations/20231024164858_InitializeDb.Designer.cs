@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231023212347_InitializeDatabase")]
-    partial class InitializeDatabase
+    [Migration("20231024164858_InitializeDb")]
+    partial class InitializeDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,8 +43,9 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend_Models.Models.IngredientAttribute", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<bool>("DriesSkin")
                         .HasColumnType("tinyint(1)");
@@ -54,6 +55,10 @@ namespace Backend.Migrations
 
                     b.Property<bool>("Hydrating")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("NonComedogenic")
                         .HasColumnType("tinyint(1)");
@@ -68,7 +73,10 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("IngredientAttributes");
                 });
