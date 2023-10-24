@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend_Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -39,11 +40,20 @@ namespace Backend.Controllers
         }
 
         public IActionResult Search(string term) {
-            var products = _appDbContext.Products.Where(p => p.Name.Contains(term)).ToList();
+            var products = _appDbContext.Products
+                .Where(p => p.Name.Contains(term))
+                .Select(p => new ProductDto{
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Type = p.Type,
+                    Url = p.Url,
+                    Thumbnail = "/images/products/" + p.Id + ".png"
+                })
+                .ToList();
 
             return Json(new { products });
         }
-
 
     }
 }

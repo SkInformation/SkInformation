@@ -40,10 +40,8 @@ namespace Backend.Controllers
 
         public IActionResult Search(string term)
         {
-            var ingredients = _appDbContext.Ingredients
-                .Select(i => i.Name)
-                .Where(i => i.Contains(term))
-                .Distinct()
+            var ingredients = _appDbContext.IngredientAttributes
+                .Where(i => i.Name.Contains(term))
                 .ToList();
 
             return Json(new { ingredients });
