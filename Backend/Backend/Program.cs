@@ -1,4 +1,5 @@
 using Backend;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<AppDbContext>(
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IIngredientService, IngredientService>();
 
 var app = builder.Build();
 
