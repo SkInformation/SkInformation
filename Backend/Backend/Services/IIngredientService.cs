@@ -8,6 +8,6 @@ namespace Backend.Services
 {
     public interface IIngredientService
     {
-        public List<IngredientAttribute> fillIngredientAttributes(List<string> ingredients);
+        public Task<List<IngredientAttribute>> fillIngredientAttributes(List<string> ingredients);
     }
 }
