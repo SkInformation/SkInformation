@@ -52,9 +52,16 @@ namespace Backend.Controllers
 
         public async Task<IActionResult> Test()
         {
-            await _ingredientService.fillIngredientAttributes(new List<string>());
+            var ingredients = new List<string>{
+                "glycerin",
+                "carbomer",
+                "niacinimide",
+                "salicylic acid"
+            };
 
-            return Ok();
+            var ingredientList = await _ingredientService.fillIngredientAttributes(ingredients);
+
+            return Json(new { ingredientList });
         }
     }
 }
