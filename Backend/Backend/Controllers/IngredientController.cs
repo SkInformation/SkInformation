@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Backend.Services;
+using Backend_Models.Dtos;
 using Backend_Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -38,18 +39,30 @@ namespace Backend.Controllers
         {
             return View("Error!");
         }
-        
+
+        /// <summary>
+        /// Searches database for ingredients with a name that contains term.
+        /// </summary>
+        /// <param name="term">Ingredient name or partial name.</param>
+        /// <returns>List of ingredients.</returns>
         [HttpGet]
+        [Produces("application/json", Type = typeof (List<IngredientAttribute>))]
         public IActionResult Search(string term)
         {
             var ingredients = _appDbContext.IngredientAttributes
                 .Where(i => i.Name.Contains(term))
                 .ToList();
 
-            return Json(new { ingredients });
+            return Json(ingredients);
         }
 
+        /// <summary>
+        /// Create a new ingredient and add it into database.
+        /// </summary>
+        /// <param name="ingredient">Name of ingredient to create</param>
+        /// <returns>Ingredient's Id from the database</returns>
         [HttpPost]
+        [Produces("application/json", Type = typeof (IdDto))]
         public IActionResult Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
         {
             ingredient = ingredient.ToUpper();
@@ -94,7 +107,7 @@ namespace Backend.Controllers
                 }
             });
             
-            return Json(new { Id = ingredientAttribute.Id });
+            return Json(new IdDto{ Id = ingredientAttribute.Id });
         }
     }
 }
