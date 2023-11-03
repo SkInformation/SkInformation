@@ -38,14 +38,6 @@ namespace Backend.Controllers
         {
             return View("Error!");
         }
-
-        [HttpGet]
-        public IActionResult All()
-        {
-            var ingredients = _appDbContext.Ingredients.ToList();
-
-            return Json( new { ingredients });
-        }
         
         [HttpGet]
         public IActionResult Search(string term)
@@ -103,21 +95,6 @@ namespace Backend.Controllers
             });
             
             return Json(new { Id = ingredientAttribute.Id });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            var ingredients = new List<string>{
-                "glycerin",
-                "carbomer",
-                "niacinimide",
-                "salicylic acid"
-            };
-
-            var ingredientList = await _ingredientService.fillIngredientAttributes(ingredients);
-
-            return Json(new { ingredientList });
         }
     }
 }

@@ -40,14 +40,6 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult All()
-        {
-            var products = _appDbContext.Products.ToList();
-
-            return Json(new { products });
-        }
-
-        [HttpGet]
         public IActionResult Search(string term) {
             var products = _appDbContext.Products
                 .Where(p => p.Name.Contains(term))
