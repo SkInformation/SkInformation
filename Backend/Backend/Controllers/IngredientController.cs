@@ -44,7 +44,7 @@ namespace Backend.Controllers
         /// Searches database for ingredients with a name that contains term.
         /// </summary>
         /// <param name="term">Ingredient name or partial name.</param>
-        /// <returns>List of ingredients.</returns>
+        /// <returns>A list of ingredients.</returns>
         [HttpGet]
         [Produces("application/json", Type = typeof (List<IngredientAttribute>))]
         public IActionResult Search(string term)
@@ -57,10 +57,10 @@ namespace Backend.Controllers
         }
 
         /// <summary>
-        /// Create a new ingredient and add it into database.
+        /// Creates an ingredient to add into the database.
         /// </summary>
         /// <param name="ingredient">Name of ingredient to create</param>
-        /// <returns>Ingredient's Id from the database</returns>
+        /// <returns>An ingredient id.</returns>
         [HttpPost]
         [Produces("application/json", Type = typeof (IdDto))]
         public IActionResult Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)

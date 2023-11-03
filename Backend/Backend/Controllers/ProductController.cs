@@ -39,7 +39,13 @@ namespace Backend.Controllers
             return View("Error!");
         }
 
+        /// <summary>
+        /// Searches database for a product name that contains term.
+        /// </summary>
+        /// <param name="term">The product name or partial name.</param>
+        /// <returns>A list of products.</returns>
         [HttpGet]
+        [Produces("application/json", Type = typeof (List<ProductDto>))]
         public IActionResult Search(string term) {
             var products = _appDbContext.Products
                 .Where(p => p.Name.Contains(term))
@@ -53,17 +59,23 @@ namespace Backend.Controllers
                 })
                 .ToList();
 
-            return Json(new { products });
+            return Json(products);
         }
 
+        /// <summary>
+        /// Creates a product to add to the database.
+        /// </summary>
+        /// <param name="product">product form</param>
+        /// <returns>A product id.</returns>
         [HttpPost]
-        public IActionResult Create(CreateProductDto product, IFormFile? thumbnail)
+        [Produces("application/json", Type = typeof (IdDto))]
+        public IActionResult Create([FromForm] CreateProductDto product)
         {
             var productExists = _appDbContext.Products
                 .FirstOrDefault(p => p.Name.Equals(product.Name));
 
             if (productExists != null) {
-                return Json(new {Id = productExists.Id});
+                return Json(new IdDto{ Id = productExists.Id });
             }
 
             var newProduct = new Product{
@@ -77,11 +89,16 @@ namespace Backend.Controllers
             
             _appDbContext.SaveChanges();
 
-            UploadImage(thumbnail, newProduct.Id);
+            UploadImage(product.thumbnail, newProduct.Id);
 
-            return Json(new {Id = newProduct.Id});
+            return Json(new IdDto{ Id = newProduct.Id });
         }
 
+        /// <summary>
+        /// Helper function that will create image file for file upload.
+        /// </summary>
+        /// <param name="thumbnail">file upload for image</param>
+        /// <param name="id">the id of the product</param>
         private void UploadImage(IFormFile? thumbnail, int id)
         {
             if (thumbnail == null) {
