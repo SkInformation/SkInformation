@@ -15,6 +15,12 @@ namespace Backend.Services
         {
             Configuration = configuration;
         }
+
+        /// <summary>
+        /// A function that will use ChatGPT to fill ingredient(s) attributes.
+        /// </summary>
+        /// <param name="ingredients">A list of ingredient(s)</param>
+        /// <returns>A list of ingredient attributes</returns>
         public async Task<List<IngredientAttribute>> fillIngredientAttributes(List<string> ingredients)
         {
             var api = new OpenAI_API.OpenAIAPI(Configuration["ChatGPT:APIKey"]);
