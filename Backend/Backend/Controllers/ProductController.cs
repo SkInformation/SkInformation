@@ -10,6 +10,7 @@ using Product = Backend_Models.Models.Product;
 
 namespace Backend.Controllers
 {
+    [ApiController]
     [Route("[controller]/[action]")]
     public class ProductController : Controller
     {
@@ -25,17 +26,20 @@ namespace Backend.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [NonAction]
         public IActionResult Index()
         {
             return View();
         }
 
+        [NonAction]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View("Error!");
         }
 
+        [HttpGet]
         public IActionResult All()
         {
             var products = _appDbContext.Products.ToList();
@@ -43,6 +47,7 @@ namespace Backend.Controllers
             return Json(new { products });
         }
 
+        [HttpGet]
         public IActionResult Search(string term) {
             var products = _appDbContext.Products
                 .Where(p => p.Name.Contains(term))

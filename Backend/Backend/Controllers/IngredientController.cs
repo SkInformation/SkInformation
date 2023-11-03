@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Backend.Controllers
 {
+    [ApiController]
     [Route("[controller]/[action]")]
     public class IngredientController : Controller
     {
@@ -25,24 +26,28 @@ namespace Backend.Controllers
             _appDbContext = appDbContext;
         }
 
+        [NonAction]
         public IActionResult Index()
         {
             return View();
         }
 
+        [NonAction]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View("Error!");
         }
 
+        [HttpGet]
         public IActionResult All()
         {
             var ingredients = _appDbContext.Ingredients.ToList();
 
             return Json( new { ingredients });
         }
-
+        
+        [HttpGet]
         public IActionResult Search(string term)
         {
             var ingredients = _appDbContext.IngredientAttributes
@@ -100,6 +105,7 @@ namespace Backend.Controllers
             return Json(new { Id = ingredientAttribute.Id });
         }
 
+        [HttpGet]
         public async Task<IActionResult> Test()
         {
             var ingredients = new List<string>{
