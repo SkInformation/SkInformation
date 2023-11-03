@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Backend.Services;
+using Backend_Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -48,6 +50,54 @@ namespace Backend.Controllers
                 .ToList();
 
             return Json(new { ingredients });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
+        {
+            ingredient = ingredient.ToUpper();
+
+            var existingIngredient = _appDbContext.IngredientAttributes
+                .FirstOrDefault(i => i.Name.Equals(ingredient));
+
+            if (existingIngredient != null) {
+                return Json( new { Id = existingIngredient.Id });
+            }
+
+            var ingredientAttribute = new IngredientAttribute{
+                Name = ingredient,
+                Usage = "",
+            };
+
+            _appDbContext.IngredientAttributes.Add(ingredientAttribute);
+            _appDbContext.SaveChanges();
+
+
+            _ = Task.Run(async () => {
+                var temp = await _ingredientService
+                .fillIngredientAttributes(new List<string>{ ingredient });
+
+                if (temp.Count == 1) {
+                    using (var scope = serviceScopeFactory.CreateScope()){
+                        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                        var ingredientAttribute = context.IngredientAttributes
+                            .First(i => i.Name.Equals(ingredient));
+
+                        ingredientAttribute.DriesSkin = temp[0].DriesSkin;
+                        ingredientAttribute.EyeIrritant = temp[0].EyeIrritant;
+                        ingredientAttribute.Hydrating = temp[0].Hydrating;
+                        ingredientAttribute.NonComedogenic = temp[0].NonComedogenic;
+                        ingredientAttribute.ReducesRedness = temp[0].ReducesRedness;
+                        ingredientAttribute.SafeForPregnancy = temp[0].SafeForPregnancy;
+                        ingredientAttribute.Usage = temp[0].Usage;
+
+                        context.SaveChanges();
+                    }
+                }
+            });
+            
+            return Json(new { Id = ingredientAttribute.Id });
         }
 
         public async Task<IActionResult> Test()
