@@ -75,7 +75,7 @@ namespace Backend.Controllers
 
             _ = Task.Run(async () => {
                 var temp = await _ingredientService
-                .fillIngredientAttributes(new List<string>{ ingredient });
+                    .fillIngredientAttributes(new List<string>{ ingredient });
 
                 if (temp.Count == 1) {
                     using (var scope = serviceScopeFactory.CreateScope()){

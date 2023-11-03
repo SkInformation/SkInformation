@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Backend_Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Product = Backend_Models.Models.Product;
 
 namespace Backend.Controllers
 {
@@ -15,10 +16,13 @@ namespace Backend.Controllers
         private readonly ILogger<ProductController> _logger;
         private readonly AppDbContext _appDbContext;
 
-        public ProductController(ILogger<ProductController> logger, AppDbContext appDbContext)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public ProductController(ILogger<ProductController> logger, AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _appDbContext = appDbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -53,6 +57,48 @@ namespace Backend.Controllers
                 .ToList();
 
             return Json(new { products });
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateProductDto product, IFormFile? thumbnail)
+        {
+            var productExists = _appDbContext.Products
+                .FirstOrDefault(p => p.Name.Equals(product.Name));
+
+            if (productExists != null) {
+                return Json(new {Id = productExists.Id});
+            }
+
+            var newProduct = new Product{
+                Name = product.Name,
+                Description = product.Description,
+                Type = product.Type,
+                Url = product.Url,
+            };
+
+            _appDbContext.Products.Add(newProduct);
+            
+            _appDbContext.SaveChanges();
+
+            UploadImage(thumbnail, newProduct.Id);
+
+            return Json(new {Id = newProduct.Id});
+        }
+
+        private void UploadImage(IFormFile? thumbnail, int id)
+        {
+            if (thumbnail == null) {
+                return;
+            }
+
+            var wwwrootPath = _webHostEnvironment.WebRootPath;
+
+            var imagePath = Path.Combine(wwwrootPath, @"images/products");
+
+            using (var fileStream = new FileStream(Path.Combine(imagePath, $"{id}.png"), FileMode.Create))
+            {
+                thumbnail.CopyTo(fileStream);
+            }
         }
 
     }
