@@ -50,7 +50,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
+        public IActionResult Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
         {
             ingredient = ingredient.ToUpper();
 

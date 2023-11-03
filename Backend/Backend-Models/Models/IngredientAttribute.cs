@@ -12,8 +12,8 @@ namespace Backend_Models.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Usage { get; set; }   //Ex: Glycerin improves hydration.
+        public string Name { get; set; } = string.Empty;
+        public string Usage { get; set; } = string.Empty;  //Ex: Glycerin improves hydration.
         public bool EyeIrritant { get; set; }
         public bool DriesSkin { get; set; }
         public bool ReducesRedness { get; set; }

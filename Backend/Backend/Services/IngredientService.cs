@@ -58,14 +58,14 @@ namespace Backend.Services
             
             foreach(JObject j in ingredientJArray) {
                 ingredientList.Add(new (){
-                   Name = (string) j["Name"],
-                   Usage = (string) j["Usage"],
-                   EyeIrritant = (bool) j["EyeIrritant"],
-                   DriesSkin = (bool) j["DriesSkin"],
-                   ReducesRedness = (bool) j["ReducesRedness"],
-                   Hydrating = (bool) j["Hydrating"],
-                   NonComedogenic = (bool) j["NonComedogenic"],
-                   SafeForPregnancy = (bool) j["SafeForPregnancy"]
+                    Name = (string) j["Name"]!,
+                    Usage = (string) j["Usage"]!,
+                    EyeIrritant = (bool) j["EyeIrritant"]!,
+                    DriesSkin = (bool) j["DriesSkin"]!,
+                    ReducesRedness = (bool) j["ReducesRedness"]!,
+                    Hydrating = (bool) j["Hydrating"]!,
+                    NonComedogenic = (bool) j["NonComedogenic"]!,
+                    SafeForPregnancy = (bool) j["SafeForPregnancy"]!
                 });
             }
 
