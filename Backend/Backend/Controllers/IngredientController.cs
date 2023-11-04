@@ -8,7 +8,6 @@ using Backend.Services;
 using Backend_Models.Dtos;
 using Backend_Models.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Backend.Controllers
 {
@@ -17,27 +16,12 @@ namespace Backend.Controllers
     public class IngredientController : Controller
     {
         private readonly IIngredientService _ingredientService;
-        private readonly ILogger<IngredientController> _logger;
         private readonly AppDbContext _appDbContext;
 
-        public IngredientController(ILogger<IngredientController> logger, AppDbContext appDbContext, IIngredientService ingredientService)
+        public IngredientController(AppDbContext appDbContext, IIngredientService ingredientService)
         {
             _ingredientService = ingredientService;
-            _logger = logger;
             _appDbContext = appDbContext;
-        }
-
-        [NonAction]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [NonAction]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
         }
 
         /// <summary>

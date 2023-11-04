@@ -14,29 +14,13 @@ namespace Backend.Controllers
     [Route("[controller]/[action]")]
     public class ProductController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
         private readonly AppDbContext _appDbContext;
-
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ILogger<ProductController> logger, AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+        public ProductController(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
         {
-            _logger = logger;
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
-        }
-
-        [NonAction]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [NonAction]
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
         }
 
         /// <summary>
