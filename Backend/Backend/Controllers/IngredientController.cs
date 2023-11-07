@@ -44,9 +44,9 @@ namespace Backend.Controllers
         /// Creates an ingredient to add into the database.
         /// </summary>
         /// <param name="ingredient">Name of ingredient to create</param>
-        /// <returns>An ingredient id.</returns>
+        /// <returns>An ingredient and its attributes.</returns>
         [HttpPost]
-        [Produces("application/json", Type = typeof (IdDto))]
+        [Produces("application/json", Type = typeof (IngredientAttribute))]
         public IActionResult Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
         {
             ingredient = ingredient.ToUpper();
@@ -55,7 +55,7 @@ namespace Backend.Controllers
                 .FirstOrDefault(i => i.Name.Equals(ingredient));
 
             if (existingIngredient != null) {
-                return Json( new { Id = existingIngredient.Id });
+                return Json(existingIngredient);
             }
 
             var ingredientAttribute = new IngredientAttribute{
@@ -91,7 +91,7 @@ namespace Backend.Controllers
                 }
             });
             
-            return Json(new IdDto{ Id = ingredientAttribute.Id });
+            return Json(ingredientAttribute);
         }
     }
 }
