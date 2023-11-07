@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend_Models.Dtos;
+using Backend_Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Product = Backend_Models.Models.Product;
@@ -97,6 +98,33 @@ namespace Backend.Controllers
             {
                 thumbnail.CopyTo(fileStream);
             }
+        }
+
+        /// <summary>
+        /// Function to add an ingredient to a product
+        /// </summary>
+        /// <param name="attributeId">The ingredient id</param>
+        /// <param name="productId">The product id</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult AddIngredient(int attributeId, int productId)
+        {
+            var ingredientExists = _appDbContext.Ingredients
+                .FirstOrDefault(i => i.AttributeId == attributeId && i.ProductId == productId);
+
+            if (ingredientExists != null) {
+                return Ok();
+            }
+
+            var ingredient = new Ingredient{
+                ProductId = productId,
+                AttributeId = attributeId
+            };
+
+            _appDbContext.Ingredients.Add(ingredient);
+            _appDbContext.SaveChanges();
+
+            return Ok();
         }
 
     }
