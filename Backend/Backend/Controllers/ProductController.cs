@@ -127,5 +127,33 @@ namespace Backend.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Function to add multiple ingredients to a single product.
+        /// </summary>
+        /// <param name="attributeIds">List of ingredient ids.</param>
+        /// <param name="productId">A single product id</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult AddIngredients(List<int> attributeIds, int productId)
+        {
+            foreach (int i in attributeIds) {
+                var ingredientExists = _appDbContext.Ingredients
+                    .FirstOrDefault(ingredient => ingredient.AttributeId == i && ingredient.ProductId == productId);
+
+                if (ingredientExists != null) {
+                    continue;
+                }
+
+                _appDbContext.Ingredients.Add(new (){
+                    ProductId = productId,
+                    AttributeId = i
+                });
+            }
+
+            _appDbContext.SaveChanges();
+            
+            return Ok();
+        }
+
     }
 }
