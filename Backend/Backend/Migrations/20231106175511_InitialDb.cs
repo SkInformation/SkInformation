@@ -6,12 +6,35 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeDatabase : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "IngredientAttributes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Usage = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EyeIrritant = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DriesSkin = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ReducesRedness = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Hydrating = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    NonComedogenic = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    SafeForPregnancy = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IngredientAttributes", x => x.Id);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -27,8 +50,7 @@ namespace Backend.Migrations
                     Type = table.Column<string>(type: "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Url = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Image = table.Column<byte[]>(type: "longblob", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -43,12 +65,17 @@ namespace Backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    AttributeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ingredients_IngredientAttributes_AttributeId",
+                        column: x => x.AttributeId,
+                        principalTable: "IngredientAttributes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ingredients_Products_ProductId",
                         column: x => x.ProductId,
@@ -57,6 +84,17 @@ namespace Backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IngredientAttributes_Name",
+                table: "IngredientAttributes",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingredients_AttributeId",
+                table: "Ingredients",
+                column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_ProductId",
@@ -69,6 +107,9 @@ namespace Backend.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "IngredientAttributes");
 
             migrationBuilder.DropTable(
                 name: "Products");

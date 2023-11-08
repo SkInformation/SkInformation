@@ -44,19 +44,24 @@
     exit;
     ```
 
-### Step 5: Creating user secrets
-- Install dotnet user-secrets tool
+### Step 5: Creating connection string
+- Create a file in Backend/Backend folder called `appsettings.Development.json`
+- Add the following to the file
+    ```json
+    {
+        "Logging": {
+            "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+            }
+        },
+        "AllowedHosts": "*",
+        "ConnectionStrings": {
+            "DefaultConnection": "Server=localhost;Database=yourDatabase;User Id=username;Password=password"
+        }
+    }
     ```
-    dotnet tool install --global dotnet-user-secrets
-    ```
-- Initialize user-secrets
-    ```
-    dotnet user-secrets init
-    ```
-- Set user-secrets for db connection string
-    ```
-    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=YourServer;Database=YourDatabase;User=YourUser;Password=YourPassword;"
-    ```
+- Update db connection details
 
 ### Step 6: Running the project
 - Update database

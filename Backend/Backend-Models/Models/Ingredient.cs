@@ -8,9 +8,11 @@ namespace Backend_Models.Models
         
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
         
-        public string Name { get; set; }
+        public int AttributeId { get; set; }
+        [ForeignKey("AttributeId")]
+        public IngredientAttribute Attribute { get; set; }
     }
 }
 
