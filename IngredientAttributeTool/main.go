@@ -2,26 +2,49 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/ayush6624/go-chatgpt"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
 )
 
 type Ingredient struct {
-	Name                string `json:"name"`
-	Usage               string `json:"usage"`
-	PossibleEyeIrritant bool   `json:"possibleEyeIrritant"`
-	PossibleDriesSkin   bool   `json:"possibleDriesSkin"`
-	ReducesRedness      bool   `json:"reducesRedness"`
-	ImprovesMoisture    bool   `json:"improvesMoisture"`
+	Name             string
+	Usage            string
+	EyeIrritant      bool
+	DriesSkin        bool
+	ReducesRedness   bool
+	Hydrating        bool
+	NonComedogenic   bool
+	SafeForPregnancy bool
 }
 
 var chatGPT *chatgpt.Client
 
+// The database connection
+var db *sql.DB
+
+// Constants for database seed
+const (
+	SQL_HOST = "127.0.0.1"
+	SQL_DB   = "comp584"
+	SQL_USER = "admin"
+	SQL_PASS = "changeme"
+)
+
 // Main entry point
 func main() {
+	tempDb, err := setupDBConnection()
+	if err != nil {
+		log.Fatalf("Failed to setup database: %v\n", err)
+	}
+
+	db = tempDb
+	defer db.Close()
+
 	tempClient, err := setupChatGPT()
 	if err != nil {
 		log.Fatal(err)
@@ -29,9 +52,13 @@ func main() {
 
 	chatGPT = tempClient
 
-	sample := make([]string, 0)
-	sample = append(sample, "Glycerin")
-	process(sample, 2)
+	ingredients, err := getIngredients()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	process(ingredients, 10)
 }
 
 // setupChatGPT - set up the chatGPT client
@@ -46,6 +73,8 @@ func process(ingredients []string, batchSize int) {
 	n := len(ingredients)
 	i := 0
 
+	fmt.Println("Processing", len(ingredients), "ingredients in sizes of", batchSize)
+
 	// While there are elements
 	for i < n {
 		// Grab up to `batchSize` ingredients
@@ -58,11 +87,13 @@ func process(ingredients []string, batchSize int) {
 			j += 1
 		}
 
+		fmt.Println("Got batch size", j, ". Requesting info.")
 		updatedIngredients, err := sourceInfo(batch)
 		if err != nil {
 			fmt.Print(err)
 		} else {
-			trackIngredients(updatedIngredients)
+			fmt.Println("Updating the database...")
+			trackIngredientAttributes(updatedIngredients)
 		}
 	}
 }
@@ -75,8 +106,14 @@ func sourceInfo(ingredients []Ingredient) ([]Ingredient, error) {
 
 	ctx := context.Background()
 
-	prompt := "For each ingredient in the json array below, update all properties. " +
-		"\nFor example, the usage is what the ingredient is used for, if it causes eye irritation, if it helps reduce redness and dryness. " +
+	prompt := "For each json object in the json array below, update all properties based on the ingredient name field:" +
+		"\nUsage: a short description of what the ingredient does" +
+		"\nEyeIrritant: if the ingredient causes eye irritation" +
+		"\nDriesSkin: if the ingredient dries out the skin" +
+		"\nReducesRedness: if the ingredient reduces redness" +
+		"\nHydrating: if the ingredient has a hydrating effect on the skin" +
+		"\nNonComedogenic: if the ingredient is noncomedogenic" +
+		"\nSafeForPregnancy: if the ingredient can safely be used while pregnant or nursing" +
 		"\nReturn the response as a parsable JSON only. Do not include explanations or other formatting." +
 		"\nInput: " + string(jsonStr)
 
@@ -97,22 +134,79 @@ func sourceInfo(ingredients []Ingredient) ([]Ingredient, error) {
 }
 
 // setupDBConnection - Create the database connection and necessary tables
-func setupDBConnection() {
+func setupDBConnection() (*sql.DB, error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/", SQL_USER, SQL_PASS, SQL_HOST)
 
+	tempDb, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tempDb.Ping(); err != nil {
+		return nil, err
+	}
+
+	_, err = tempDb.Exec("CREATE DATABASE IF NOT EXISTS " + SQL_DB)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Printf("Connected to the MySQL server and created database %s!\n", SQL_DB)
+
+	_, err = tempDb.Exec("USE " + SQL_DB)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create the products table
+	_, err = tempDb.Exec("CREATE TABLE IF NOT EXISTS `IngredientAttributes` (`Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL, `Usage` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL, `EyeIrritant` tinyint(1) NOT NULL, `DriesSkin` tinyint(1) NOT NULL, `ReducesRedness` tinyint(1) NOT NULL,  `Hydrating` tinyint(1) NOT NULL,  `NonComedogenic` tinyint(1) NOT NULL, `SafeForPregnancy` tinyint(1) NOT NULL, PRIMARY KEY (`Name`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;")
+	if err != nil {
+		return nil, err
+	}
+
+	return tempDb, nil
 }
 
 // trackIngredientAttributes - track
 func trackIngredientAttributes(ingredients []Ingredient) {
-
+	for _, ingredient := range ingredients {
+		query := "INSERT INTO IngredientAttributes (Name, `Usage`, EyeIrritant, DriesSkin, ReducesRedness, Hydrating, NonComedogenic, SafeForPregnancy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		_, err := db.Exec(query, ingredient.Name, ingredient.Usage, ingredient.EyeIrritant, ingredient.DriesSkin, ingredient.ReducesRedness, ingredient.Hydrating, ingredient.NonComedogenic, ingredient.SafeForPregnancy)
+		if err != nil {
+			fmt.Println("Error inserting data:", err)
+		}
+	}
 }
 
 // getIngredients - Get the ingredients from the database
-func getIngredients() []string {
+func getIngredients() ([]string, error) {
+	// Query to retrieve unique values from the 'name' field
+	query := "SELECT DISTINCT name FROM Ingredients"
+
+	// Execute the query
+	rows, err := db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
 	var ingredients = make([]string, 0)
 
-	return ingredients
-}
+	// Iterate through the result set and print the unique names
+	for rows.Next() {
+		var name string
+		err := rows.Scan(&name)
+		if err != nil {
+			return nil, err
+		}
 
-func trackIngredients(ingredients []Ingredient) {
-	fmt.Println(ingredients)
+		ingredients = append(ingredients, name)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return ingredients, nil
 }

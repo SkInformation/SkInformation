@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231017033700_InitializeDatabase")]
-    partial class InitializeDatabase
+    [Migration("20231106175511_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,18 +27,59 @@ namespace Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AttributeId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("Backend_Models.Models.IngredientAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DriesSkin")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("EyeIrritant")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Hydrating")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<bool>("NonComedogenic")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("ReducesRedness")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("SafeForPregnancy")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Usage")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("IngredientAttributes");
                 });
 
             modelBuilder.Entity("Backend_Models.Models.Product", b =>
@@ -50,10 +91,6 @@ namespace Backend.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("longblob");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -74,11 +111,19 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend_Models.Models.Ingredient", b =>
                 {
+                    b.HasOne("Backend_Models.Models.IngredientAttribute", "Attribute")
+                        .WithMany()
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend_Models.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Attribute");
 
                     b.Navigation("Product");
                 });
