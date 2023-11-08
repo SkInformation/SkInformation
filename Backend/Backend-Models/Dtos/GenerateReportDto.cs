@@ -10,6 +10,6 @@ namespace Backend_Models.Dtos
     {
         public SkinType SkinType { get; set; }
         public List<SkinGoal> SkinGoals { get; set; }
-        public List<ProductReaction> Products { get; set; }
+        public List<ProductReactionDto> Products { get; set; }
     }
 }
