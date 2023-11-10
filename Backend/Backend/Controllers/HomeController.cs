@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
@@ -26,7 +26,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
     [NonAction]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
