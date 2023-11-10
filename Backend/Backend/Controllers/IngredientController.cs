@@ -30,10 +30,10 @@ namespace Backend.Controllers
         /// <param name="term">Ingredient name or partial name.</param>
         /// <returns>A list of ingredients.</returns>
         [HttpGet]
-        [Produces("application/json", Type = typeof (List<IngredientAttribute>))]
+        [Produces("application/json", Type = typeof (List<Ingredient>))]
         public IActionResult Search(string term)
         {
-            var ingredients = _appDbContext.IngredientAttributes
+            var ingredients = _appDbContext.Ingredients
                 .Where(i => i.Name.Contains(term))
                 .ToList();
 
@@ -46,24 +46,24 @@ namespace Backend.Controllers
         /// <param name="ingredient">Name of ingredient to create</param>
         /// <returns>An ingredient and its attributes.</returns>
         [HttpPost]
-        [Produces("application/json", Type = typeof (IngredientAttribute))]
+        [Produces("application/json", Type = typeof (Ingredient))]
         public IActionResult Create([FromServices] IServiceScopeFactory serviceScopeFactory, string ingredient)
         {
             ingredient = ingredient.ToUpper();
 
-            var existingIngredient = _appDbContext.IngredientAttributes
+            var existingIngredient = _appDbContext.Ingredients
                 .FirstOrDefault(i => i.Name.Equals(ingredient));
 
             if (existingIngredient != null) {
                 return Json(existingIngredient);
             }
 
-            var ingredientAttribute = new IngredientAttribute{
+            var ingredientAttribute = new Ingredient{
                 Name = ingredient,
                 Usage = "",
             };
 
-            _appDbContext.IngredientAttributes.Add(ingredientAttribute);
+            _appDbContext.Ingredients.Add(ingredientAttribute);
             _appDbContext.SaveChanges();
 
 
@@ -75,7 +75,7 @@ namespace Backend.Controllers
                     using (var scope = serviceScopeFactory.CreateScope()){
                         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                        var ingredientAttribute = context.IngredientAttributes
+                        var ingredientAttribute = context.Ingredients
                             .First(i => i.Name.Equals(ingredient));
 
                         ingredientAttribute.DriesSkin = temp[0].DriesSkin;

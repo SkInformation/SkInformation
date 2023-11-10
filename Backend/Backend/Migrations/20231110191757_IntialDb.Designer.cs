@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231106175511_InitialDb")]
-    partial class InitialDb
+    [Migration("20231110191757_IntialDb")]
+    partial class IntialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,27 +22,6 @@ namespace Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Backend_Models.Models.Ingredient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttributeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttributeId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("Backend_Models.Models.IngredientAttribute", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +58,7 @@ namespace Backend.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("IngredientAttributes");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Backend_Models.Models.Product", b =>
@@ -109,9 +88,30 @@ namespace Backend.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Backend_Models.Models.Ingredient", b =>
+            modelBuilder.Entity("Backend_Models.Models.ProductIngredient", b =>
                 {
-                    b.HasOne("Backend_Models.Models.IngredientAttribute", "Attribute")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductIngredients");
+                });
+
+            modelBuilder.Entity("Backend_Models.Models.ProductIngredient", b =>
+                {
+                    b.HasOne("Backend_Models.Models.Ingredient", "Attribute")
                         .WithMany()
                         .HasForeignKey("AttributeId")
                         .OnDelete(DeleteBehavior.Cascade)

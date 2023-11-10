@@ -109,19 +109,19 @@ namespace Backend.Controllers
         [HttpPost]
         public IActionResult AddIngredient(int attributeId, int productId)
         {
-            var ingredientExists = _appDbContext.Ingredients
+            var ingredientExists = _appDbContext.ProductIngredients
                 .FirstOrDefault(i => i.AttributeId == attributeId && i.ProductId == productId);
 
             if (ingredientExists != null) {
                 return Ok();
             }
 
-            var ingredient = new Ingredient{
+            var ingredient = new ProductIngredient{
                 ProductId = productId,
                 AttributeId = attributeId
             };
 
-            _appDbContext.Ingredients.Add(ingredient);
+            _appDbContext.ProductIngredients.Add(ingredient);
             _appDbContext.SaveChanges();
 
             return Ok();
@@ -137,14 +137,14 @@ namespace Backend.Controllers
         public IActionResult AddIngredients(List<int> attributeIds, int productId)
         {
             foreach (int i in attributeIds) {
-                var ingredientExists = _appDbContext.Ingredients
+                var ingredientExists = _appDbContext.ProductIngredients
                     .FirstOrDefault(ingredient => ingredient.AttributeId == i && ingredient.ProductId == productId);
 
                 if (ingredientExists != null) {
                     continue;
                 }
 
-                _appDbContext.Ingredients.Add(new (){
+                _appDbContext.ProductIngredients.Add(new (){
                     ProductId = productId,
                     AttributeId = i
                 });

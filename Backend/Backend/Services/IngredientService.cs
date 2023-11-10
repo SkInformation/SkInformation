@@ -21,7 +21,7 @@ namespace Backend.Services
         /// </summary>
         /// <param name="ingredients">A list of ingredient(s)</param>
         /// <returns>A list of ingredient attributes</returns>
-        public async Task<List<IngredientAttribute>> fillIngredientAttributes(List<string> ingredients)
+        public async Task<List<Ingredient>> fillIngredientAttributes(List<string> ingredients)
         {
             var api = new OpenAI_API.OpenAIAPI(Configuration["ChatGPT:APIKey"]);
 
@@ -58,7 +58,7 @@ namespace Backend.Services
             string response = await chat.GetResponseFromChatbotAsync();
             // Console.WriteLine(response);
 
-            var ingredientList = new List<IngredientAttribute>();
+            var ingredientList = new List<Ingredient>();
             
             JArray ingredientJArray = JArray.Parse(response);
             
