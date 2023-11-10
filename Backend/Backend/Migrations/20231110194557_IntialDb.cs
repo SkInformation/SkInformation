@@ -65,14 +65,14 @@ namespace Backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    AttributeId = table.Column<int>(type: "int", nullable: false)
+                    IngredientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductIngredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductIngredients_Ingredients_AttributeId",
-                        column: x => x.AttributeId,
+                        name: "FK_ProductIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -92,9 +92,9 @@ namespace Backend.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductIngredients_AttributeId",
+                name: "IX_ProductIngredients_IngredientId",
                 table: "ProductIngredients",
-                column: "AttributeId");
+                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductIngredients_ProductId",

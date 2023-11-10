@@ -102,14 +102,14 @@ public class ProductController : Controller
     public IActionResult AddIngredient(int attributeId, int productId)
     {
         var ingredientExists = _appDbContext.ProductIngredients
-            .FirstOrDefault(i => i.AttributeId == attributeId && i.ProductId == productId);
+            .FirstOrDefault(i => i.IngredientId == attributeId && i.ProductId == productId);
 
         if (ingredientExists != null) return Ok();
 
         var ingredient = new ProductIngredient
         {
             ProductId = productId,
-            AttributeId = attributeId
+            IngredientId = attributeId
         };
 
         _appDbContext.ProductIngredients.Add(ingredient);
@@ -130,14 +130,14 @@ public class ProductController : Controller
         foreach (var i in attributeIds)
         {
             var ingredientExists = _appDbContext.ProductIngredients
-                .FirstOrDefault(ingredient => ingredient.AttributeId == i && ingredient.ProductId == productId);
+                .FirstOrDefault(ingredient => ingredient.IngredientId == i && ingredient.ProductId == productId);
 
             if (ingredientExists != null) continue;
 
             _appDbContext.ProductIngredients.Add(new ProductIngredient
             {
                 ProductId = productId,
-                AttributeId = i
+                IngredientId = i
             });
         }
 

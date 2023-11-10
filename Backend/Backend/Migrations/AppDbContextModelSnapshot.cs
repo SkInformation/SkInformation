@@ -91,7 +91,7 @@ namespace Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AttributeId")
+                    b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -99,7 +99,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttributeId");
+                    b.HasIndex("IngredientId");
 
                     b.HasIndex("ProductId");
 
@@ -108,9 +108,9 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend_Models.Models.ProductIngredient", b =>
                 {
-                    b.HasOne("Backend_Models.Models.Ingredient", "Attribute")
+                    b.HasOne("Backend_Models.Models.Ingredient", "Ingredient")
                         .WithMany()
-                        .HasForeignKey("AttributeId")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -120,7 +120,7 @@ namespace Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Attribute");
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Product");
                 });

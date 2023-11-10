@@ -10,9 +10,9 @@ namespace Backend_Models.Models
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
         
-        public int AttributeId { get; set; }
-        [ForeignKey("AttributeId")]
-        public Ingredient Attribute { get; set; }
+        public int IngredientId { get; set; }
+        [ForeignKey("IngredientId")]
+        public Ingredient? Ingredient { get; set; }
     }
 }
 
