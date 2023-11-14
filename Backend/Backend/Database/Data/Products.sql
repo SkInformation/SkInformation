@@ -1,3 +1,4 @@
+SET IDENTITY_INSERT Products ON;
 INSERT INTO Products (Id, Name, Description, Type, Url) VALUES (1, 'Acne Foaming Cream Wash ', '10% Benzoyl peroxide acne wash for face and body', 'CLEANSER', 'https://cerave.com/skincare/cleansers/facial-cleansers/-acne-foaming-cream-wash-');
 INSERT INTO Products (Id, Name, Description, Type, Url) VALUES (2, 'Hydrating Foaming Oil Cleanser', 'Lightweight cleansing oil for face and body', 'CLEANSER', 'https://cerave.com/skincare/cleansers/facial-cleansers/hydrating-foaming-oil-cleanser');
 INSERT INTO Products (Id, Name, Description, Type, Url) VALUES (3, 'Foaming Facial Cleanser', 'Foaming gel cleanser for normal to oily skin', 'CLEANSER', 'https://cerave.com/skincare/cleansers/foaming-facial-cleanser');

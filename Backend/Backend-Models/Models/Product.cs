@@ -9,7 +9,7 @@ namespace Backend_Models.Models
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')")]
+        // [Column(TypeName = "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')")]
         public string Type { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
     }

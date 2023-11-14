@@ -1,3 +1,4 @@
+SET IDENTITY_INSERT ProductIngredients ON;
 INSERT INTO ProductIngredients (Id, ProductId, IngredientId) VALUES (1, 1, 28);
 INSERT INTO ProductIngredients (Id, ProductId, IngredientId) VALUES (2, 1, 262);
 INSERT INTO ProductIngredients (Id, ProductId, IngredientId) VALUES (3, 1, 102);
