@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddSwaggerGen(options =>
 {

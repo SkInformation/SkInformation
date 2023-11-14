@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    public partial class IntialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "IngredientAttributes",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,7 +33,7 @@ namespace Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IngredientAttributes", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -59,25 +59,25 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Ingredients",
+                name: "ProductIngredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    AttributeId = table.Column<int>(type: "int", nullable: false)
+                    IngredientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredients", x => x.Id);
+                    table.PrimaryKey("PK_ProductIngredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingredients_IngredientAttributes_AttributeId",
-                        column: x => x.AttributeId,
-                        principalTable: "IngredientAttributes",
+                        name: "FK_ProductIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ingredients_Products_ProductId",
+                        name: "FK_ProductIngredients_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -86,19 +86,19 @@ namespace Backend.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IngredientAttributes_Name",
-                table: "IngredientAttributes",
+                name: "IX_Ingredients_Name",
+                table: "Ingredients",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_AttributeId",
-                table: "Ingredients",
-                column: "AttributeId");
+                name: "IX_ProductIngredients_IngredientId",
+                table: "ProductIngredients",
+                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_ProductId",
-                table: "Ingredients",
+                name: "IX_ProductIngredients_ProductId",
+                table: "ProductIngredients",
                 column: "ProductId");
         }
 
@@ -106,10 +106,10 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "ProductIngredients");
 
             migrationBuilder.DropTable(
-                name: "IngredientAttributes");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Products");

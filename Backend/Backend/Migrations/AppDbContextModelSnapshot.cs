@@ -24,27 +24,6 @@ namespace Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AttributeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttributeId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("Backend_Models.Models.IngredientAttribute", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<bool>("DriesSkin")
                         .HasColumnType("tinyint(1)");
 
@@ -76,7 +55,7 @@ namespace Backend.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("IngredientAttributes");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Backend_Models.Models.Product", b =>
@@ -106,11 +85,32 @@ namespace Backend.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Backend_Models.Models.Ingredient", b =>
+            modelBuilder.Entity("Backend_Models.Models.ProductIngredient", b =>
                 {
-                    b.HasOne("Backend_Models.Models.IngredientAttribute", "Attribute")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductIngredients");
+                });
+
+            modelBuilder.Entity("Backend_Models.Models.ProductIngredient", b =>
+                {
+                    b.HasOne("Backend_Models.Models.Ingredient", "Ingredient")
                         .WithMany()
-                        .HasForeignKey("AttributeId")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -120,7 +120,7 @@ namespace Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Attribute");
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Product");
                 });
