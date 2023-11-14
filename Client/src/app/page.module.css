@@ -4,7 +4,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 6rem;
-  min-height: 100vh;
+  min-height: 93vh;
+  border: 1px solid #E85187;
+  box-shadow: -5px 10px 10px #888888;
 }
 
 .description {
