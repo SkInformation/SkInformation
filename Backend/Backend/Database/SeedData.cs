@@ -9,6 +9,8 @@ namespace Backend
             using (var context =
                    new AppDbContext(serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>()))
             {
+                context.Database.Migrate();
+                
                 if (context.Products.Any())
                 {
                     return;
