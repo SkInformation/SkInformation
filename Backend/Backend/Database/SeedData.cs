@@ -18,7 +18,7 @@ namespace Backend
                 
                 context.Database.EnsureCreated();
                 string seedDataDirectory = "Database/Data";
-                string[] sqlFilesNames = {"Products.sql"};
+                string[] sqlFilesNames = {"Products.sql", "Ingredients.sql", "ProductIngredients.sql"};
                 
                 foreach (string sqlFileName in sqlFilesNames)
                 {
