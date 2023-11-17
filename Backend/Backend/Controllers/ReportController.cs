@@ -42,4 +42,14 @@ public class ReportController : Controller
 
         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
     }
+
+    private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
+        var productIds = new HashSet<int>();
+        
+        foreach(ProductReactionDto p in dto.Products) {
+            productIds.Add(p.ProductId);
+        }
+
+        return productIds;
+    }
 }
