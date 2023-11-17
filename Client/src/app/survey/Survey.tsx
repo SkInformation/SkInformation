@@ -6,6 +6,7 @@ import {Step} from "@/app/survey/components/Step";
 import Grid from "@mui/material/Unstable_Grid2";
 import {Button, Typography} from "@mui/material";
 import {SurveyStep, useSurvey} from "@/app/context/SurveyContext";
+import SkinGoals from "@/app/survey/components/steps/SkinGoals";
 
 export default function Survey() {
     const {currentStep, stepConfig, navigateBackward, navigateForward} = useSurvey();
@@ -28,11 +29,16 @@ export default function Survey() {
 
     return (
         <>
-            <Box maxWidth="lg" width={100}>
-                <Step hidden={ currentStep !== SurveyStep.SkinType }>Step1</Step>
-                <Step hidden={ currentStep !== SurveyStep.SkinGoals }>Step2</Step>
-                <Step hidden={ currentStep !== SurveyStep.Products }>Step3</Step>
-                <Step hidden={ currentStep !== SurveyStep.Analysis }>Step4</Step>
+            <Box maxWidth="lg" width={"100%"}>
+                <Step hidden={currentStep !== SurveyStep.SkinType}
+                      title={stepConfig[SurveyStep.SkinType].title}>Step1</Step>
+                <Step hidden={currentStep !== SurveyStep.SkinGoals} title={stepConfig[SurveyStep.SkinGoals].title}>
+                    <SkinGoals/>
+                </Step>
+                <Step hidden={currentStep !== SurveyStep.Products}
+                      title={stepConfig[SurveyStep.Products].title}>Step3</Step>
+                <Step hidden={currentStep !== SurveyStep.Analysis}
+                      title={stepConfig[SurveyStep.Analysis].title}>Step4</Step>
             </Box>
             <Grid container columns={2} width={"100%"}>
                 <Grid xs display="flex" justifyContent="left" alignItems="left">
