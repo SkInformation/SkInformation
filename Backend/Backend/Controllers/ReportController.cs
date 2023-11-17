@@ -29,21 +29,25 @@ public class ReportController : Controller
     [HttpPost]
     public async Task<IActionResult> GenerateReport(GenerateReportDto reportInput)
     {
-        var status = await _emailService
-            .SendEmail(new PostmarkMessage
-            {
-                To = reportInput.Email,
-                From = "testing@acio.dev",
-                TrackOpens = true,
-                Subject = "Your SkInformation Report",
-                TextBody = "Your report is ready!",
-                HtmlBody = "<h1>Your routine is great!</h1>",
-                Tag = "Customized user report about skincare."
+        var triedProducts = GetTriedProducts(reportInput);
+        var usedTypes = GetUsedProductTypes(triedProducts);
+        var unusedRecommendations = GetUnusedProductRecommendations(usedTypes);
+        
+        var irritantAnalysis = new List<ProductIrritantAnalysisDto>();
+        
+        foreach(ProductReactionDto product in reportInput.Products) {
+            var potentialIrritants = GetIngredientsCausingIrritation(product);
+            
+            irritantAnalysis.Add(new ProductIrritantAnalysisDto{
+                Product = _appDbContext.Products.First(p => p.Id == product.ProductId),
+                PotentialIrritants = potentialIrritants
             });
+        }
 
-        if (status) return Ok();
-
-        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        return Json( new ReportDto {
+            ProductRecommendations = unusedRecommendations,
+            IrritantAnalysis = irritantAnalysis
+        } );
     }
 
     private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
@@ -81,7 +85,7 @@ public class ReportController : Controller
         return recommendations;
     }
 
-    private Dictionary<ProductReaction, List<Ingredient>> GetIngredientsCausingIrritation(ProductReactionDto dto) {
+    private List<PotentialIrritantDto> GetIngredientsCausingIrritation(ProductReactionDto dto) {
         // Store the reaction to all possible irritating ingredient
         var irritants = new Dictionary<ProductReaction, List<Ingredient>>();
 
@@ -104,7 +108,16 @@ public class ReportController : Controller
             AddIngredientsToDictionary(!ingredient.NonComedogenic, dto, ProductReaction.Swelling, ingredient, irritants);
         }
 
-        return irritants;
+        var productIrritantAnalysisDtos = new List<PotentialIrritantDto>();
+        
+        foreach (var kvp in irritants) {
+            productIrritantAnalysisDtos.Add(new PotentialIrritantDto{
+                Type = kvp.Key.ToString(),
+                Ingredients = kvp.Value
+            });
+        }
+
+        return productIrritantAnalysisDtos;
     }
 
     private void AddIngredientsToDictionary(bool knownIrritant, 
