@@ -52,4 +52,12 @@ public class ReportController : Controller
 
         return productIds;
     }
+
+    private List<string> GetUsedProductTypes(HashSet<int> triedProducts) {
+        return _appDbContext.Products
+            .Where(p => triedProducts.Contains(p.Id))
+            .Select(p => p.Type)
+            .Distinct() 
+            .ToList();
+    }
 }
