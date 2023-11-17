@@ -64,6 +64,23 @@ public class ReportController : Controller
             .ToList();
     }
 
+    private Dictionary<string, List<Product>> GetUnusedProductRecommendations(List<string> usedTypes) {
+        var grouping = _appDbContext.Products
+             .Where(p => !usedTypes.Contains(p.Type))
+             .GroupBy(p => p.Type)
+             .Select(group => group.Take(3))
+             .ToList();
+
+        var recommendations = new Dictionary<string, List<Product>>();
+
+        foreach(IEnumerable<Product> e in grouping) {
+            var products = e.ToList();
+            recommendations[products[0].Type] = products;
+        }
+
+        return recommendations;
+    }
+
     private Dictionary<ProductReaction, List<Ingredient>> GetIngredientsCausingIrritation(ProductReactionDto dto) {
         // Store the reaction to all possible irritating ingredient
         var irritants = new Dictionary<ProductReaction, List<Ingredient>>();
