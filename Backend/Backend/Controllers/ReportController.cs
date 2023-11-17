@@ -2,6 +2,9 @@ using Backend_Models.Dtos;
 using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using PostmarkDotNet;
+using Backend_Models.Models;
+using Microsoft.EntityFrameworkCore;
+using Backend_Models.Enums;
 
 namespace Backend.Controllers;
 
@@ -59,5 +62,42 @@ public class ReportController : Controller
             .Select(p => p.Type)
             .Distinct() 
             .ToList();
+    }
+
+    private Dictionary<ProductReaction, List<Ingredient>> GetIngredientsCausingIrritation(ProductReactionDto dto) {
+        // Store the reaction to all possible irritating ingredient
+        var irritants = new Dictionary<ProductReaction, List<Ingredient>>();
+
+        // Defaults
+        foreach (ProductReaction reaction in dto.Reactions) {
+            irritants[reaction] = new List<Ingredient>();
+        }
+
+        var productIngredients = _appDbContext.ProductIngredients
+            .Include(i => i.Ingredient)
+            .Where(i => i.ProductId == dto.ProductId)
+            .ToList();
+        
+        foreach (var productIngredient in productIngredients) {
+            var ingredient = productIngredient.Ingredient!;
+            AddIngredientsToDictionary(ingredient.EyeIrritant, dto, ProductReaction.EyeIrritation, ingredient, irritants);
+            AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Flakiness, ingredient, irritants);
+            AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Itchiness, ingredient, irritants);
+            AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Redness, ingredient, irritants);
+            AddIngredientsToDictionary(!ingredient.NonComedogenic, dto, ProductReaction.Swelling, ingredient, irritants);
+        }
+
+        return irritants;
+    }
+
+    private void AddIngredientsToDictionary(bool knownIrritant, 
+                                            ProductReactionDto dto, 
+                                            ProductReaction reaction, 
+                                            Ingredient ingredient, 
+                                            Dictionary<ProductReaction, List<Ingredient>> irritants)
+    {
+        if (knownIrritant && dto.Reactions.Contains(reaction)) {
+            irritants[reaction].Add(ingredient);
+        }
     }
 }
