@@ -7,6 +7,7 @@ export enum SurveyStep {
 }
 
 interface StepConfig {
+    title: string;
     hideBackButton: boolean;
     backButtonText?: string;
     hideNextButton: boolean;
@@ -14,19 +15,23 @@ interface StepConfig {
 }
 const stepConfig: StepConfig[] = [
     {
+        title: "",
         hideBackButton: true,
         hideNextButton: false,
     },
     {
+        title: "Choose your goals",
         hideBackButton: false,
         hideNextButton: false,
     },
     {
+        title: "Add Skincare Products",
         hideBackButton: false,
         hideNextButton: false,
         nextButtonText: 'Complete',
     },
     {
+        title: "",
         hideBackButton: false,
         hideNextButton: true,
     }
