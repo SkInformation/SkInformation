@@ -109,6 +109,57 @@
 .logo {
   position: relative;
 }
+
+.survey {
+  margin-top: 10%;
+}
+
+.survey img {
+  width: 145px;
+}
+
+.survey div button {
+  margin: auto;
+}
+
+.survey_big_button span {
+  display: none;
+}
+
+.survey_big_button {
+  border: 1px solid #E85187;
+  background-color: #FEFCF4;
+  width: 200px;
+  height: 200px;
+  color: #E85187;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 20px;
+}
+
+.survey_big_button:hover {
+  background-color: #FEFCF4;
+  box-shadow: 5px 10px 10px #E85187;
+  top: -5px;
+  left: -5px;
+}
+
+.navigation {
+  border: 1px solid #E85187;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #FFF2F7;
+  color: #E85187;
+}
+
+.navigation:hover {
+  background-color: #E85187;
+  color: #FFFFFF;
+}
+
+
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {

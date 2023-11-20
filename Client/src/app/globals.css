@@ -12,6 +12,22 @@ body {
   color: #E85187;
 }
 
+.dry {
+  background-image: url('/assets/images/survey/skin_type/dry.jpg');
+}
+
+.combination {
+  background-image: url('/assets/images/survey/skin_type/combination.jpg');
+}
+
+.normal {
+  background-image: url('/assets/images/survey/skin_type/normal.jpg');
+}
+
+.oily {
+  background-image: url('/assets/images/survey/skin_type/oily.jpg');
+}
+
 @font-face {
   font-family: overTheRainbow;
   src: url('/assets/Over_the_Rainbow/OvertheRainbow-Regular.ttf');
@@ -26,19 +42,6 @@ a {
   border: 1px solid #E85187;
   padding: 10px;
   padding-radius: 20px;
-}
-
-button.MuiButtonBase-root {
-  border: 1px solid #E85187;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #FFF2F7;
-  color: #E85187;
-}
-
-button.MuiButtonBase-root:hover {
-  background-color: #E85187;
-  color: #FFFFFF;
 }
 
 h1 {
