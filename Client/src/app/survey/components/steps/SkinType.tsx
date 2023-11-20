@@ -30,7 +30,7 @@ export default function SkinTypes() {
                         return (
                             <Grid key={type} display="flex" xs={1}>
                                 <Button name={type} onClick={handleClick}
-                                        className={styles.survey_big_button + ' ' + type.toLowerCase()}>
+                                        className={styles.survey_big_button}>
                                     <img src={"/assets/images/survey/skin_type/" + type + ".jpg" } />
                                 </Button>
                             </Grid>
