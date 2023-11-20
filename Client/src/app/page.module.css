@@ -135,6 +135,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 20px;
 }
 
 .survey_big_button:hover {
