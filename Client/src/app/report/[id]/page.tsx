@@ -11,7 +11,7 @@ interface ReportProps {
 }
 
 export default async function Report({params}: ReportProps) {
-    const result = await apiRequest<Data>(HttpMethod.GET, `report/${params.id}`, {}, {}, (err) => {
+    const result = await apiRequest<Data>(HttpMethod.GET, `report/${params.id}`, {}, {}, {}, (err) => {
         console.error(err.message)
     });
 
