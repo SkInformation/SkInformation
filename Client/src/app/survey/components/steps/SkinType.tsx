@@ -2,30 +2,8 @@ import {useEffect} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {SkinType, useSurvey} from "@/app/context/SurveyContext";
 import {Button} from "@mui/material";
-import ButtonBase from '@mui/material/ButtonBase';
 import styles from '@/app/page.module.css'
 
-const images = [
-    {
-        url: 'assets/images/survey/skin_type/dry.jpg',
-        title: 'Dry',
-        width: '145px',
-    },
-    {
-        url: 'assets/images/survey/skin_type/normal.jpg',
-        title: 'Normal',
-        width: '145px',
-    },
-    {
-        url: 'assets/images/survey/skin_type/oily.jpg',
-        title: 'Oily',
-        width: '145px',
-    },    {
-        url: 'assets/images/survey/skin_type/combination.jpg',
-        title: 'Combination',
-        width: '145px%',
-    },
-];
 export default function SkinTypes() {
     const {skinType, setSkinType} = useSurvey()
 
