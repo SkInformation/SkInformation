@@ -28,19 +28,6 @@ a {
   padding-radius: 20px;
 }
 
-button.MuiButtonBase-root {
-  border: 1px solid #E85187;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #FFF2F7;
-  color: #E85187;
-}
-
-button.MuiButtonBase-root:hover {
-  background-color: #E85187;
-  color: #FFFFFF;
-}
-
 h1 {
   font-family: overTheRainbow;
   font-size: 38px;

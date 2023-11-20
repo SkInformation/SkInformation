@@ -9,7 +9,7 @@ interface StepProps {
 export function Step({
     children,
     hidden = false,
-                         title
+    title
 }: StepProps) {
     return (
         <>

@@ -7,6 +7,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import {Button, Typography} from "@mui/material";
 import {SurveyStep, useSurvey} from "@/app/context/SurveyContext";
 import SkinGoals from "@/app/survey/components/steps/SkinGoals";
+import SkinType from "@/app/survey/components/steps/SkinType";
+import styles from "@/app/page.module.css";
 
 export default function Survey() {
     const {currentStep, stepConfig, navigateBackward, navigateForward} = useSurvey();
@@ -30,8 +32,9 @@ export default function Survey() {
     return (
         <>
             <Box maxWidth="lg" width={"100%"}>
-                <Step hidden={currentStep !== SurveyStep.SkinType}
-                      title={stepConfig[SurveyStep.SkinType].title}>Step1</Step>
+                <Step hidden={currentStep !== SurveyStep.SkinType} title={stepConfig[SurveyStep.SkinType].title}>
+                    <SkinType/>
+                </Step>
                 <Step hidden={currentStep !== SurveyStep.SkinGoals} title={stepConfig[SurveyStep.SkinGoals].title}>
                     <SkinGoals/>
                 </Step>
@@ -45,7 +48,7 @@ export default function Survey() {
                     {
                         hideBackButton ?
                             <></> :
-                            <Button variant={"contained"} onClick={navigateBackward}>
+                            <Button variant={"contained"} onClick={navigateBackward} className={styles.navigation}>
                                 <Typography>
                                     {backButtonText || 'Back'}
                                 </Typography>
@@ -55,7 +58,7 @@ export default function Survey() {
                 <Grid xs display="flex" justifyContent="right" alignItems="right">
                     {hideNextButton ?
                         <></> :
-                        <Button variant={"contained"} onClick={navigateForward}>
+                        <Button variant={"contained"} onClick={navigateForward} className={styles.navigation}>
                             <Typography>
                                 {nextButtonText || 'Next'}
                             </Typography>
