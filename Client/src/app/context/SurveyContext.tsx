@@ -15,7 +15,7 @@ interface StepConfig {
 }
 const stepConfig: StepConfig[] = [
     {
-        title: "",
+        title: "Choose your skin type",
         hideBackButton: true,
         hideNextButton: false,
     },
