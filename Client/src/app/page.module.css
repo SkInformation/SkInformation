@@ -122,12 +122,19 @@
   margin: auto;
 }
 
+.survey_big_button span {
+  display: none;
+}
+
 .survey_big_button {
   border: 1px solid #E85187;
   background-color: #FEFCF4;
   width: 200px;
   height: 200px;
   color: #E85187;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .survey_big_button:hover {
