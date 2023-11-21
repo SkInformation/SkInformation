@@ -18,6 +18,18 @@ public class IngredientController : Controller
     }
 
     /// <summary>
+    /// Returns list of all ingredients.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Produces("application/json", Type = typeof(List<Ingredient>))]
+    public IActionResult All()
+    {
+        var ingredients = _appDbContext.Ingredients.ToList();
+        return Json(ingredients);
+    }
+
+    /// <summary>
     ///     Searches database for ingredients with a name that contains term.
     /// </summary>
     /// <param name="term">Ingredient name or partial name.</param>
