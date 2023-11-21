@@ -27,7 +27,7 @@ public class ReportController : Controller
     /// <param name="reportInput">A GenerateReportDto.</param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> GenerateReport(GenerateReportDto reportInput)
+    public async Task<IActionResult> Generate(GenerateReportDto reportInput)
     {
         var triedProducts = GetTriedProducts(reportInput);
         var usedTypes = GetUsedProductTypes(triedProducts);
