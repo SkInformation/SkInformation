@@ -5,6 +5,7 @@ using PostmarkDotNet;
 using Backend_Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Backend_Models.Enums;
+using System.Text.Json;
 
 namespace Backend.Controllers;
 
@@ -44,10 +45,20 @@ public class ReportController : Controller
             });
         }
 
-        return Json( new ReportDto {
+        var report =  new ReportDto {
             ProductRecommendations = unusedRecommendations,
             IrritantAnalysis = irritantAnalysis
-        } );
+        };
+
+        var serializedReport = JsonSerializer.Serialize(report);
+        var reportDb = new Report{
+            ReportDto = serializedReport
+        };
+
+        _appDbContext.Reports.Add(reportDb);
+        _appDbContext.SaveChanges();
+
+        return Json(new IdDto{ Id = reportDb.Id });
     }
 
     private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
