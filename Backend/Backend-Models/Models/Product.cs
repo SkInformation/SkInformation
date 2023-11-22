@@ -12,6 +12,8 @@ namespace Backend_Models.Models
         // [Column(TypeName = "ENUM('MOISTURIZER','CLEANSER','SERUM','SUNSCREEN')")]
         public string Type { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+        
+        public ICollection<ProductIngredient> Mappings { get; set; }
     }
 }
 

@@ -29,7 +29,7 @@ public class ProductController : Controller
     {
         var products = _appDbContext.Products
             .Where(p => p.Name.Contains(term))
-            .Select(p => new ProductIngredientDto
+            .Select(p => new ProductIngredientDto()
             {
                 Product = new ProductDto {
                     Id = p.Id,
@@ -39,20 +39,7 @@ public class ProductController : Controller
                     Url = p.Url,
                     Thumbnail = "/images/products/" + p.Id + ".png"
                 },
-                Ingredients = _appDbContext.ProductIngredients
-                    .Include(pi => pi.Ingredient)
-                    .Where(pi => pi.ProductId == p.Id)
-                    .Select(pi => new Ingredient{
-                        Id = pi.IngredientId,
-                        Name = pi.Ingredient.Name,
-                        Usage = pi.Ingredient.Usage,
-                        DriesSkin = pi.Ingredient.DriesSkin,
-                        EyeIrritant = pi.Ingredient.EyeIrritant,
-                        Hydrating = pi.Ingredient.Hydrating,
-                        NonComedogenic = pi.Ingredient.NonComedogenic,
-                        ReducesRedness = pi.Ingredient.ReducesRedness,
-                        SafeForPregnancy = pi.Ingredient.SafeForPregnancy
-                    }).ToList()
+                Ingredients = p.Mappings.Select(pi => pi.Ingredient!).ToList()
             })
             .ToList();
 
