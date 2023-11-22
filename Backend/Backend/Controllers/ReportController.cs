@@ -62,6 +62,40 @@ public class ReportController : Controller
     }
 
     /// <summary>
+    ///     Generate report details link and send in email.
+    /// </summary>
+    /// <param name="reportId">Id of report</param>
+    /// <param name="email">Email to send report link</param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> Email(int reportId, string email)
+    {
+        var report = _appDbContext.Reports
+            .FirstOrDefault(r => r.Id == reportId);
+
+        if (report == null) {
+            return NotFound("Report not found");
+        }
+
+        const string API_URL = "http://localhost:5100/report/details?reportId=";
+        var status = await _emailService
+            .SendEmail(new PostmarkMessage
+            {
+                To = email,
+                From = "SkInformation@acio.dev",
+                TrackOpens = true,
+                Subject = "Your SkInformation Report",
+                TextBody = "Your report is ready!",
+                HtmlBody = $"<a href={API_URL + reportId}>View Report</>",
+                Tag = "Customized user report about skincare."
+            });
+
+        if (status) return Ok();
+
+        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+    }
+
+    /// <summary>
     ///     Get report details.
     /// </summary>
     /// <param name="reportId">Report id</param>
