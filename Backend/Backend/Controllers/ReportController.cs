@@ -26,7 +26,7 @@ public class ReportController : Controller
     ///     Generates a report based on input provided.
     /// </summary>
     /// <param name="reportInput">A GenerateReportDto.</param>
-    /// <returns></returns>
+    /// <returns>Report id</returns>
     [HttpPost]
     public async Task<IActionResult> Generate(GenerateReportDto reportInput)
     {
@@ -59,6 +59,26 @@ public class ReportController : Controller
         _appDbContext.SaveChanges();
 
         return Json(new IdDto{ Id = reportDb.Id });
+    }
+
+    /// <summary>
+    ///     Get report details.
+    /// </summary>
+    /// <param name="reportId">Report id</param>
+    /// <returns></returns>
+    [HttpGet]
+    [Produces("application/json")]
+    public IActionResult Details(int reportId) {
+        var report = _appDbContext.Reports
+            .FirstOrDefault(r => r.Id == reportId);
+
+        if (report == null) {
+            return NotFound("Report not found");
+        }
+
+        var deSerialized = JsonSerializer.Deserialize<ReportDto>(report.ReportDto);
+
+        return Json(deSerialized);
     }
 
     private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
