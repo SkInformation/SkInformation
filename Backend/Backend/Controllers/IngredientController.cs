@@ -18,9 +18,9 @@ public class IngredientController : Controller
     }
 
     /// <summary>
-    /// Returns list of all ingredients.
+    ///     Get all ingredients.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A list of ingredients.</returns>
     [HttpGet]
     [Produces("application/json", Type = typeof(List<Ingredient>))]
     public IActionResult All()
@@ -48,7 +48,7 @@ public class IngredientController : Controller
     /// <summary>
     ///     Creates an ingredient to add into the database.
     /// </summary>
-    /// <param name="ingredient">Name of ingredient to create</param>
+    /// <param name="ingredient">Name of ingredient to create.</param>
     /// <returns>An ingredient and its attributes.</returns>
     [HttpPost]
     [Produces("application/json", Type = typeof(Ingredient))]
