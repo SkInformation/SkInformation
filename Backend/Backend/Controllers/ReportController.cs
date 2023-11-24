@@ -6,6 +6,7 @@ using Backend_Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Backend_Models.Enums;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Backend.Controllers;
 
@@ -15,11 +16,13 @@ public class ReportController : Controller
 {
     private readonly AppDbContext _appDbContext;
     private readonly IEmailService _emailService;
+    private readonly IConfiguration _configuration;
 
-    public ReportController(AppDbContext appDbContext, IEmailService emailService)
+    public ReportController(AppDbContext appDbContext, IEmailService emailService, IConfiguration configuration)
     {
         _appDbContext = appDbContext;
         _emailService = emailService;
+        _configuration = configuration;
     }
 
     /// <summary>
@@ -77,7 +80,9 @@ public class ReportController : Controller
             return NotFound("Report not found");
         }
 
-        const string API_URL = "http://localhost:5100/report/details?reportId=";
+        string domain = _configuration.GetValue<string>("APP_URL") ?? "http://localhost:3000" ;
+        string reportUrl = domain + "/report/details?reportId=" + reportId;
+        
         var status = await _emailService
             .SendEmail(new PostmarkMessage
             {
@@ -86,7 +91,7 @@ public class ReportController : Controller
                 TrackOpens = true,
                 Subject = "Your SkInformation Report",
                 TextBody = "Your report is ready!",
-                HtmlBody = $"<a href={API_URL + reportId}>View Report</>",
+                HtmlBody = $"<a href={reportUrl}>View Report</>",
                 Tag = "Customized user report about skincare."
             });
 
