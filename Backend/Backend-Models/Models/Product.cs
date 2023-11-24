@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Backend_Models.Models
 {
@@ -13,6 +14,7 @@ namespace Backend_Models.Models
         public string Type { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
         
+        [JsonIgnore]
         public ICollection<ProductIngredient> Mappings { get; set; }
     }
 }
