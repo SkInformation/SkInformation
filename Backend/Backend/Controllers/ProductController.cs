@@ -24,21 +24,19 @@ public class ProductController : Controller
     /// <param name="term">The product name or partial name.</param>
     /// <returns>A list of products and their ingredients.</returns>
     [HttpGet]
-    [Produces("application/json", Type = typeof(List<ProductIngredientDto>))]
+    [Produces("application/json", Type = typeof(List<ProductDto>))]
     public IActionResult Search(string term)
     {
         var products = _appDbContext.Products
             .Where(p => p.Name.Contains(term))
-            .Select(p => new ProductIngredientDto()
+            .Select(p => new ProductDto()
             {
-                Product = new ProductDto {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Type = p.Type,
-                    Url = p.Url,
-                    Thumbnail = "/images/products/" + p.Id + ".png"
-                },
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Type = p.Type,
+                Url = p.Url,
+                Thumbnail = "/images/products/" + p.Id + ".png",
                 Ingredients = p.Mappings.Select(pi => pi.Ingredient!).ToList()
             })
             .ToList();
