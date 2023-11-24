@@ -81,8 +81,16 @@ public class IngredientController : Controller
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+                    if (context == null) {
+                        return;
+                    }
+
                     var ingredientAttribute = context.Ingredients
                         .First(i => i.Name.Equals(ingredient));
+
+                    if (ingredientAttribute == null) {
+                        return;
+                    }
 
                     ingredientAttribute.DriesSkin = temp[0].DriesSkin;
                     ingredientAttribute.EyeIrritant = temp[0].EyeIrritant;
