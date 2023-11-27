@@ -5,6 +5,8 @@ using PostmarkDotNet;
 using Backend_Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Backend_Models.Enums;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Backend.Controllers;
 
@@ -14,20 +16,22 @@ public class ReportController : Controller
 {
     private readonly AppDbContext _appDbContext;
     private readonly IEmailService _emailService;
+    private readonly IConfiguration _configuration;
 
-    public ReportController(AppDbContext appDbContext, IEmailService emailService)
+    public ReportController(AppDbContext appDbContext, IEmailService emailService, IConfiguration configuration)
     {
         _appDbContext = appDbContext;
         _emailService = emailService;
+        _configuration = configuration;
     }
 
     /// <summary>
     ///     Generates a report based on input provided.
     /// </summary>
     /// <param name="reportInput">A GenerateReportDto.</param>
-    /// <returns></returns>
+    /// <returns>Report id</returns>
     [HttpPost]
-    public async Task<IActionResult> GenerateReport(GenerateReportDto reportInput)
+    public async Task<IActionResult> Generate(GenerateReportDto reportInput)
     {
         var triedProducts = GetTriedProducts(reportInput);
         var usedTypes = GetUsedProductTypes(triedProducts);
@@ -44,10 +48,76 @@ public class ReportController : Controller
             });
         }
 
-        return Json( new ReportDto {
+        var report =  new ReportDto {
             ProductRecommendations = unusedRecommendations,
             IrritantAnalysis = irritantAnalysis
-        } );
+        };
+
+        var serializedReport = JsonSerializer.Serialize(report);
+        var reportDb = new Report{
+            ReportDto = serializedReport
+        };
+
+        _appDbContext.Reports.Add(reportDb);
+        _appDbContext.SaveChanges();
+
+        return Json(new IdDto{ Id = reportDb.Id });
+    }
+
+    /// <summary>
+    ///     Generate report details link and send in email.
+    /// </summary>
+    /// <param name="reportId">Id of report</param>
+    /// <param name="email">Email to send report link</param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> Email(int reportId, string email)
+    {
+        var report = _appDbContext.Reports
+            .FirstOrDefault(r => r.Id == reportId);
+
+        if (report == null) {
+            return NotFound("Report not found");
+        }
+
+        string domain = _configuration.GetValue<string>("APP_URL") ?? "http://localhost:3000" ;
+        string reportUrl = domain + "/report/details?reportId=" + reportId;
+        
+        var status = await _emailService
+            .SendEmail(new PostmarkMessage
+            {
+                To = email,
+                From = "SkInformation@acio.dev",
+                TrackOpens = true,
+                Subject = "Your SkInformation Report",
+                TextBody = "Your report is ready!",
+                HtmlBody = $"<a href={reportUrl}>View Report</>",
+                Tag = "Customized user report about skincare."
+            });
+
+        if (status) return Ok();
+
+        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+    }
+
+    /// <summary>
+    ///     Get report details.
+    /// </summary>
+    /// <param name="reportId">Report id</param>
+    /// <returns></returns>
+    [HttpGet]
+    [Produces("application/json")]
+    public IActionResult Details(int reportId) {
+        var report = _appDbContext.Reports
+            .FirstOrDefault(r => r.Id == reportId);
+
+        if (report == null) {
+            return NotFound("Report not found");
+        }
+
+        var deSerialized = JsonSerializer.Deserialize<ReportDto>(report.ReportDto);
+
+        return Json(deSerialized);
     }
 
     private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
