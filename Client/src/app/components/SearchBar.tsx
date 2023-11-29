@@ -74,17 +74,13 @@ export default function SearchBar<T extends { id: number; name: string }>({
             }}
             filterOptions={(x) => {
                 return x.filter((item) => {
-                    debugger
-                    if (typeof item === 'string') {
-                        return item
-                    }
+                    let itemName = typeof item === 'string' ? item : item.name
 
-                    return !selectedValues.includes(item)
+                    return !selectedValues.find(({name}) => name === itemName);
                 })
             }}
             options={options}
             noOptionsText="No products found"
-            inputValue={inputValue}
             onChange={(_event: any, newValue: string | T | null) => {
                 if (!newValue || typeof newValue === 'string') {
                     return;
