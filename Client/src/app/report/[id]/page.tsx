@@ -48,7 +48,7 @@ export interface IrritantAnalysis {
 }
 
 export default async function Report({params}: ReportProps) {
-    const analysis = await apiRequest<ReportDetails>(HttpMethod.GET, `http://localhost:5100/Report/Details`, { reportId: params.id }, undefined, {}, (err) => {
+    const analysis = await apiRequest<ReportDetails>(HttpMethod.GET, `https://api.skinformation.site/Report/Details`, { reportId: params.id }, undefined, {}, (err) => {
         console.error(err.message)
     });
 
