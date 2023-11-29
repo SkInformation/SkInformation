@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {Product, useSurvey} from "@/app/context/SurveyContext";
+import apiRequest, {HttpMethod} from "@/app/lib/api"
 import SearchBar from '@/app/components/SearchBar'
 import LinkIcon from '@mui/icons-material/Link';
 import {
@@ -20,89 +21,16 @@ import * as url from "url";
 import Box from "@mui/material/Box";
 
 const searchProduct = async (input: string): Promise<Product[]> => {
-    //return apiRequest<Product[]>(HttpMethod.GET, '/Product/Search', { term: input })
+    if (!input) {
+        return []
+    }
 
-    return [
-        {
-            "id": 2,
-            "name": "Hydrating Foaming Oil Cleanser",
-            "description": "Lightweight cleansing oil for face and body",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/facial-cleansers/hydrating-foaming-oil-cleanser",
-            "thumbnail": "/images/products/2.png",
-            "ingredients": [],
-        },
-        {
-            "id": 4,
-            "name": "Hydrating Facial Cleanser",
-            "description": "Hydrating cleanser for normal-to-dry skin",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/hydrating-facial-cleanser",
-            "thumbnail": "/images/products/4.png",
-            "ingredients": [],
-        },
-        {
-            "id": 5,
-            "name": "Hydrating Cream-to-Foam Cleanser",
-            "description": "Creamy foaming face wash for normal-to-dry skin",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/hydrating-cream-to-foam-cleanser",
-            "thumbnail": "/images/products/5.png",
-            "ingredients": [],
-        },
-        {
-            "id": 7,
-            "name": "Acne Control Cleanser",
-            "description": "Gel-to-foam salicylic acid acne face wash",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/acne-salicylic-acid-cleanser",
-            "thumbnail": "/images/products/7.png",
-            "ingredients": [],
-        },
-        {
-            "id": 10,
-            "name": "Comforting Eye Makeup Remover",
-            "description": "Gentle eye makeup remover that comforts skin",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/comforting-eye-makeup-remover",
-            "thumbnail": "/images/products/10.png",
-            "ingredients": [],
-        },
-        {
-            "id": 11,
-            "name": "Hydrating Makeup Removing Plant-Based Wipes",
-            "description": "Makeup removing compostable wipes",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/hydrating-makeup-removing-plant-based-wipes",
-            "thumbnail": "/images/products/11.png",
-            "ingredients": [],
-        },
-        {
-            "id": 12,
-            "name": "Makeup Removing Cleanser Cloths",
-            "description": "Makeup remover cloth and gentle cleanser",
-            "type": "CLEANSER",
-            "url": "https://cerave.com/skincare/cleansers/makeup-removing-cleanser-cloths",
-            "thumbnail": "/images/products/12.png",
-            "ingredients": [],
-        },
-        {
-            "id": 13,
-            "name": "Ultra-Light Moisturizing Gel",
-            "description": "Refreshing, lightweight texture with a weightless feel on skin",
-            "type": "MOISTURIZER",
-            "url": "https://cerave.com/skincare/moisturizers/facial-moisturizers/ultra-light-gel-moisturizer",
-            "thumbnail": "/images/products/13.png",
-            "ingredients": [],
-        }
-    ]
+    return apiRequest<Product[]>(HttpMethod.GET, '/Product/Search', {term: input})
 }
 
 export default function Products() {
-    const {products, setProducts} = useSurvey()
-
+    const {products, setProducts} = useSurvey();
     const [open, setOpen] = useState(false);
-    const [searchValue, setSearchValue] = useState<Product | null>(null)
 
     const addProduct = (value: Product) => {
         if (products.find(p => p.id === value.id)) {
@@ -115,7 +43,7 @@ export default function Products() {
         <>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12}>
-                    <SearchBar name="product" selectedValue={products} setSelectedValue={addProduct}
+                    <SearchBar<Product> name="product" selectedValues={products} setSelectedValue={addProduct}
                                query={searchProduct}/>
                 </Grid>
                 <Grid display="flex" flexGrow={1}>
