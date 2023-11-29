@@ -7,7 +7,9 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(
     options => options
-        .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), dbOptions => {
+            dbOptions.EnableRetryOnFailure();
+        }));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -28,6 +30,18 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
+// Reference: https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-8.0
+const string originsKey = "_SkInformationAllowedOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: originsKey,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -54,7 +68,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors(originsKey);
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -3,7 +3,7 @@
 import {createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 
 export enum SurveyStep {
-    SkinType, SkinGoals, Products, Analysis
+    SkinType, SkinGoals, Products, Summary
 }
 
 interface StepConfig {
@@ -28,10 +28,9 @@ const stepConfig: StepConfig[] = [
         title: "Add Skincare Products",
         hideBackButton: false,
         hideNextButton: false,
-        nextButtonText: 'Complete',
     },
     {
-        title: "",
+        title: "Summary",
         hideBackButton: false,
         hideNextButton: true,
     }
@@ -56,9 +55,38 @@ export enum ProductReaction
     Flakiness, Redness, Swelling, Itchiness
 }
 
+// {
+//     "id": 0,
+//     "name": "string",
+//     "usage": "string",
+//     "eyeIrritant": true,
+//     "driesSkin": true,
+//     "reducesRedness": true,
+//     "hydrating": true,
+//     "nonComedogenic": true,
+//     "safeForPregnancy": true
+// }
+
+export type Ingredient = {
+    id: number;
+    name: string;
+    usage: string;
+    eyeIrritant: boolean;
+    driesSkin: boolean;
+    reducesRedness: boolean;
+    hydrating: boolean;
+    nonComedogenic: boolean;
+    safeForPregnancy: boolean;
+}
+
 export type Product = {
-    id: Number;
-    reactions: ProductReaction[]
+    id: number;
+    name: string;
+    description: string;
+    type: string;
+    url: string;
+    thumbnail: string;
+    ingredients: Ingredient[];
 }
 
 export enum SkinGoal
@@ -72,8 +100,8 @@ export enum SkinType
 }
 
 interface SurveyContextType {
-    currentStep: SurveyStep;
-    stepConfig: StepConfig[];
+    currentStep: SurveyStep,
+    stepConfig: StepConfig[],
     navigateForward: () => void,
     navigateBackward: () => void,
     skinType?: SkinType,

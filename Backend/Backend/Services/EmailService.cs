@@ -11,7 +11,7 @@ namespace Backend.Services
         private readonly PostmarkClient _postmarkClient;
         public EmailService(IConfiguration configuration)
         {
-            _postmarkClient = new PostmarkClient(configuration.GetValue<string>("PostmarkApiKey"));
+            _postmarkClient = new PostmarkClient(configuration.GetValue<string>("PostmarkAPI"));
         }
         public async Task<bool> SendEmail(PostmarkMessage email)
         {

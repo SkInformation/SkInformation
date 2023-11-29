@@ -18,6 +18,18 @@ public class IngredientController : Controller
     }
 
     /// <summary>
+    ///     Get all ingredients.
+    /// </summary>
+    /// <returns>A list of ingredients.</returns>
+    [HttpGet]
+    [Produces("application/json", Type = typeof(List<Ingredient>))]
+    public IActionResult All()
+    {
+        var ingredients = _appDbContext.Ingredients.ToList();
+        return Json(ingredients);
+    }
+
+    /// <summary>
     ///     Searches database for ingredients with a name that contains term.
     /// </summary>
     /// <param name="term">Ingredient name or partial name.</param>
@@ -36,7 +48,7 @@ public class IngredientController : Controller
     /// <summary>
     ///     Creates an ingredient to add into the database.
     /// </summary>
-    /// <param name="ingredient">Name of ingredient to create</param>
+    /// <param name="ingredient">Name of ingredient to create.</param>
     /// <returns>An ingredient and its attributes.</returns>
     [HttpPost]
     [Produces("application/json", Type = typeof(Ingredient))]
@@ -69,8 +81,16 @@ public class IngredientController : Controller
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+                    if (context == null) {
+                        return;
+                    }
+
                     var ingredientAttribute = context.Ingredients
                         .First(i => i.Name.Equals(ingredient));
+
+                    if (ingredientAttribute == null) {
+                        return;
+                    }
 
                     ingredientAttribute.DriesSkin = temp[0].DriesSkin;
                     ingredientAttribute.EyeIrritant = temp[0].EyeIrritant;
