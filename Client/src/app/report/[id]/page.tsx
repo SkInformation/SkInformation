@@ -1,5 +1,7 @@
 import apiRequest, {HttpMethod} from "@/app/lib/api";
 import IrritantsAccordion from "../IrritantsAccordion";
+import ProductRecommendationDisplay from "../ProductRecommendationDisplay";
+
 
 interface ReportProps {
     params: {
@@ -10,10 +12,18 @@ interface ReportProps {
 // Data models for request
 
 export interface ReportDetails {
+    productRecommendations: ProductRecommendation;
     irritantAnalysis: IrritantAnalysis[];
 }
 
-interface Product {
+export interface ProductRecommendation {
+    MOISTURIZER?: Product[];
+    SERUM?: Product[];
+    CLEANSER?: Product[];
+    SUNSCREEN?: Product[];
+}
+
+export interface Product {
     id: number
     name: string;
     description: string;
@@ -44,9 +54,12 @@ export default async function Report({params}: ReportProps) {
 
     return (
         <>
-        {analysis.irritantAnalysis.map((ia: IrritantAnalysis) => (
-            <IrritantsAccordion key={ia.product.id} product={ia.product} potentialIrritants={ia.potentialIrritants}/>
-        ))}
+            <h1>Recommendations</h1>
+            <ProductRecommendationDisplay prodRecs={analysis.productRecommendations}/>
+            <h1>Irritants</h1>
+            {analysis.irritantAnalysis.map((ia: IrritantAnalysis) => (
+                <IrritantsAccordion key={ia.product.id} product={ia.product} potentialIrritants={ia.potentialIrritants}/>
+            ))}
         </>
     );
 }

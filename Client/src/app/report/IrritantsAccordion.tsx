@@ -9,7 +9,7 @@ import {Ingredient, IrritantAnalysis, PotentialIrritant} from "./[id]/page";
 export default function IrritantsAccordion(analysis: IrritantAnalysis) {
     return (
         <div>
-            <h1>{analysis.product.name}</h1>
+            <h2>{analysis.product.name}</h2>
             <p>{analysis.product.description}</p>
             <br/>
             {analysis.potentialIrritants.map((pi: PotentialIrritant) => (
