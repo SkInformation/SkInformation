@@ -28,7 +28,7 @@ public class ProductController : Controller
     public IActionResult Search(string term)
     {
         var products = _appDbContext.Products
-            .Where(p => p.Name.Contains(term))
+            .Where(p => p.Name.StartsWith(term))
             .Select(p => new ProductDto()
             {
                 Id = p.Id,
