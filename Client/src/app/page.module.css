@@ -158,7 +158,11 @@
   color: #FFFFFF;
 }
 
-
+.stepHeader {
+  font-family: overTheRainbow;
+  font-size: 38px;
+  font-weight: bold;
+}
 
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {

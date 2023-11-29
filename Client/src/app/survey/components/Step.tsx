@@ -1,4 +1,5 @@
 import Grid from "@mui/material/Unstable_Grid2";
+import styles from '@/app/page.module.css'
 
 interface StepProps {
     children: React.ReactNode;
@@ -17,7 +18,7 @@ export function Step({
                 !hidden ?
                     <>
                         <Grid container justifyContent={"center"}>
-                            <h1>{title}</h1>
+                            <h1 className={styles.stepHeader}>{title}</h1>
                         </Grid>
                         {children}
                     </> :
