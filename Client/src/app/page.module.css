@@ -138,7 +138,7 @@
   border-radius: 20px;
 }
 
-.survey_big_button:hover {
+.survey_big_button.selected {
   background-color: #FEFCF4;
   box-shadow: 5px 10px 10px #E85187;
   top: -5px;

@@ -2,6 +2,7 @@
 
 import {createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 
+const LOCAL_STORAGE_KEY = "surveyContext";
 export enum SurveyStep {
     SkinType, SkinGoals, Products, Summary
 }
@@ -54,18 +55,6 @@ export enum ProductReaction
 {
     Flakiness, Redness, Swelling, Itchiness
 }
-
-// {
-//     "id": 0,
-//     "name": "string",
-//     "usage": "string",
-//     "eyeIrritant": true,
-//     "driesSkin": true,
-//     "reducesRedness": true,
-//     "hydrating": true,
-//     "nonComedogenic": true,
-//     "safeForPregnancy": true
-// }
 
 export type Ingredient = {
     id: number;
@@ -133,17 +122,28 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         }
     }
 
+    // Load initial state from localStorage, if available
     useEffect(() => {
-        if (currentStep !== 0) {
-            return;
+        const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setCurrentStep(parsedData.currentStep);
+            setSkinType(parsedData.skinType);
+            setSkinGoals(parsedData.skinGoals);
+            setProducts(parsedData.products);
         }
+    }, []);
 
-        if (!skinType) {
-            setCurrentStep(SurveyStep.SkinType)
-        } else if (skinGoals.length === 0) {
-            setCurrentStep(SurveyStep.SkinGoals)
-        }
-    }, [skinType, skinGoals])
+    // Save state to localStorage on changes
+    useEffect(() => {
+        const dataToStore = {
+            currentStep,
+            skinType,
+            skinGoals,
+            products,
+        };
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
+    }, [currentStep, skinType, skinGoals, products]);
 
     const initialContextValue: SurveyContextType = {
         currentStep,
