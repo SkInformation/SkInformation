@@ -15,7 +15,7 @@ export default function IrritantsAccordion(analysis: IrritantAnalysis) {
             {analysis.potentialIrritants.map((pi: PotentialIrritant) => (
                 <div key={pi.type}>
                     <h3>{pi.type}</h3>
-                    {pi.ingredients.map((i: Ingredient) => (
+                    {pi.ingredients.length > 0 ? pi.ingredients.map((i: Ingredient) => (
                         <Accordion key={i.id}>
                             <AccordionSummary
                                 expandIcon={<ExpandMore/>}
@@ -29,7 +29,7 @@ export default function IrritantsAccordion(analysis: IrritantAnalysis) {
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>
-                    ))}
+                    )) : <p>No ingredients were found to cause {pi.type}.</p>}
                 </div>
             ))}
         </div>
