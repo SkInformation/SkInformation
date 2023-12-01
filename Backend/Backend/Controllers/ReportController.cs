@@ -39,11 +39,14 @@ public class ReportController : Controller
         
         var irritantAnalysis = new List<ProductIrritantAnalysisDto>();
         
-        foreach(ProductReactionDto product in reportInput.Products) {
-            var potentialIrritants = GetIngredientsCausingIrritation(product);
+        foreach(ProductReactionDto reactionDto in reportInput.Products) {
+            var potentialIrritants = GetIngredientsCausingIrritation(reactionDto);
+            var product = _appDbContext.Products.FirstOrDefault(p => p.Id == reactionDto.ProductId);
             
+            if (product == null) continue;
+                
             irritantAnalysis.Add(new ProductIrritantAnalysisDto{
-                Product = _appDbContext.Products.First(p => p.Id == product.ProductId),
+                Product = product,
                 PotentialIrritants = potentialIrritants
             });
         }
