@@ -1,3 +1,5 @@
+"use client";
+
 import {Product} from "./[id]/page";
 import {Typography, Grid, Card, CardContent, CardActionArea} from "@mui/material";
 
@@ -10,15 +12,17 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({ products }) => {
         <Grid 
             container 
             direction={"row"}
-            alignItems={"baseline"}
+            alignItems={"stretch"}
             justifyContent={"center"}
             spacing={3}>
             {products.map((p: Product) => (
                 <Grid
                     key={p.id}
                     item
-                    xs={4}>
-                        <Card sx={{ height: "500px"}}>
+                    lg={4}
+                    md={4}
+                    xs={12}>
+                        <Card sx={{ height: "100%"}}>
                             <CardContent>
                                 <CardActionArea href={p.url} target="_blank" style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
                                     <img src={`https://api.skinformation.site/images/products/${p.id}.png`}/>
