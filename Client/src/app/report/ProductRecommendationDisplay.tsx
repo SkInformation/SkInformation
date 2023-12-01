@@ -1,5 +1,6 @@
 import ProductsDisplay from "./ProductsDisplay";
-import {ProductRecommendation, Product} from "./[id]/page";
+import {ProductRecommendation} from "./[id]/page";
+import {Stack} from "@mui/material"
 
 interface ProductRecommendationDisplayProps {
     prodRecs: ProductRecommendation;
@@ -7,32 +8,32 @@ interface ProductRecommendationDisplayProps {
   
   const ProductRecommendationDisplay: React.FC<ProductRecommendationDisplayProps> = ({ prodRecs }) => {
     return (
-      <div>
+      <Stack spacing={2}>
         {prodRecs.CLEANSER &&
-          <div>
+          <Stack>
             <h2>Cleanser</h2>
             <ProductsDisplay products={prodRecs.CLEANSER}/>
-          </div>
+          </Stack>
         }
         {prodRecs.MOISTURIZER &&
-          <div>
+          <Stack>
             <h2>Moisturizer</h2>
             <ProductsDisplay products={prodRecs.MOISTURIZER}/>
-          </div>
+          </Stack>
         }
         {prodRecs.SERUM &&
-          <div>
+          <Stack>
             <h2>Serum</h2>
             <ProductsDisplay products={prodRecs.SERUM}/>
-          </div>
+          </Stack>
         }
         {prodRecs.SUNSCREEN &&
-          <div>
+          <Stack>
             <h2>Sunscreen</h2>
             <ProductsDisplay products={prodRecs.SUNSCREEN}/>
-          </div>
+          </Stack>
         }
-      </div>
+      </Stack>
     );
   };
   
