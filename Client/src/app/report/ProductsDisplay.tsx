@@ -12,8 +12,7 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({ products }) => {
             direction={"row"}
             alignItems={"baseline"}
             justifyContent={"center"}
-            spacing={3}
-            sx={{ marginBottom: "20px"}}>
+            spacing={3}>
             {products.map((p: Product) => (
                 <Grid
                     key={p.id}
