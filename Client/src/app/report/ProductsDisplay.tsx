@@ -22,7 +22,7 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({ products }) => {
                         <Card sx={{ height: "500px"}}>
                             <CardContent>
                                 <CardActionArea href={p.url} target="_blank" style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
-                                    <img src={`http://localhost:5100/images/products/${p.id}.png`}/>
+                                    <img src={`https://api.skinformation.site/images/products/${p.id}.png`}/>
                                 </CardActionArea>
                                 <Typography 
                                     variant={"h6"}>
