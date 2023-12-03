@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import {debounce} from "@mui/material/utils";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -36,7 +36,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
         [query],
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         let active = true;
 
         if (inputValue === '') {

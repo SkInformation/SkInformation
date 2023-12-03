@@ -93,6 +93,7 @@ interface SurveyContextType {
     stepConfig: StepConfig[],
     navigateForward: () => void,
     navigateBackward: () => void,
+    navigateTo: (step: number) => void,
     skinType?: SkinType,
     setSkinType: Dispatch<SetStateAction<SkinType | undefined>>,
     skinGoals: SkinGoal[],
@@ -120,6 +121,14 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         } else {
             console.error("Attempting to navigate backward beyond the bounds of step config")
         }
+    }
+
+    const navigateTo = (step: number): void => {
+        if (step < 0 || step > stepConfig.length) {
+            console.error(`Unable to navigate to the step ${step}.`)
+            return
+        }
+        setCurrentStep(step);
     }
 
     // Load initial state from localStorage, if available
@@ -150,6 +159,7 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         stepConfig,
         navigateBackward,
         navigateForward,
+        navigateTo,
         skinType,
         setSkinType,
         skinGoals,

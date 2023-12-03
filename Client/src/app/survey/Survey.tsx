@@ -10,6 +10,7 @@ import SkinGoals from "@/app/survey/components/steps/SkinGoals";
 import SkinType from "@/app/survey/components/steps/SkinType";
 import styles from "@/app/page.module.css";
 import Products from "@/app/survey/components/steps/Products";
+import Summary from "@/app/survey/components/steps/Summary";
 
 export default function Survey() {
     const {currentStep, stepConfig, navigateBackward, navigateForward} = useSurvey();
@@ -42,8 +43,9 @@ export default function Survey() {
                 <Step hidden={currentStep !== SurveyStep.Products} title={stepConfig[SurveyStep.Products].title}>
                     <Products/>
                 </Step>
-                <Step hidden={currentStep !== SurveyStep.Summary}
-                      title={stepConfig[SurveyStep.Summary].title}>Step4</Step>
+                <Step hidden={currentStep !== SurveyStep.Summary} title={stepConfig[SurveyStep.Summary].title}>
+                    <Summary/>
+                </Step>
             </Box>
             <Grid container columns={2} width={"100%"}>
                 <Grid xs display="flex" justifyContent="left" alignItems="left">
