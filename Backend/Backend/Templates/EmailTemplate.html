@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Your SkInformation report is ready!</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* RESET STYLES */
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* GMAIL BLUE LINKS */
+        u + #body a {
+            color: inherit;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+
+        /* SAMSUNG MAIL BLUE LINKS */
+        #MessageViewBody a {
+            color: inherit;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+
+        /* Animation keyframes */
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .fade1 { animation: 1s 1 fade-in; }
+        .fade2 { animation: 0.5s 1 fade-in; }
+        .fade3 { animation: 2s 1 fade-in; }
+
+        /* Interactive Elements */
+        /* Hide inputs */
+        input { display: none; }
+        /* Make labels looks clickable */
+        label { cursor: pointer; }
+        /* Hide slides */
+        .slide { display: none; }
+
+        /* Show the checked slides */
+        #slide1:checked ~ .slide1,
+        #slide2:checked ~ .slide2,
+        #slide3:checked ~ .slide3 {
+            display: block;
+        }
+
+        /* Universal styles for links and stuff */
+        a { color: -webkit-link; font-weight: bold; }
+        a:hover { color: #fd6350; text-decoration: none; }
+        a.button { transition: all 0.2s ease; }
+        a.button:hover {
+            background-color: #ea5bfa !important;
+            transform: scaleX(120%) scaleY(120%);
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            .mobile { width: 100% !important; }
+            .block { display: block !important;; width: 100% !important;}
+        }
+    </style>
+</head>
+<body id="body" style="margin: 0 !important; padding: 0 !important;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tr>
+        <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width: 600px;">
+                <!-- Logo image -->
+                <tr>
+                    <td bgcolor="#F2BED1"
+                        style="background: #F2BED1; padding: 10px">
+                        <img class="fade1"
+                             alt="SkInformation LLC Company Logo"
+                             src="https://cdn.glitch.global/145e378f-d783-4f93-bcf6-7950570d7cfb/logo.png?v=1701718287743"
+                             style="display: block; margin: 0 auto; width: 75px; height: 75px; border-radius: 37px;"/>
+
+                    </td>
+                </tr>
+
+                <!-- Hero Image -->
+                <tr>
+                    <td bgcolor="#FDCEDF">
+                        <img alt="Gif to grab the user's attention"
+                             border="0"
+                             src="https://cdn.glitch.global/145e378f-d783-4f93-bcf6-7950570d7cfb/skinformation_hero.gif?v=1701718284704"
+                             style="color: #ffffff; display: block; max-width: 100%; min-width: 100px; height: auto; width: 100%;"
+                             width="600"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#F8E8EE" style="padding: 10px">
+                        <p>Your personal SkInformation report is now available for viewing. In this report, you'll find product recommendations, and an analysis of the ingredients that might be causing irritation.</p>
+                        <br>
+                        <p>Click the button below to see your personalized report!</p>
+                    </td>
+                </tr>
+
+                <!-- View report button -->
+                <tr>
+                    <td bgcolor="#F8E8EE"
+                        style="font-size: 14px; background: #F8E8EE">
+                        <div style="margin: 20px 0 50px 0; text-align: center">
+                            <!--[if mso]>
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                         xmlns:w="urn:schemas-microsoft-com:office:word" href="http://google.com"
+                                         style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%"
+                                         strokecolor="#00458f" fillcolor="#1e90ff">
+                                <w:anchorlock/>
+                                <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">
+                                    View my report
+                                </center>
+                            </v:roundrect>
+                            <![endif]-->
+                            <a href="{%REPORT_ID_LINK%}"
+                               class="button"
+                               style="padding-left: 10px; padding-right: 10px; background-color:#c94fd9;border:1px solid #bb2ea0;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;mso-hide:all;">
+                                View my report
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Footer information: Always include an unsubscribe link! -->
+                <tr>
+                    <td bgcolor="#F2BED1">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tr>
+                                <td>
+                                    <!-- About us-->
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" class="block" width="33%">
+                                        <tr>
+                                            <td style="padding: 20px; line-height: 24px;">
+                                                <h2 style="font-size: 16px; margin: 0 0 20px 0;">
+                                                    About Us
+                                                </h2>
+                                                <p style="font-size: 14px; margin: 0;">
+                                                    SkInformation has helped trillions of people around the world with evidence based recommendations to help improve your skincare.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- Useful links -->
+                                    <table align="right" border="0" cellpadding="0" cellspacing="0" class="block" width="33%">
+                                        <tr>
+                                            <td style="padding: 20px; line-height: 24px;">
+                                                <h2 style="font-size: 16px; margin: 0 0 20px 0;">
+                                                    Useful Links
+                                                </h2>
+                                                <p style="font-size: 14px; margin: 0;">
+                                                    <a href="#">Unsubscribe</a><br>
+                                                    <a href="#">Privacy Policy</a><br>
+                                                    <a href="#">Terms and Conditions</a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- Teaser -->
+                                    <table align="right" border="0" cellpadding="0" cellspacing="0" class="block" width="33%">
+                                        <tr>
+                                            <td style="padding: 20px; line-height: 24px;">
+                                                <h2 style="font-size: 16px; margin: 0 0 20px 0;">
+                                                    Disclaimer
+                                                </h2>
+                                                <p style="font-size: 14px; margin: 0;">
+                                                    Product recommendation and analysis is not a suitable replacement for medical advice. Please see your dermatologist for specific skin concerns.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F2BED1"
+                        style="text-align: center; font-size: 14px; background: #F2BED1">
+                        <p>SkInformation LLC © 2023 All Rights Reserved</p>
+                        <p>172 STE 84 Parking Way, CA 91001</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
