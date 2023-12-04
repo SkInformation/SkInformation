@@ -1,6 +1,7 @@
 "use client"
 
 import {createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
+import {Product} from "../shared/types";
 
 const LOCAL_STORAGE_KEY = "surveyContext";
 export enum SurveyStep {
@@ -51,33 +52,6 @@ export interface SurveyProviderProps {
     children: React.ReactNode;
 }
 
-export enum ProductReaction
-{
-    Flakiness, Redness, Swelling, Itchiness
-}
-
-export type Ingredient = {
-    id: number;
-    name: string;
-    usage: string;
-    eyeIrritant: boolean;
-    driesSkin: boolean;
-    reducesRedness: boolean;
-    hydrating: boolean;
-    nonComedogenic: boolean;
-    safeForPregnancy: boolean;
-}
-
-export type Product = {
-    id: number;
-    name: string;
-    description: string;
-    type: string;
-    url: string;
-    thumbnail: string;
-    ingredients: Ingredient[];
-}
-
 export enum SkinGoal
 {
     ReduceRedness, ReduceWrinkles, PoreAppearance, EvenSkinTone, MoistureRetention, SkinGlow
@@ -93,19 +67,20 @@ interface SurveyContextType {
     stepConfig: StepConfig[],
     navigateForward: () => void,
     navigateBackward: () => void,
+    navigateTo: (step: number) => void,
     skinType?: SkinType,
     setSkinType: Dispatch<SetStateAction<SkinType | undefined>>,
     skinGoals: SkinGoal[],
     setSkinGoals: Dispatch<SetStateAction<SkinGoal[]>>,
-    products: Product[],
-    setProducts: Dispatch<SetStateAction<Product[]>>,
+    products: { [key: number]: Product },
+    setProducts: Dispatch<SetStateAction<{ [key: number]: Product }>>,
 }
 
 const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
     const [ currentStep, setCurrentStep ] = useState<SurveyStep>(SurveyStep.SkinType)
     const [ skinType, setSkinType ] = useState<SkinType | undefined>()
     const [ skinGoals, setSkinGoals ] = useState<SkinGoal[]>([])
-    const [ products, setProducts ] = useState<Product[]>([])
+    const [products, setProducts] = useState<{ [key: number]: Product }>([])
     const navigateForward = (): void => {
         if (currentStep < stepConfig.length-1) {
             setCurrentStep(currentStep+1)
@@ -120,6 +95,14 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         } else {
             console.error("Attempting to navigate backward beyond the bounds of step config")
         }
+    }
+
+    const navigateTo = (step: number): void => {
+        if (step < 0 || step > stepConfig.length) {
+            console.error(`Unable to navigate to the step ${step}.`)
+            return
+        }
+        setCurrentStep(step);
     }
 
     // Load initial state from localStorage, if available
@@ -150,6 +133,7 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         stepConfig,
         navigateBackward,
         navigateForward,
+        navigateTo,
         skinType,
         setSkinType,
         skinGoals,
