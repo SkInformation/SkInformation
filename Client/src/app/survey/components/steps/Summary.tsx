@@ -7,11 +7,10 @@ import TextField from "@mui/material/TextField";
 import {useState} from "react";
 
 interface GenerateReportInput {
-    email: string
     skinType: SkinType
     skinGoals: SkinGoal[]
     products: {
-        product: number
+        productId: number
         reactions: number[]
     }[]
 }
@@ -27,8 +26,8 @@ export default function Summary() {
         setEmailValidationError("")
 
         const mappedProducts = Object.values(products).map(p => ({
-            product: p.id,
-            reactions: p.reactions
+            productId: p.id,
+            reactions: p.reactions || []
         }))
 
         if (!email) {
@@ -37,7 +36,6 @@ export default function Summary() {
         }
 
         const body: GenerateReportInput = {
-            email: email.trim(),
             skinType: skinType!,
             skinGoals: skinGoals,
             products: mappedProducts
@@ -46,7 +44,7 @@ export default function Summary() {
         console.log(body)
 
         try {
-            await apiRequest(HttpMethod.POST, '/Report/GenerateReport', {}, body)
+            await apiRequest(HttpMethod.POST, '/Report/Generate', {}, body)
             setReportSent(true)
         } catch (err) {
             // render err
