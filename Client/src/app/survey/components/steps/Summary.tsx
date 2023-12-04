@@ -26,12 +26,10 @@ export default function Summary() {
     const submitSurvey = async () => {
         setEmailValidationError("")
 
-        const mappedProducts = products.map(p => ({
+        const mappedProducts = Object.values(products).map(p => ({
             product: p.id,
-            reactions: []
+            reactions: p.reactions
         }))
-
-        console.log("is this getting called?")
 
         if (!email) {
             setEmailValidationError("Required: Invalid email")
@@ -64,7 +62,6 @@ export default function Summary() {
                     </Typography>
                 </Grid>
                 <Grid display="flex" xs={12} justifyContent="center">
-
                     <Stack direction="row" spacing={1} alignItems="center"
                            textAlign="center">
                         <Typography
@@ -92,7 +89,7 @@ export default function Summary() {
                         Products
                     </Typography>
                     <Stack direction="column" spacing={1} alignItems="center" textAlign="center">
-                        {products.map((product) => {
+                        {Object.values(products).map((product) => {
                             const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
 
                             return (

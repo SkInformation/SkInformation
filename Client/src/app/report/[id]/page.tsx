@@ -2,6 +2,7 @@ import apiRequest, {HttpMethod} from "@/app/lib/api";
 import IrritantsAccordion from "../IrritantsAccordion";
 import ProductRecommendationDisplay from "../ProductRecommendationDisplay";
 import {Stack} from "@mui/material";
+import {Ingredient, Product} from "@/app/shared/types";
 
 interface ReportProps {
     params: {
@@ -23,24 +24,12 @@ export interface ProductRecommendation {
     SUNSCREEN?: Product[];
 }
 
-export interface Product {
-    id: number
-    name: string;
-    description: string;
-    type: string;
-    url: string;
-}
 
 export interface PotentialIrritant {
     type: string;
     ingredients: [Ingredient];
 }
 
-export interface Ingredient {
-    id: number
-    name: string;
-    usage: string;
-}
 
 export interface IrritantAnalysis {
     product: Product;

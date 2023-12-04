@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import {SkinGoal, useSurvey} from "@/app/context/SurveyContext";
-import {Button} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import styles from "@/app/page.module.css";
 
 export default function SkinGoals() {
@@ -19,6 +19,12 @@ export default function SkinGoals() {
 
     return (
         <>
+            <Grid display="flex" xs={12}>
+                <Typography variant="body1">
+                    In order to best help you, please select all of the goals that you have in mind for improving your
+                    skin care routine!
+                </Typography>
+            </Grid>
             <Grid container spacing={{xs: 2, sm: 3}} columns={{xs: 2, sm: 3}} disableEqualOverflow
                   justifyContent={"space-evenly"} className={styles.survey}>
                 {
