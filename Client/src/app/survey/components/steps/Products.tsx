@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {useSurvey} from "@/app/context/SurveyContext";
 import apiRequest, {HttpMethod} from "@/app/lib/api"
@@ -263,12 +263,9 @@ export default function Products() {
         event.preventDefault();
         console.log('saving Ingredients form')
 
-        /*let response = apiRequest<any>(HttpMethod.POST, '/Product/Create', {}, payload);
+        /*let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
         response.then((apiResponse) => {
-            if(apiResponse.id > 0) {
-                newProduct.Id = apiResponse.id;
-                setOpenProductForm(false)
-            }
+            console.log(apiResponse);
         })*/
     }
 
