@@ -24,7 +24,7 @@ import {
     TableContainer,
     TableRow,
     Tooltip,
-    Typography
+    Typography, Hidden
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as url from "url";
@@ -149,8 +149,9 @@ export default function Products() {
      */
     const handleProductSave = async (event: FormEvent): Promise<any> => {
         event.preventDefault();
-        let payload = newProduct;
-        delete payload['Id'];
+        let payload = {'product': newProduct};
+        // Remove the ID from being submitted to the create endpoint since it isn't needed.
+        delete payload['product']['Id'];
 
         // Make the call to the API
         const response = apiRequest<any>(HttpMethod.POST, '/Product/Create', {}, payload);
@@ -262,7 +263,11 @@ export default function Products() {
     const handleIngredientsSave = async (event: FormEvent): Promise<any> => {
         event.preventDefault();
         console.log('saving Ingredients form')
+        let payload = {
+            'productId': newProduct.Id
+        }
 
+        console.log(payload);
         /*let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
         response.then((apiResponse) => {
             console.log(apiResponse);
@@ -360,7 +365,9 @@ export default function Products() {
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             <form onSubmit={handleIngredientsSave}>
                                 <FormControl fullWidth>
+                                    <InputLabel id="ingredients">Type</InputLabel>
                                     <Select
+                                        id={'ingredients'}
                                         multiple
                                         native
                                         // @ts-ignore Typings are not considering `native`
