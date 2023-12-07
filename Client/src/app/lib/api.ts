@@ -15,7 +15,7 @@ async function apiRequest<T>(
                 route += `${key}=${query[key]}`
             })
         }
-        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5100', route)
+        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route)
         let contentType = 'application/json';
         let postBody;
 
