@@ -3,6 +3,7 @@ async function apiRequest<T>(
     route: string,
     query: Record<string, any> = {},
     body?: Record<string, any>,
+    form?: Record<string, any>,
     headers?: Record<string, string>,
     renderError?: (error: Error) => void
 ): Promise<T> {
@@ -14,14 +15,24 @@ async function apiRequest<T>(
                 route += `${key}=${query[key]}`
             })
         }
-        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route)
+        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5100', route)
+        let contentType = 'application/json';
+        let postBody;
+
+        if(form) {
+            contentType = 'undefined';
+            postBody = form;
+        } else {
+            postBody = body ? JSON.stringify(body) : undefined
+        }
+
         const response = await fetch(resolvedUrl, {
             method: method.toUpperCase(),
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': contentType,
                 ...headers,
             },
-            body: body ? JSON.stringify(body) : undefined,
+            body: postBody,
         });
 
         return handleResponse<T>(response);

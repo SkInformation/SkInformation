@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {useSurvey} from "@/app/context/SurveyContext";
 import apiRequest, {HttpMethod} from "@/app/lib/api"
@@ -6,16 +6,11 @@ import SearchBar from '@/app/components/SearchBar'
 import FlakyIcon from '@mui/icons-material/Flaky';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import AddProductForm from "@/app/survey/components/steps/Products/AddProductForm";
 import {
-    Button,
     Chip,
     Collapse,
-    FormControl,
     IconButton,
-    Input,
-    InputLabel,
-    Modal,
-    MenuItem,
     Paper,
     Stack,
     Table,
@@ -26,7 +21,7 @@ import {
     Tooltip,
     Typography, Hidden
 } from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import * as url from "url";
 import Box from "@mui/material/Box";
 import {Product, Ingredient, Reaction} from "@/app/shared/types";
@@ -42,41 +37,6 @@ const searchProduct = async (input: string): Promise<Product[]> => {
 export default function Products() {
     const {products, setProducts} = useSurvey();
     const [openProduct, setOpenProduct] = useState<number | null>(null);
-    const [openProductForm, setOpenProductForm] = useState(false);
-    const [openIngredientsForm, setOpenIngredientsForm] = useState(false);
-
-    // Modal Style
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        maxWidth: 600,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
-    // Product Form Stuff
-    const newProduct = {
-        Id: "",
-        Name: "",
-        Description: "",
-        Thumbnail: "",
-        Type: "",
-        Url: ""
-    }
-
-    const skinTypeSelectData = [
-        'Cleanser',
-        'Moisturizer',
-        'Serum',
-        'Sunscreen'
-    ]
-
-    // Ingredients List
-    const allIngredients = [];
 
     // Product Search
     const addProduct = (value: Product) => {
@@ -130,269 +90,9 @@ export default function Products() {
         setOpenProduct((currentProduct) => currentProduct === productId ? null : productId)
     }
 
-    /*  Product Add Modal */
-
-    /**
-     * Handler for opening product form
-     */
-    const handleOpenProductForm = () => setOpenProductForm(true);
-
-    /**
-     * Handler for closing product form
-     */
-    const handleCloseProductForm = () => setOpenProductForm(false);
-
-    /**
-     * Form handler for saving the new product
-     *
-     * @param event
-     */
-    const handleProductSave = async (event: FormEvent): Promise<any> => {
-        event.preventDefault();
-        let payload = {'product': newProduct};
-        // Remove the ID from being submitted to the create endpoint since it isn't needed.
-        delete payload['product']['Id'];
-
-        // Make the call to the API
-        const response = apiRequest<any>(HttpMethod.POST, '/Product/Create', {}, payload);
-
-        // Handle response form API.
-        response.then((apiResponse) => {
-            if(apiResponse.id > 0) {
-                newProduct.Id = apiResponse.id;
-                // Close product modal
-                setOpenProductForm(false);
-                // Open Ingredients Modal
-                setOpenIngredientsForm(true);
-            }
-        })
-    }
-
-    /**
-     * Handler for new product type selection
-     *
-     * @param event
-     */
-    const handleProductTypeChange = (event: SelectChangeEvent) => {
-        newProduct.Type = event.target.value;
-    };
-
-    /**
-     * Hander from new product name change.
-     *
-     * @param event
-     */
-    const handleProductNameChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Name = event.currentTarget.value;
-    }
-
-    /**
-     * Hander for new product description change.
-     *
-     * @param event
-     */
-    const handleProductDescriptionChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Description = event.currentTarget.value;
-    }
-
-    /**
-     * Handler for new product URL change
-     *
-     * @param event
-     */
-    const handleProductUrlChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Url = event.currentTarget.value;
-    }
-
-    /**
-     * Handler for thumbnail upload.  Will read the file into a string so that we can pass the data via JSON.
-     *
-     * @param event
-     */
-    const handleProductThumbnailChange = (event: ChangeEvent<HTMLInputElement>) => {
-        let fr = new FileReader();
-        let file = event.target.files[0];
-
-        try {
-            fr.onload = (e) => {
-                newProduct.Thumbnail = e.target.result;
-            }
-            fr.readAsText(file);
-        } catch (err) {
-            console.error(err);
-        }
-
-    }
-
-
-    // Begin Ingredient to new Product Modal and form
-
-    /**
-     * Handle closing the ingredients form modal.
-     */
-    const handleCloseIngredientsForm = () => setOpenIngredientsForm(false);
-
-    /**
-     * Retrieves the complete list of ingredients from the API.
-     * @param input
-     */
-    const getIngredients = async (): Promise<Ingredient[]> => {
-        let resp = apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {});
-
-        resp.then((apiResponse) => {
-            apiResponse.forEach((ingredient, index) => {
-                allIngredients.push({'id': index, 'name': ingredient.name})
-            });
-        })
-    }
-
-    /**
-     * Handles the ingredient selection change event.
-     *
-     * @param event
-     */
-    const handleIngredientSelection = (event: SelectChangeEvent) => {
-
-    }
-
-    /**
-     * Form handler for the Ingredients list save for a new product.
-     *
-     * @param event
-     */
-    const handleIngredientsSave = async (event: FormEvent): Promise<any> => {
-        event.preventDefault();
-        console.log('saving Ingredients form')
-        let payload = {
-            'productId': newProduct.Id
-        }
-
-        console.log(payload);
-        /*let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
-        response.then((apiResponse) => {
-            console.log(apiResponse);
-        })*/
-    }
-
-    getIngredients();
-
     return (
         <>
-            <Grid>
-                <Grid xs display="flex" justifyContent="right" alignItems="right">
-                    <Button variant="contained" onClick={handleOpenProductForm}>Add Product</Button>
-                </Grid>
-                <Modal
-                    open={openProductForm}
-                    onClose={handleCloseProductForm}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Add A Product
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <form onSubmit={handleProductSave}>
-                                <FormControl fullWidth>
-                                    <InputLabel htmlFor="product-name">Product Name</InputLabel>
-                                    <Input
-                                        id="product-name"
-                                        name={'Name'}
-                                        required={true}
-                                        onChange={handleProductNameChange}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth>
-                                    <input
-                                        accept="image/*"
-                                        id="product-thumbnail"
-                                        type="file"
-                                        name={'Thumbnail'}
-                                        onChange={handleProductThumbnailChange}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth>
-                                    <InputLabel htmlFor="product-description">Product Description</InputLabel>
-                                    <Input
-                                        id="product-description"
-                                        name={'Description'}
-                                        required={true}
-                                        onChange={handleProductDescriptionChange}
-                                    />
-                                </FormControl>
-                                <FormControl fullWidth>
-                                    <InputLabel id="product-type">Type</InputLabel>
-                                    <Select
-                                        labelId="product-type"
-                                        id="product-type"
-                                        label="type"
-                                        onChange={handleProductTypeChange}
-                                    >
-                                        {skinTypeSelectData.map((text) => (
-                                            <MenuItem
-                                                key={text}
-                                                value={text.toUpperCase()}
-                                            >
-                                                {text}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                                <FormControl fullWidth>
-                                    <InputLabel htmlFor="product-url">Product URL</InputLabel>
-                                    <Input
-                                        id="product-url"
-                                        name={'Url'}
-                                        onChange={handleProductUrlChange}
-                                    />
-                                </FormControl>
-                                <Button type={'submit'} variant="contained">Save</Button>
-                            </form>
-                        </Typography>
-                    </Box>
-                </Modal>
-                <Modal
-                    open={openIngredientsForm}
-                    onClose={handleCloseIngredientsForm}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Add Ingredients
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <form onSubmit={handleIngredientsSave}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="ingredients">Type</InputLabel>
-                                    <Select
-                                        id={'ingredients'}
-                                        multiple
-                                        native
-                                        // @ts-ignore Typings are not considering `native`
-                                        onChange={handleIngredientSelection}
-                                        label="Ingredients"
-                                        inputProps={{
-                                            id: 'select-multiple-native',
-                                        }}
-                                    >
-                                        {allIngredients.map((ingredient, id) => (
-                                            <MenuItem
-                                                key={id}
-                                                value={id}
-                                            >
-                                                {ingredient}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                                <Button type={'submit'} variant="contained">Save</Button>
-                            </form>
-                        </Typography>
-                    </Box>
-                </Modal>
-            </Grid>
+            <AddProductForm/>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12}>
                     <Typography variant="body1">
