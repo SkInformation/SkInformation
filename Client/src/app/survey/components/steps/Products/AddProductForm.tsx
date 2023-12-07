@@ -204,8 +204,8 @@ export default function AddProductForm() {
                 <Modal
                     open={openProductForm}
                     onClose={handleCloseProductForm}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
+                    aria-labelledby="add-product-modal"
+                    aria-describedby="add-product-modal"
                 >
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
