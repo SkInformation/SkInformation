@@ -57,6 +57,34 @@ export enum SkinGoal
     ReduceRedness, ReduceWrinkles, PoreAppearance, EvenSkinTone, MoistureRetention, SkinGlow
 }
 
+export function getSkinGoalName(goal: SkinGoal): string {
+    let name = ''
+    switch (goal) {
+        case SkinGoal.ReduceRedness:
+            name = 'redness'
+            break;
+        case SkinGoal.ReduceWrinkles:
+            name = 'wrinkles'
+            break;
+        case SkinGoal.PoreAppearance:
+            name = 'pores'
+            break;
+        case SkinGoal.EvenSkinTone:
+            name = 'skintone'
+            break;
+        case SkinGoal.MoistureRetention:
+            name = 'moisturize'
+            break;
+        case SkinGoal.SkinGlow:
+            name = 'glow'
+            break;
+        default:
+            console.error(`No mapping for ${goal}`)
+    }
+
+    return name
+}
+
 export enum SkinType
 {
     Dry, Normal, Combination, Oily

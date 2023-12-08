@@ -1,7 +1,8 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import {SkinGoal, useSurvey} from "@/app/context/SurveyContext";
+import {getSkinGoalName, SkinGoal, useSurvey} from "@/app/context/SurveyContext";
 import {Button, Typography} from "@mui/material";
-import styles from "@/app/page.module.css";
+import styles from "@/app/survey/page.module.css";
+import {getSkinGoalImageSrc} from "@/app/survey/components/helper";
 
 export default function SkinGoals() {
     const {skinGoals, setSkinGoals} = useSurvey()
@@ -29,14 +30,21 @@ export default function SkinGoals() {
                   justifyContent={"space-evenly"} className={styles.survey}>
                 {
                     Object.keys(SkinGoal).filter(key => isNaN(Number(key))).map(goal => {
+                        const goalName = getSkinGoalName(SkinGoal[goal as keyof typeof SkinGoal])
                         return (
                             <Grid key={goal} display="flex" xs={1}>
                                 <Button name={goal} onClick={() => handleClick(goal)}
                                         className={`
-                                            ${styles.survey_big_button} 
-                                            ${skinGoals.includes(SkinGoal[goal as keyof typeof SkinGoal]) ? styles.selected : ""}
-                                        `}>
-                                    {goal}
+                                        ${styles.survey_big_button}
+                                        ${skinGoals.includes(SkinGoal[goal as keyof typeof SkinGoal]) ? styles.selected : ""}
+                                    `}
+                                >
+                                    <div className={`${styles.imageContainer}`}>
+                                        <img src={getSkinGoalImageSrc(SkinGoal[goal as keyof typeof SkinGoal])}
+                                             alt={`${goalName} skin goal button image`}
+                                             style={{width: '100%', height: 'auto'}}/>
+                                        <Typography className={`${styles.overlayText}`}>{goalName}</Typography>
+                                    </div>
                                 </Button>
                             </Grid>
                         )

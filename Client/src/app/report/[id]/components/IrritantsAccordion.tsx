@@ -4,8 +4,17 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import {ExpandMore} from '@mui/icons-material';
-import {Ingredient, IrritantAnalysis, PotentialIrritant} from "./[id]/page";
+import {Ingredient, Product} from "@/app/shared/types";
 
+export interface IrritantAnalysis {
+    product: Product;
+    potentialIrritants: [PotentialIrritant];
+}
+
+export interface PotentialIrritant {
+    type: string;
+    ingredients: [Ingredient];
+}
 export default function IrritantsAccordion(analysis: IrritantAnalysis) {
     return (
         <div>
