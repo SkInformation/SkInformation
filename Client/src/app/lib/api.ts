@@ -1,9 +1,10 @@
-async function apiRequest<T>(
+import * as url from "url";
+
+export async function apiRequest<T>(
     method: HttpMethod,
     route: string,
     query: Record<string, any> = {},
     body?: Record<string, any>,
-    form?: Record<string, any>,
     headers?: Record<string, string>,
     renderError?: (error: Error) => void
 ): Promise<T> {
@@ -17,14 +18,6 @@ async function apiRequest<T>(
         }
         const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route)
         let contentType = 'application/json';
-        let postBody;
-
-        if(form) {
-            contentType = 'undefined';
-            postBody = form;
-        } else {
-            postBody = body ? JSON.stringify(body) : undefined
-        }
 
         const response = await fetch(resolvedUrl, {
             method: method.toUpperCase(),
@@ -32,7 +25,7 @@ async function apiRequest<T>(
                 'Content-Type': contentType,
                 ...headers,
             },
-            body: postBody,
+            body: body ? JSON.stringify(body) : undefined,
         });
 
         return handleResponse<T>(response);
@@ -46,8 +39,6 @@ async function apiRequest<T>(
         throw error;
     }
 }
-
-import * as url from "url";
 
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
@@ -67,4 +58,21 @@ export enum HttpMethod {
     DELETE = 'DELETE'
 }
 
-export default apiRequest;
+export async function submitMultipartForm<T>(formData: FormData, route: string): Promise<T> {
+    try {
+        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route);
+        const response = await fetch(resolvedUrl, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Request failed:', error);
+        throw error;
+    }
+}

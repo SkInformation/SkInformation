@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
-import apiRequest, {HttpMethod} from "@/app/lib/api"
+import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
 import {
     Button,
     FormControl,
@@ -14,14 +14,21 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
 import {Product, Ingredient, Reaction} from "@/app/shared/types";
 import Grid from "@mui/material/Unstable_Grid2";
-import styles from '@/app/page.module.css'
+import styles from '@/app/survey/page.module.css'
 
 export default function AddProductForm() {
     const [openProductForm, setOpenProductForm] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState<Number[]>([]);
     const [ingredientsList, setIngredientsList] = useState<[]>([]);
-    const [productId, setProductId] = useState();
-    const [selectFile, setSelectedFile] = useState(null);
+
+    //Properties
+    const [productId, setProductId] = useState("");
+    const [productName, setProductName] = useState("");
+    const [productDescription, setProductDescription] = useState("");
+    const [productThumbnail, setProductThumbnail] = useState("");
+    const [productType, setProductType] = useState("");
+    const [productUrl, setProductUrl] = useState("");
+
 
     useEffect(() => {
         if(ingredientsList.length == 0) {
@@ -42,22 +49,16 @@ export default function AddProductForm() {
         p: 4,
     };
 
-    // Product Form Stuff
-    let newProduct = {
-        Id: "",
-        Name: "",
-        Description: "",
-        Thumbnail: "",
-        Type: "",
-        Url: ""
-    }
-
     const skinTypeSelectData = [
         'Cleanser',
         'Moisturizer',
         'Serum',
         'Sunscreen'
     ]
+
+    interface ProductCreateResponse {
+        id: Number
+    }
 
     /*  Product Add Modal */
 
@@ -79,25 +80,27 @@ export default function AddProductForm() {
     const handleProductSave = async (event: FormEvent): Promise<any> => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('Name', newProduct.Name);
-        formData.append('Description', newProduct.Description);
-        formData.append('Type', newProduct.Type);
-        formData.append('Url', newProduct.Url);
-        formData.append('Thumbnail', selectFile, selectFile.name);
+        formData.append('name', productName);
+        formData.append('description', productDescription);
+        formData.append('type', productType);
+        formData.append('url', productUrl);
 
-        // Make the call to the API
-        const response = apiRequest<any>(HttpMethod.POST, '/Product/Create', {}, {}, formData);
+        if (productThumbnail) {
+            formData.append('thumbnail', productThumbnail, productThumbnail.name);
+        }
 
-        // Handle response form API.
-        response.then((apiResponse) => {
-            if(apiResponse.id > 0) {
-                newProduct.Id = apiResponse.id;
-                setProductId(apiResponse.id)
+        try {
+            const response = await submitMultipartForm<ProductCreateResponse>(formData, '/Product/Create');
 
-                // Handle Ingredients save
-                handleIngredientsSave(apiResponse.id, selectedIngredients)
+            // Handle response form API.
+            if(response.id) {
+                setProductId(response.id);
+                handleIngredientsSave();
             }
-        })
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
     }
 
     /**
@@ -106,8 +109,8 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductTypeChange = (event: SelectChangeEvent) => {
-        newProduct.Type = event.target.value;
-    };
+        setProductType(event.target.value)
+    }
 
     /**
      * Hander from new product name change.
@@ -115,7 +118,7 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductNameChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Name = event.currentTarget.value;
+        setProductName(event.currentTarget.value)
     }
 
     /**
@@ -124,7 +127,7 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductDescriptionChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Description = event.currentTarget.value;
+        setProductDescription(event.currentTarget.value)
     }
 
     /**
@@ -133,7 +136,7 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductUrlChange = (event: FormEvent<HTMLInputElement>) => {
-        newProduct.Url = event.currentTarget.value;
+        setProductUrl(event.currentTarget.value)
     }
 
     /**
@@ -142,7 +145,9 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductThumbnailChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setSelectedFile(event.target.files[0]);
+        if (event.target.files && event.target.files.length > 0) {
+            setProductThumbnail(event.target.files[0]);
+        }
     }
 
 
@@ -178,10 +183,10 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientsSave = (productID, ingredientsToAdd) => {
+    const handleIngredientsSave = () => {
         let payload = {
-            'productId': productID,
-            'attributeIds': ingredientsToAdd
+            'productId': productId,
+            'attributeIds': selectedIngredients
         }
 
         let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
@@ -267,6 +272,7 @@ export default function AddProductForm() {
                                     <Input
                                         id="product-url"
                                         name={'Url'}
+                                        required={true}
                                         onChange={handleProductUrlChange}
                                     />
                                 </FormControl>
