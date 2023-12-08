@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
+import {useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {useSurvey} from "@/app/context/SurveyContext";
 import apiRequest, {HttpMethod} from "@/app/lib/api"
@@ -19,12 +19,12 @@ import {
     TableContainer,
     TableRow,
     Tooltip,
-    Typography, Hidden
+    Typography
 } from "@mui/material";
 
 import * as url from "url";
 import Box from "@mui/material/Box";
-import {Product, Ingredient, Reaction} from "@/app/shared/types";
+import {Product, Reaction} from "@/app/shared/types";
 import Image from 'next/image'
 
 const searchProduct = async (input: string): Promise<Product[]> => {
@@ -242,6 +242,7 @@ export default function Products() {
                             <Typography variant={"caption"} component="div">No products selected.</Typography>
                         </Grid>
                 }
+                
             </Grid>
         </>
     );
