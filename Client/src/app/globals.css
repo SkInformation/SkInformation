@@ -8,24 +8,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #EFF7FF;
+  background-color: #FDCEDF;
   color: #E85187;
-}
-
-.dry {
-  background-image: url('/assets/images/survey/skin_type/dry.jpg');
-}
-
-.combination {
-  background-image: url('/assets/images/survey/skin_type/combination.jpg');
-}
-
-.normal {
-  background-image: url('/assets/images/survey/skin_type/normal.jpg');
-}
-
-.oily {
-  background-image: url('/assets/images/survey/skin_type/oily.jpg');
 }
 
 @font-face {
@@ -36,12 +20,6 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.box {
-  border: 1px solid #E85187;
-  padding: 10px;
-  padding-radius: 20px;
 }
 
 @media (prefers-color-scheme: dark) {

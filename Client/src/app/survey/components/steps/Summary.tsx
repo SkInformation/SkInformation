@@ -5,6 +5,7 @@ import url from "url";
 import apiRequest, {HttpMethod} from "@/app/lib/api";
 import TextField from "@mui/material/TextField";
 import {useState} from "react";
+import Image from 'next/image'
 
 interface GenerateReportInput {
     skinType: SkinType
@@ -53,7 +54,7 @@ export default function Summary() {
 
     return (
         <>
-            <Grid container alignContent={"space-evenly"} disableEqualOverflow>
+            <Grid container justifyContent="center" disableEqualOverflow>
                 <Grid display="flex" xs={12}>
                     <Typography variant="h6" gutterBottom component="div">
                         Skin Type
@@ -94,7 +95,7 @@ export default function Summary() {
                                 <>
                                     <Stack direction="row" spacing={1} alignItems="center" textAlign="center">
                                         <a href={thumbnailUrl} target="_blank">
-                                            <img
+                                            <Image
                                                 width={75}
                                                 height={75}
                                                 src={thumbnailUrl}

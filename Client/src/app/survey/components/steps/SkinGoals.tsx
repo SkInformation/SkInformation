@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import {SkinGoal, useSurvey} from "@/app/context/SurveyContext";
+import {getSkinGoalName, SkinGoal, useSurvey} from "@/app/context/SurveyContext";
 import {Button, Typography} from "@mui/material";
-import styles from "@/app/page.module.css";
+import styles from "@/app/survey/page.module.css";
 
 export default function SkinGoals() {
     const {skinGoals, setSkinGoals} = useSurvey()
@@ -34,9 +34,10 @@ export default function SkinGoals() {
                                 <Button name={goal} onClick={() => handleClick(goal)}
                                         className={`
                                             ${styles.survey_big_button} 
+                                            ${styles[getSkinGoalName(SkinGoal[goal as keyof typeof SkinGoal])]}
                                             ${skinGoals.includes(SkinGoal[goal as keyof typeof SkinGoal]) ? styles.selected : ""}
                                         `}>
-                                    {goal}
+                                    {''}
                                 </Button>
                             </Grid>
                         )

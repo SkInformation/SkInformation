@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import {SkinType, useSurvey} from "@/app/context/SurveyContext";
 import {Button} from "@mui/material";
-import styles from '@/app/page.module.css'
+import styles from '@/app/survey/page.module.css'
 
 export default function SkinTypes() {
     const {skinType, setSkinType} = useSurvey()
@@ -19,12 +19,13 @@ export default function SkinTypes() {
                   justifyContent={"space-evenly"} className={styles.survey}>
                 {
                     Object.keys(SkinType).filter(key => isNaN(Number(key))).map(type => {
+                        console.log(styles)
                         return (
                             <Grid key={type} display="flex" xs={1}>
                                 <Button name={type} onClick={() => handleClick(type)}
                                         className={`${styles.survey_big_button} ${
                                             skinType === SkinType[type as keyof typeof SkinType] ? styles.selected : ""
-                                        } ${type.toLowerCase()}`}>
+                                        } ${styles[type.toLowerCase()]}`}>
                                     <span>{type}</span>
                                 </Button>
                             </Grid>
