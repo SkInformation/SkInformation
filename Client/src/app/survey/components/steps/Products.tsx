@@ -21,7 +21,6 @@ import {
     Tooltip,
     Typography
 } from "@mui/material";
-
 import * as url from "url";
 import Box from "@mui/material/Box";
 import {Product, Reaction} from "@/app/shared/types";
@@ -39,7 +38,6 @@ export default function Products() {
     const {products, setProducts} = useSurvey();
     const [openProduct, setOpenProduct] = useState<number | null>(null);
 
-    // Product Search
     const addProduct = (value: Product) => {
         if (products[value.id]) {
             return
@@ -242,7 +240,7 @@ export default function Products() {
                             <Typography variant={"caption"} component="div">No products selected.</Typography>
                         </Grid>
                 }
-                
+
             </Grid>
         </>
     );
