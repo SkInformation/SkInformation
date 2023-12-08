@@ -1,7 +1,7 @@
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import './globals.css'
-import { SurveyProvider } from "@/app/context/SurveyContext";
+import {SurveyProvider} from "@/app/context/SurveyContext";
 
 const inter = Inter({ subsets: ['latin'] })
 
