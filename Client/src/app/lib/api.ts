@@ -1,6 +1,6 @@
 import * as url from "url";
 
-export async function apiRequest<T>(
+async function apiRequest<T>(
     method: HttpMethod,
     route: string,
     query: Record<string, any> = {},
@@ -17,12 +17,11 @@ export async function apiRequest<T>(
             })
         }
         const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route)
-        let contentType = 'application/json';
 
         const response = await fetch(resolvedUrl, {
             method: method.toUpperCase(),
             headers: {
-                'Content-Type': contentType,
+                'Content-Type': 'application/json',
                 ...headers,
             },
             body: body ? JSON.stringify(body) : undefined,
@@ -76,3 +75,5 @@ export async function submitMultipartForm<T>(formData: FormData, route: string):
         throw error;
     }
 }
+
+export default apiRequest;

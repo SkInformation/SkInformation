@@ -1,25 +1,33 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
 import {
+    Alert,
+    AlertTitle,
     Button,
+    Collapse,
     FormControl,
+    IconButton,
     Input,
     InputLabel,
     TextField,
     Modal,
     MenuItem,
-    Typography, Hidden
+    Typography, Hidden,
+    Stack,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
 import {Ingredient} from "@/app/shared/types";
 import Grid from "@mui/material/Unstable_Grid2";
 import styles from '@/app/survey/page.module.css'
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function AddProductForm() {
     const [openProductForm, setOpenProductForm] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState<Number[]>([]);
     const [ingredientsList, setIngredientsList] = useState<[]>([]);
+    const [successBox, setSuccessBoxStatus] = useState(false);
+    const [errorBox, setErrorBoxStatus] = useState(false);
 
     //Properties
     const [productId, setProductId] = useState("");
@@ -103,6 +111,7 @@ export default function AddProductForm() {
             }
         } catch (error) {
             console.error('Error:', error);
+            setErrorBoxStatus(true);
         }
 
     }
@@ -120,10 +129,12 @@ export default function AddProductForm() {
             if(apiResponse.status == 'success') {
                 // Close product modal
                 setOpenProductForm(false);
+                setSuccessBoxStatus(true);
             }
         });
         response.catch((apiResponse) => {
             console.log('Error: ' + apiResponse);
+            setErrorBoxStatus(true);
         });
     }
 
@@ -205,6 +216,46 @@ export default function AddProductForm() {
     return (
         <>
             <Grid>
+                <Box sx={{ width: '100%' }}>
+                    <Collapse in={successBox}>
+                        <Alert
+                            severity="success"
+                            action={
+                                <IconButton
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setSuccessBoxStatus(false);
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
+                        >
+                            <AlertTitle>Success</AlertTitle>
+                            The product was saved!
+                        </Alert>
+                    </Collapse>
+                    <Collapse in={errorBox}>
+                        <Alert
+                            severity="error"
+                            action={
+                                <IconButton
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setErrorBoxStatus(false);
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
+                        >
+                            <AlertTitle>Error</AlertTitle>
+                            This is an error in saving your product
+                        </Alert>
+                    </Collapse>
+                </Box>
                 <Grid xs display="flex" justifyContent="right" alignItems="right">
                     <Button variant="contained" onClick={handleOpenProductForm}>Add Product</Button>
                 </Grid>
