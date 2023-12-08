@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
 import {
     Button,
@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
-import {Product, Ingredient, Reaction} from "@/app/shared/types";
+import {Ingredient} from "@/app/shared/types";
 import Grid from "@mui/material/Unstable_Grid2";
 import styles from '@/app/survey/page.module.css'
 
@@ -94,13 +94,35 @@ export default function AddProductForm() {
 
             // Handle response form API.
             if(response.id) {
-                setProductId(response.id);
+                setProductId(parseInt(response.id));
                 handleIngredientsSave();
             }
         } catch (error) {
             console.error('Error:', error);
         }
 
+    }
+
+    /**
+     * Form handler for the Ingredients list save for a new product.
+     *
+     * @param event
+     */
+    const handleIngredientsSave = () => {
+        let payload = {
+            'productId': productId,
+            'attributeIds': selectedIngredients
+        }
+
+        let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
+        response.then((apiResponse) => {
+            console.log(apiResponse);
+            // Close product modal
+            setOpenProductForm(false);
+        });
+        response.catch((apiResponse) => {
+            console.log(apiResponse);
+        });
     }
 
     /**
@@ -176,28 +198,6 @@ export default function AddProductForm() {
      */
     const handleIngredientSelection = (event: SelectChangeEvent) => {
         setSelectedIngredients([...event.target.value])
-    }
-
-    /**
-     * Form handler for the Ingredients list save for a new product.
-     *
-     * @param event
-     */
-    const handleIngredientsSave = () => {
-        let payload = {
-            'productId': productId,
-            'attributeIds': selectedIngredients
-        }
-
-        let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
-        response.then((apiResponse) => {
-            console.log(apiResponse);
-            // Close product modal
-            setOpenProductForm(false);
-        });
-        response.catch((apiResponse) => {
-            console.log(apiResponse);
-        });
     }
 
     return (
