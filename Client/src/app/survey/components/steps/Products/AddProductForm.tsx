@@ -12,8 +12,7 @@ import {
     TextField,
     Modal,
     MenuItem,
-    Typography, Hidden,
-    Stack,
+    Typography,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from "@mui/material/Box";
@@ -36,7 +35,7 @@ export default function AddProductForm() {
     const [productThumbnail, setProductThumbnail] = useState("");
     const [productType, setProductType] = useState("");
     const [productUrl, setProductUrl] = useState("");
-
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         if(ingredientsList.length == 0) {
@@ -171,7 +170,14 @@ export default function AddProductForm() {
      * @param event
      */
     const handleProductUrlChange = (event: FormEvent<HTMLInputElement>) => {
-        setProductUrl(event.currentTarget.value)
+        const urlRegex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
+
+        if (urlRegex.test(event.currentTarget.value)) {
+            setErrorMessage(false);
+            setProductUrl(event.currentTarget.value)
+        } else {
+            setErrorMessage('Is Not Valid URL')
+        }
     }
 
     /**
@@ -194,10 +200,10 @@ export default function AddProductForm() {
     const getIngredients = async (): Promise<Ingredient[]> => {
         let resp = apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {});
 
-        resp.then((apiResponse) => {
+        resp.then((response) => {
             let list = new Array();
 
-            apiResponse.forEach((ingredient, index) => {
+            response.forEach((ingredient, index) => {
                 list.push({'id': ingredient.id, 'name': ingredient.name})
             });
             setIngredientsList(list);
@@ -266,6 +272,27 @@ export default function AddProductForm() {
                     aria-describedby="add-product-modal"
                 >
                     <Box sx={style}>
+                        <Box sx={{ width: '100%' }}>
+                            <Collapse in={errorMessage}>
+                                <Alert
+                                    severity="error"
+                                    action={
+                                        <IconButton
+                                            color="inherit"
+                                            size="small"
+                                            onClick={() => {
+                                                setErrorMessage(false);
+                                            }}
+                                        >
+                                            <CloseIcon fontSize="inherit" />
+                                        </IconButton>
+                                    }
+                                >
+                                    <AlertTitle>Error</AlertTitle>
+                                    {errorMessage}
+                                </Alert>
+                            </Collapse>
+                        </Box>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             Add A Product
                         </Typography>

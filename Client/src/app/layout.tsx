@@ -1,10 +1,7 @@
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import './globals.css'
-import { Logo } from "@/app/components/Logo";
-import Container from '@mui/material/Container';
 import { SurveyProvider } from "@/app/context/SurveyContext";
-import styles from "@/app/page.module.css";
 
 const inter = Inter({ subsets: ['latin'] })
 

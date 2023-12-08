@@ -9,6 +9,7 @@ export default function SkinTypes() {
 
     function handleClick(selectedType: string) {
         const type = SkinType[selectedType as keyof typeof SkinType]
+
         setSkinType(skinType === type ? undefined : type);
     }
 

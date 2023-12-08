@@ -1,6 +1,6 @@
 import * as url from "url";
 
-async function apiRequest<T>(
+export async function apiRequest<T>(
     method: HttpMethod,
     route: string,
     query: Record<string, any> = {},
