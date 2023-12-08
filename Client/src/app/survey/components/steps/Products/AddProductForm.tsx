@@ -60,6 +60,10 @@ export default function AddProductForm() {
         id: Number
     }
 
+    interface IngredientResponse {
+        status: String
+    }
+
     /*  Product Add Modal */
 
     /**
@@ -95,7 +99,7 @@ export default function AddProductForm() {
             // Handle response form API.
             if(response.id) {
                 setProductId(parseInt(response.id));
-                handleIngredientsSave();
+                handleIngredientsSave(response.id);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -108,17 +112,18 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientsSave = () => {
-        let payload = {'attributeIds': selectedIngredients}
+    const handleIngredientsSave = (productID) => {
 
-        let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {'productId': productId}, payload);
+        let response = apiRequest<IngredientResponse>(HttpMethod.POST, '/Product/AddIngredients', {'productId': productID}, selectedIngredients);
+
         response.then((apiResponse) => {
-            console.log(apiResponse);
-            // Close product modal
-            setOpenProductForm(false);
+            if(apiResponse.status == 'success') {
+                // Close product modal
+                setOpenProductForm(false);
+            }
         });
         response.catch((apiResponse) => {
-            console.log(apiResponse);
+            console.log('Error: ' + apiResponse);
         });
     }
 

@@ -117,7 +117,8 @@ public class ProductController : Controller
         _appDbContext.ProductIngredients.Add(ingredient);
         _appDbContext.SaveChanges();
 
-        return Ok();
+        var resultSet = new Dictionary<string, string> { { "status","success" } };
+        return Json(resultSet);
     }
 
     /// <summary>
@@ -144,7 +145,8 @@ public class ProductController : Controller
         }
 
         _appDbContext.SaveChanges();
-
-        return Ok();
+        
+        var resultSet = new Dictionary<string, string> { { "status","success" } };
+        return Json(resultSet);
     }
 }
