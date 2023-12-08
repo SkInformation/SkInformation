@@ -62,18 +62,15 @@ export default function Products() {
 
         if (product) {
             const selectedReaction = Reaction[reactionKey as keyof typeof Reaction];
-            console.log({selectedReaction})
 
             let reactions = [...(product.reactions || [])];
             // Toggle the reaction
             if (reactions.includes(selectedReaction)) {
-                console.log("is this getting hit 2?")
                 // If selected, remove it from the array
                 reactions = reactions.filter(
                     (prevReaction) => prevReaction !== selectedReaction
                 );
             } else {
-                console.log("is this getting hit?")
                 // If not selected, add it to the array
                 reactions = [...reactions, selectedReaction];
             }

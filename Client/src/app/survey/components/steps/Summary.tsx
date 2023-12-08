@@ -42,7 +42,6 @@ export default function Summary() {
             products: mappedProducts
         }
 
-        console.log(body)
 
         try {
             await apiRequest(HttpMethod.POST, '/Report/Generate', {}, body)

@@ -8,176 +8,48 @@
     /*border: 1px solid #E85187;*/
 }
 
-.dry {
-    background-image: url('/assets/images/survey/skin_type/type_dry.png');
-}
-
-.combination {
-    background-image: url('/assets/images/survey/skin_type/type_combination.png');
-}
-
-.normal {
-    background-image: url('/assets/images/survey/skin_type/type_normal.png');
-}
-
-.oily {
-    background-image: url('/assets/images/survey/skin_type/type_oily.png');
-}
-
-.glow {
-    background-image: url('/assets/images/survey/skin_goal/goal_glow.png');
-}
-
-.moisturize {
-    background-image: url('/assets/images/survey/skin_goal/goal_moisturize.png');
-}
-
-.pores {
-    background-image: url('/assets/images/survey/skin_goal/goal_pores.png');
-}
-
-.redness {
-    background-image: url('/assets/images/survey/skin_goal/goal_redness.png');
-}
-
-.skintone {
-    background-image: url('/assets/images/survey/skin_goal/goal_skintone.png');
-}
-
-.wrinkles {
-    background-image: url('/assets/images/survey/skin_goal/goal_wrinkles.png');
-}
-
 .survey_card {
-    padding: 10px;
+    padding: 1em;
     background-color: #F8E8EE;
     border-radius: 15px !important;
     box-shadow: 0 10px 10px #888888;
     /*background-color: #F9F5F6;*/
 }
 
-.description {
-    display: inherit;
-    justify-content: inherit;
-    align-items: inherit;
-    font-size: 0.85rem;
-    max-width: var(--max-width);
-    width: 100%;
-    z-index: 2;
-    font-family: var(--font-mono);
-}
-
-.description a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.description p {
-    position: relative;
-    margin: 0;
-    padding: 1rem;
-    background-color: rgba(var(--callout-rgb), 0.5);
-    border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-    border-radius: var(--border-radius);
-}
-
-.code {
-    font-weight: 700;
-    font-family: var(--font-mono);
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(25%, auto));
-    max-width: 100%;
-    width: var(--max-width);
-}
-
-/*.card {*/
-/*  padding: 1rem 1.2rem;*/
-/*  border-radius: var(--border-radius);*/
-/*  background: rgba(var(--card-rgb), 0);*/
-/*  border: 1px solid rgba(var(--card-border-rgb), 0);*/
-/*  transition: background 200ms, border 200ms;*/
-/*}*/
-
-/*.card span {*/
-/*  display: inline-block;*/
-/*  transition: transform 200ms;*/
-/*}*/
-
-/*.card h2 {*/
-/*  font-weight: 600;*/
-/*  margin-bottom: 0.7rem;*/
-/*}*/
-
-/*.card p {*/
-/*  margin: 0;*/
-/*  opacity: 0.6;*/
-/*  font-size: 0.9rem;*/
-/*  line-height: 1.5;*/
-/*  max-width: 30ch;*/
-/*}*/
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 4rem 0;
-}
-
-.center::before {
-    background: var(--secondary-glow);
-    border-radius: 50%;
-    width: 480px;
-    height: 360px;
-    margin-left: -400px;
-}
-
-.center::after {
-    background: var(--primary-glow);
-    width: 240px;
-    height: 180px;
-    z-index: -1;
-}
-
-.center::before,
-.center::after {
-    content: '';
-    left: 50%;
-    position: absolute;
-    filter: blur(45px);
-    transform: translateZ(0);
-}
-
-.logo {
-    position: relative;
-}
-
 .survey {
-    margin-top: 10
-}
-
-.survey img {
-    width: 145px;
+    min-width: 145px;
 }
 
 .survey div button {
     margin: auto;
 }
 
-.survey_big_button span {
-    display: none;
+.imageContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.imageContainer img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlayText {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 1.5em;
+    font-size: 20px;
 }
 
 .survey_big_button {
     border: 1px solid #E85187;
     background-color: #FEFCF4;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
+    min-width: 200px;
+    min-height: 200px;
     color: #E85187;
     background-size: contain;
     background-repeat: no-repeat;
@@ -196,7 +68,11 @@
     left: -5px;
 }
 
-.navigation {
+.navigation_container {
+    padding-top: 1em;
+}
+
+.navigation_button {
     border: 1px solid #E85187;
     padding: 10px;
     border-radius: 10px;
@@ -204,7 +80,7 @@
     color: #E85187;
 }
 
-.navigation:hover {
+.navigation_button:hover {
     background-color: #E85187;
     color: #FFFFFF;
 }

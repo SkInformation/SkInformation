@@ -31,7 +31,6 @@ export default function Survey() {
         }
     }, [currentStep, stepConfig])
 
-    console.log(`${styles.survey_card}`)
     return (
         <>
             <Card className={`${styles.survey_card}`}>
@@ -49,12 +48,13 @@ export default function Survey() {
                         <Summary/>
                     </Step>
                 </Box>
-                <Grid container columns={2} width={"100%"}>
+                <Grid container columns={2} className={styles.navigation_container}>
                     <Grid xs display="flex" justifyContent="left" alignItems="left">
                         {
                             hideBackButton ?
                                 <></> :
-                                <Button variant={"contained"} onClick={navigateBackward} className={styles.navigation}>
+                                <Button variant={"contained"} onClick={navigateBackward}
+                                        className={styles.navigation_button}>
                                     <Typography>
                                         {backButtonText || 'Back'}
                                     </Typography>
@@ -64,7 +64,8 @@ export default function Survey() {
                     <Grid xs display="flex" justifyContent="right" alignItems="right">
                         {hideNextButton ?
                             <></> :
-                            <Button variant={"contained"} onClick={navigateForward} className={styles.navigation}>
+                            <Button variant={"contained"} onClick={navigateForward}
+                                    className={styles.navigation_button}>
                                 <Typography>
                                     {nextButtonText || 'Next'}
                                 </Typography>
