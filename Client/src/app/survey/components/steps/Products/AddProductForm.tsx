@@ -109,12 +109,9 @@ export default function AddProductForm() {
      * @param event
      */
     const handleIngredientsSave = () => {
-        let payload = {
-            'productId': productId,
-            'attributeIds': selectedIngredients
-        }
+        let payload = {'attributeIds': selectedIngredients}
 
-        let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {}, payload);
+        let response = apiRequest<any>(HttpMethod.POST, '/Product/AddIngredients', {'productId': productId}, payload);
         response.then((apiResponse) => {
             console.log(apiResponse);
             // Close product modal
