@@ -258,6 +258,7 @@ export default function AddProductForm() {
                                         label="type"
                                         onChange={handleProductTypeChange}
                                         required={true}
+                                        defaultValue=""
                                     >
                                         {skinTypeSelectData.map((text) => (
                                             <MenuItem
