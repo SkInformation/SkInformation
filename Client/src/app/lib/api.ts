@@ -17,7 +17,6 @@ async function apiRequest<T>(
             })
         }
         const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route)
-
         const response = await fetch(resolvedUrl, {
             method: method.toUpperCase(),
             headers: {
