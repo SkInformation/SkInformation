@@ -1,12 +1,11 @@
 using Backend_Models.Dtos;
-using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using PostmarkDotNet;
 using Backend_Models.Models;
 using Microsoft.EntityFrameworkCore;
 using Backend_Models.Enums;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Backend.Services;
+using PostmarkDotNet;
 
 namespace Backend.Controllers;
 
@@ -15,13 +14,11 @@ namespace Backend.Controllers;
 public class ReportController : Controller
 {
     private readonly AppDbContext _appDbContext;
-    private readonly IEmailService _emailService;
     private readonly IConfiguration _configuration;
 
-    public ReportController(AppDbContext appDbContext, IEmailService emailService, IConfiguration configuration)
+    public ReportController(AppDbContext appDbContext, IConfiguration configuration)
     {
         _appDbContext = appDbContext;
-        _emailService = emailService;
         _configuration = configuration;
     }
 
@@ -31,76 +28,81 @@ public class ReportController : Controller
     /// <param name="reportInput">A GenerateReportDto.</param>
     /// <returns>Report id</returns>
     [HttpPost]
-    public async Task<IActionResult> Generate(GenerateReportDto reportInput)
+    public async Task<IActionResult> Generate([FromServices] IServiceScopeFactory serviceScopeFactory,
+        GenerateReportDto reportInput)
     {
         var triedProducts = GetTriedProducts(reportInput);
         var usedTypes = GetUsedProductTypes(triedProducts);
         var unusedRecommendations = GetUnusedProductRecommendations(usedTypes);
-        
+
         var irritantAnalysis = new List<ProductIrritantAnalysisDto>();
-        
-        foreach(ProductReactionDto reactionDto in reportInput.Products) {
+
+        foreach (ProductReactionDto reactionDto in reportInput.Products)
+        {
             var potentialIrritants = GetIngredientsCausingIrritation(reactionDto);
             var product = _appDbContext.Products.FirstOrDefault(p => p.Id == reactionDto.ProductId);
-            
+
             if (product == null) continue;
-                
-            irritantAnalysis.Add(new ProductIrritantAnalysisDto{
+
+            irritantAnalysis.Add(new ProductIrritantAnalysisDto
+            {
                 Product = product,
                 PotentialIrritants = potentialIrritants
             });
         }
 
-        var report =  new ReportDto {
+        var report = new ReportDto
+        {
             ProductRecommendations = unusedRecommendations,
             IrritantAnalysis = irritantAnalysis
         };
 
         var serializedReport = JsonSerializer.Serialize(report);
-        var reportDb = new Report{
+        var reportDb = new Report
+        {
             ReportDto = serializedReport
         };
 
         _appDbContext.Reports.Add(reportDb);
         _appDbContext.SaveChanges();
 
-        return Json(new IdDto{ Id = reportDb.Id });
+        string email = reportInput.Email;
+        int reportId = reportDb.Id;
+
+        _ = Task.Run(() => { DispatchReportEmail(serviceScopeFactory, email, reportId); });
+        
+        return Json(new IdDto { Id = reportDb.Id });
     }
 
-    /// <summary>
-    ///     Generate report details link and send in email.
-    /// </summary>
-    /// <param name="reportId">Id of report</param>
-    /// <param name="email">Email to send report link</param>
-    /// <returns></returns>
-    [HttpPost]
-    public async Task<IActionResult> Email(int reportId, string email)
+    private async void DispatchReportEmail(IServiceScopeFactory serviceScopeFactory, string email, int reportId)
     {
-        var report = _appDbContext.Reports
-            .FirstOrDefault(r => r.Id == reportId);
+        string templatesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates");
+        string emailTemplate = Path.Combine(templatesDirectory, "EmailTemplate.html");
 
-        if (report == null) {
-            return NotFound("Report not found");
+        if (!System.IO.File.Exists(emailTemplate))
+        {
+            return;
         }
-
-        string domain = _configuration.GetValue<string>("APP_URL") ?? "http://localhost:3000" ;
-        string reportUrl = domain + "/report/details?reportId=" + reportId;
         
-        var status = await _emailService
-            .SendEmail(new PostmarkMessage
-            {
-                To = email,
-                From = "SkInformation@acio.dev",
-                TrackOpens = true,
-                Subject = "Your SkInformation Report",
-                TextBody = "Your report is ready!",
-                HtmlBody = $"<a href={reportUrl}>View Report</>",
-                Tag = "Customized user report about skincare."
-            });
-
-        if (status) return Ok();
-
-        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        string domain = _configuration.GetValue<string>("APP_URL") ?? "http://localhost:3000";
+        string reportUrl = domain + "/report/" + reportId;
+        string bodyHtml = System.IO.File.ReadAllText(emailTemplate).Replace("{%REPORT_ID_LINK%}", reportUrl);
+        
+        using (var scope = serviceScopeFactory.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<IEmailService>();
+            await context
+                .SendEmail(new PostmarkMessage
+                {
+                    To = email,
+                    From = "SkInformation@skinformation.site",
+                    TrackOpens = true,
+                    Subject = "Your SkInformation Report",
+                    TextBody = "Your report is ready!",
+                    HtmlBody = bodyHtml,
+                    Tag = "Customized user report about skincare."
+                });
+        }
     }
 
     /// <summary>
@@ -110,11 +112,13 @@ public class ReportController : Controller
     /// <returns></returns>
     [HttpGet]
     [Produces("application/json")]
-    public IActionResult Details(int reportId) {
+    public IActionResult Details(int reportId)
+    {
         var report = _appDbContext.Reports
             .FirstOrDefault(r => r.Id == reportId);
 
-        if (report == null) {
+        if (report == null)
+        {
             return NotFound("Report not found");
         }
 
@@ -123,34 +127,39 @@ public class ReportController : Controller
         return Json(deSerialized);
     }
 
-    private HashSet<int> GetTriedProducts(GenerateReportDto dto) {
+    private HashSet<int> GetTriedProducts(GenerateReportDto dto)
+    {
         var productIds = new HashSet<int>();
-        
-        foreach(ProductReactionDto p in dto.Products) {
+
+        foreach (ProductReactionDto p in dto.Products)
+        {
             productIds.Add(p.ProductId);
         }
 
         return productIds;
     }
 
-    private List<string> GetUsedProductTypes(HashSet<int> triedProducts) {
+    private List<string> GetUsedProductTypes(HashSet<int> triedProducts)
+    {
         return _appDbContext.Products
             .Where(p => triedProducts.Contains(p.Id))
             .Select(p => p.Type)
-            .Distinct() 
+            .Distinct()
             .ToList();
     }
 
-    private Dictionary<string, List<Product>> GetUnusedProductRecommendations(List<string> usedTypes) {
+    private Dictionary<string, List<Product>> GetUnusedProductRecommendations(List<string> usedTypes)
+    {
         var grouping = _appDbContext.Products
-             .Where(p => !usedTypes.Contains(p.Type))
-             .GroupBy(p => p.Type)
-             .Select(group => group.Take(3))
-             .ToList();
+            .Where(p => !usedTypes.Contains(p.Type))
+            .GroupBy(p => p.Type)
+            .Select(group => group.Take(3))
+            .ToList();
 
         var recommendations = new Dictionary<string, List<Product>>();
 
-        foreach(IEnumerable<Product> e in grouping) {
+        foreach (IEnumerable<Product> e in grouping)
+        {
             var products = e.ToList();
             recommendations[products[0].Type] = products;
         }
@@ -158,12 +167,14 @@ public class ReportController : Controller
         return recommendations;
     }
 
-    private List<PotentialIrritantDto> GetIngredientsCausingIrritation(ProductReactionDto dto) {
+    private List<PotentialIrritantDto> GetIngredientsCausingIrritation(ProductReactionDto dto)
+    {
         // Store the reaction to all possible irritating ingredient
         var irritants = new Dictionary<ProductReaction, List<Ingredient>>();
 
         // Defaults
-        foreach (ProductReaction reaction in dto.Reactions) {
+        foreach (ProductReaction reaction in dto.Reactions)
+        {
             irritants[reaction] = new List<Ingredient>();
         }
 
@@ -171,20 +182,25 @@ public class ReportController : Controller
             .Include(i => i.Ingredient)
             .Where(i => i.ProductId == dto.ProductId)
             .ToList();
-        
-        foreach (var productIngredient in productIngredients) {
+
+        foreach (var productIngredient in productIngredients)
+        {
             var ingredient = productIngredient.Ingredient!;
-            AddIngredientsToDictionary(ingredient.EyeIrritant, dto, ProductReaction.EyeIrritation, ingredient, irritants);
+            AddIngredientsToDictionary(ingredient.EyeIrritant, dto, ProductReaction.EyeIrritation, ingredient,
+                irritants);
             AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Flakiness, ingredient, irritants);
             AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Itchiness, ingredient, irritants);
             AddIngredientsToDictionary(ingredient.DriesSkin, dto, ProductReaction.Redness, ingredient, irritants);
-            AddIngredientsToDictionary(!ingredient.NonComedogenic, dto, ProductReaction.Swelling, ingredient, irritants);
+            AddIngredientsToDictionary(!ingredient.NonComedogenic, dto, ProductReaction.Swelling, ingredient,
+                irritants);
         }
 
         var productIrritantAnalysisDtos = new List<PotentialIrritantDto>();
-        
-        foreach (var kvp in irritants) {
-            productIrritantAnalysisDtos.Add(new PotentialIrritantDto{
+
+        foreach (var kvp in irritants)
+        {
+            productIrritantAnalysisDtos.Add(new PotentialIrritantDto
+            {
                 Type = kvp.Key.ToString(),
                 Ingredients = kvp.Value
             });
@@ -193,13 +209,14 @@ public class ReportController : Controller
         return productIrritantAnalysisDtos;
     }
 
-    private void AddIngredientsToDictionary(bool knownIrritant, 
-                                            ProductReactionDto dto, 
-                                            ProductReaction reaction, 
-                                            Ingredient ingredient, 
-                                            Dictionary<ProductReaction, List<Ingredient>> irritants)
+    private void AddIngredientsToDictionary(bool knownIrritant,
+        ProductReactionDto dto,
+        ProductReaction reaction,
+        Ingredient ingredient,
+        Dictionary<ProductReaction, List<Ingredient>> irritants)
     {
-        if (knownIrritant && dto.Reactions.Contains(reaction)) {
+        if (knownIrritant && dto.Reactions.Contains(reaction))
+        {
             irritants[reaction].Add(ingredient);
         }
     }

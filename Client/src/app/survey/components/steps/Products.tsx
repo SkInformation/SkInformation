@@ -25,6 +25,7 @@ import {
 import * as url from "url";
 import Box from "@mui/material/Box";
 import {Product, Ingredient, Reaction} from "@/app/shared/types";
+import Image from 'next/image'
 
 const searchProduct = async (input: string): Promise<Product[]> => {
     if (!input) {
@@ -64,18 +65,15 @@ export default function Products() {
 
         if (product) {
             const selectedReaction = Reaction[reactionKey as keyof typeof Reaction];
-            console.log({selectedReaction})
 
             let reactions = [...(product.reactions || [])];
             // Toggle the reaction
             if (reactions.includes(selectedReaction)) {
-                console.log("is this getting hit 2?")
                 // If selected, remove it from the array
                 reactions = reactions.filter(
                     (prevReaction) => prevReaction !== selectedReaction
                 );
             } else {
-                console.log("is this getting hit?")
                 // If not selected, add it to the array
                 reactions = [...reactions, selectedReaction];
             }
@@ -110,31 +108,6 @@ export default function Products() {
                                         setSelectedValue={addProduct}
                                query={searchProduct}/>
                 </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="body1">
-                        Click on a product to see its details, including a thumbnail image, name, description, and
-                        product type. You can also click the image to open the product's link in a new tab.
-                    </Typography>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="body1">
-                        Below each product, you'll find reaction buttons represented by the <FlakyIcon/> icon. Click on
-                        these buttons to select or deselect reactions related to the product.
-                        The buttons will turn red when a reaction is selected and gray when it's not.
-                    </Typography>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="body1">
-                        If a product has ingredients, you can click on the "Ingredients" section to see details about
-                        each ingredient, such as usage and special properties.
-                    </Typography>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="body1">
-                        Lastly, you can expand or collapse the product details by clicking on the arrow icon at the
-                        bottom of each product section.
-                    </Typography>
-                </Grid>
                 <Grid display="flex">
                     <TableContainer component={Paper}>
                         <Table sx={{minWidth: 650}} stickyHeader size="small" width="100%" aria-label="products table">
@@ -146,7 +119,7 @@ export default function Products() {
                                         <div key={`product-${product.id}`} onClick={() => handleRowClick(product.id)}>
                                             <TableRow sx={{'&:last-child td, &:last-child th': {borderBottom: 0}}}>
                                                 <TableCell>
-                                                    <img
+                                                    <Image
                                                         style={{
                                                             minWidth: '75px',
                                                             minHeight: '75px',

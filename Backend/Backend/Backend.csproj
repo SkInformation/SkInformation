@@ -18,17 +18,17 @@
         <PackageReference Include="OpenAI" Version="1.7.2"/>
         <PackageReference Include="postmark" Version="4.7.10"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
-        <None Update="Database\Data\*.sql">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Backend-Models\Backend-Models.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
+        <None Update="Database\Data\*.sql">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <Folder Include="wwwroot\images\products\"/>
+        <Content Include="Templates\**\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

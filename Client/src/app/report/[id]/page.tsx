@@ -1,39 +1,16 @@
 import apiRequest, {HttpMethod} from "@/app/lib/api";
-import IrritantsAccordion from "../IrritantsAccordion";
-import ProductRecommendationDisplay from "../ProductRecommendationDisplay";
+import IrritantsAccordion, {IrritantAnalysis} from "./components/IrritantsAccordion";
+import ProductRecommendationDisplay, {ProductRecommendation} from "./components/ProductRecommendationDisplay";
 import {Stack} from "@mui/material";
-import {Ingredient, Product} from "@/app/shared/types";
 
 interface ReportProps {
     params: {
         id: number
     }
 }
-
-// Data models for request
-
 export interface ReportDetails {
     productRecommendations: ProductRecommendation;
     irritantAnalysis: IrritantAnalysis[];
-}
-
-export interface ProductRecommendation {
-    MOISTURIZER?: Product[];
-    SERUM?: Product[];
-    CLEANSER?: Product[];
-    SUNSCREEN?: Product[];
-}
-
-
-export interface PotentialIrritant {
-    type: string;
-    ingredients: [Ingredient];
-}
-
-
-export interface IrritantAnalysis {
-    product: Product;
-    potentialIrritants: [PotentialIrritant];
 }
 
 export default async function Report({params}: ReportProps) {
