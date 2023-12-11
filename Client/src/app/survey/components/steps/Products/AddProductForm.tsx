@@ -32,7 +32,7 @@ export default function AddProductForm() {
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
-    const [productThumbnail, setProductThumbnail] = useState("");
+    const [productThumbnail, setProductThumbnail] = useState<File | null>(null);
     const [productType, setProductType] = useState("");
     const [productUrl, setProductUrl] = useState("");
     const [errorMessage, setErrorMessage] = useState('')
