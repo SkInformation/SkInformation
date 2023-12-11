@@ -1,4 +1,6 @@
-async function apiRequest<T>(
+import * as url from "url";
+
+export async function apiRequest<T>(
     method: HttpMethod,
     route: string,
     query: Record<string, any> = {},
@@ -36,8 +38,6 @@ async function apiRequest<T>(
     }
 }
 
-import * as url from "url";
-
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
         if (response.body) {
@@ -54,6 +54,25 @@ export enum HttpMethod {
     POST = 'POST',
     PUT = 'PUT',
     DELETE = 'DELETE'
+}
+
+export async function submitMultipartForm<T>(formData: FormData, route: string): Promise<T> {
+    try {
+        const resolvedUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', route);
+        const response = await fetch(resolvedUrl, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Request failed:', error);
+        throw error;
+    }
 }
 
 export default apiRequest;

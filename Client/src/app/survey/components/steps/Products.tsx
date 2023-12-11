@@ -6,6 +6,7 @@ import SearchBar from '@/app/components/SearchBar'
 import FlakyIcon from '@mui/icons-material/Flaky';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import AddProductForm from "@/app/survey/components/steps/Products/AddProductForm";
 import {
     Chip,
     Collapse,
@@ -87,6 +88,7 @@ export default function Products() {
 
     return (
         <>
+            <AddProductForm/>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12}>
                     <Typography variant="body1">
