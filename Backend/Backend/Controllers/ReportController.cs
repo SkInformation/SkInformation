@@ -69,7 +69,12 @@ public class ReportController : Controller
         string email = reportInput.Email;
         int reportId = reportDb.Id;
 
-        _ = Task.Run(() => { DispatchReportEmail(serviceScopeFactory, email, reportId); });
+        List<string> whitelist = new List<string>();
+        _configuration.GetSection("WhitelistedEmails").Bind(whitelist);
+        if (whitelist.Exists(w => w.Equals(email)))
+        {
+             _ = Task.Run(() => { DispatchReportEmail(serviceScopeFactory, email, reportId); });
+        }
         
         return Json(new IdDto { Id = reportDb.Id });
     }
