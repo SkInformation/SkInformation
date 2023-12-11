@@ -35,7 +35,7 @@ export default function AddProductForm() {
     const [productThumbnail, setProductThumbnail] = useState<File | null>(null);
     const [productType, setProductType] = useState("");
     const [productUrl, setProductUrl] = useState("");
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState<String | null>(null)
 
     useEffect(() => {
         if(ingredientsList.length == 0) {
@@ -173,7 +173,7 @@ export default function AddProductForm() {
         const urlRegex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
 
         if (urlRegex.test(event.currentTarget.value)) {
-            setErrorMessage(false);
+            setErrorMessage(null);
             setProductUrl(event.currentTarget.value)
         } else {
             setErrorMessage('Is Not Valid URL')
@@ -281,7 +281,7 @@ export default function AddProductForm() {
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setErrorMessage(false);
+                                                setErrorMessage(null);
                                             }}
                                         >
                                             <CloseIcon fontSize="inherit" />
