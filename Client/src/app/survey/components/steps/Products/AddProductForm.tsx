@@ -151,7 +151,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductNameChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setProductName(event.currentTarget.value)
     }
 
@@ -160,7 +160,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductDescriptionChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
         setProductDescription(event.currentTarget.value)
     }
 
@@ -169,7 +169,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductUrlChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
         const urlRegex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
 
         if (urlRegex.test(event.currentTarget.value)) {
