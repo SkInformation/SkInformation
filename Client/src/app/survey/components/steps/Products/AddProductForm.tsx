@@ -24,7 +24,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function AddProductForm() {
     const [openProductForm, setOpenProductForm] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState<Number[]>([]);
-    const [ingredientsList, setIngredientsList] = useState<[]>([]);
+    const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
     const [successBox, setSuccessBoxStatus] = useState(false);
     const [errorBox, setErrorBoxStatus] = useState(false);
 
@@ -197,16 +197,14 @@ export default function AddProductForm() {
      * Retrieves the complete list of ingredients from the API.
      * @param input
      */
-    const getIngredients = async (): Promise<Ingredient[]> => {
-        let resp = apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {});
-
-        resp.then((response) => {
-            let list = new Array();
-
+    const getIngredients = (): Promise<Ingredient[]> => {
+        return apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {}).then((response) => {
+            let list: Ingredient[] = [];
             response.forEach((ingredient, index) => {
-                list.push({'id': ingredient.id, 'name': ingredient.name})
+                list.push(ingredient)
             });
             setIngredientsList(list);
+            return list;
         });
     }
 
