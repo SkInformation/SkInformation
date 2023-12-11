@@ -29,7 +29,7 @@ export default function AddProductForm() {
     const [errorBox, setErrorBoxStatus] = useState(false);
 
     //Properties
-    const [productId, setProductId] = useState("");
+    const [productId, setProductId] = useState<Number>(0);
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
     const [productThumbnail, setProductThumbnail] = useState<File | null>(null);
@@ -104,8 +104,8 @@ export default function AddProductForm() {
             const response = await submitMultipartForm<ProductCreateResponse>(formData, '/Product/Create');
 
             // Handle response form API.
-            if(response.id) {
-                setProductId(parseInt(response.id));
+            if (response.id) {
+                setProductId(response.id);
                 handleIngredientsSave(response.id);
             }
         } catch (error) {
