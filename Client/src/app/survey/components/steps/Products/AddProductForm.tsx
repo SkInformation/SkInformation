@@ -120,7 +120,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientsSave = (productID) => {
+    const handleIngredientsSave = (productID: Number) => {
 
         let response = apiRequest<IngredientResponse>(HttpMethod.POST, '/Product/AddIngredients', {'productId': productID}, selectedIngredients);
 
