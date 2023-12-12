@@ -45,3 +45,51 @@ export function getSkinGoalImageSrc(type: SkinGoal): string {
 
     return src
 }
+
+export function getSkinTypeReadableName(type: SkinType): string {
+    let name = ''
+
+    switch (type) {
+        case SkinType.Dry:
+            name = 'Dry'
+            break;
+        case SkinType.Normal:
+            name = 'Normal'
+            break;
+        case SkinType.Oily:
+            name = 'Oily'
+            break;
+        case SkinType.Combination:
+            name = 'Combination'
+            break;
+    }
+
+    return name
+}
+
+export function getSkinGoalReadableName(goal: SkinGoal): string {
+    let name = ''
+
+    switch (goal) {
+        case SkinGoal.SkinGlow:
+            name = 'Skin Glow'
+            break;
+        case SkinGoal.MoistureRetention:
+            name = 'Moisture Retention'
+            break;
+        case SkinGoal.PoreAppearance:
+            name = 'Pore Appearance'
+            break;
+        case SkinGoal.ReduceRedness:
+            name = 'Reduce Redness'
+            break;
+        case SkinGoal.ReduceWrinkles:
+            name = 'Reduce Wrinkles'
+            break;
+        case SkinGoal.EvenSkinTone:
+            name = 'Even Skin Tone'
+            break;
+    }
+
+    return name
+}

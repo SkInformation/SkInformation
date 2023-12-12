@@ -6,6 +6,7 @@ import apiRequest, {HttpMethod} from "@/app/lib/api";
 import TextField from "@mui/material/TextField";
 import {useState} from "react";
 import Image from 'next/image'
+import {getSkinTypeImageSrc, getSkinTypeReadableName} from "@/app/survey/components/helper";
 
 interface GenerateReportInput {
     skinType: SkinType
@@ -42,7 +43,6 @@ export default function Summary() {
             products: mappedProducts
         }
 
-
         try {
             await apiRequest(HttpMethod.POST, '/Report/Generate', {}, body)
             setReportSent(true)
@@ -53,25 +53,27 @@ export default function Summary() {
 
     return (
         <>
-            <Grid container justifyContent="center" disableEqualOverflow>
+            <Grid container disableEqualOverflow>
                 <Grid display="flex" xs={12}>
-                    <Typography variant="h6" gutterBottom component="div">
+                    <Typography variant="h5" gutterBottom component="div">
                         Skin Type
                     </Typography>
                 </Grid>
-                <Grid display="flex" xs={12} justifyContent="center">
-                    <Stack direction="row" spacing={1} alignItems="center"
-                           textAlign="center">
-                        <Typography
-                            className="MuiTypography-alignMiddle">{skinType}
+                <Grid display="flex" xs={12}>
+                    <Stack direction="row" spacing={1}>
+                        <img src={getSkinTypeImageSrc(skinType!)}
+                             alt={`${skinType} skin image`}
+                             style={{minWidth: '75px', height: 'auto', maxWidth: '150px'}}/>
+                        <Typography>
+                            {getSkinTypeReadableName(skinType!)}
                         </Typography>
                     </Stack>
                 </Grid>
-                <Grid display="flex" xs={12} justifyContent="center">
-                    <Typography variant="h6" gutterBottom component="div">
+                <Grid display="flex" xs={12}>
+                    <Typography variant="h5" gutterBottom component="div">
                         Skin Goals
                     </Typography>
-                    <Stack direction="row" spacing={1} alignItems="center" textAlign="center">
+                    <Stack direction="row" spacing={1}>
                         {skinGoals.map((goal) => (
                             <>
                                 <Typography
@@ -82,33 +84,33 @@ export default function Summary() {
                         ))}
                     </Stack>
                 </Grid>
-                <Grid display="flex" xs={12} justifyContent="center">
-                    <Typography variant="h6" gutterBottom component="div">
+                <Grid display="flex" xs={12}>
+                    <Typography variant="h5" gutterBottom component="div">
                         Products
                     </Typography>
-                    <Stack direction="column" spacing={1} alignItems="center" textAlign="center">
-                        {Object.values(products).map((product) => {
-                            const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
+                </Grid>
+                <Grid display="flex" xs={12}>
+                    {Object.values(products).map((product) => {
+                        const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
 
-                            return (
-                                <>
-                                    <Stack direction="row" spacing={1} alignItems="center" textAlign="center">
-                                        <a href={thumbnailUrl} target="_blank">
-                                            <Image
-                                                width={75}
-                                                height={75}
-                                                src={thumbnailUrl}
-                                                alt={product.description}/>
-                                        </a>
-                                        <Typography
-                                            className="MuiTypography-alignMiddle">
-                                            {product.name}
-                                        </Typography>
-                                    </Stack>
-                                </>
-                            )
-                        })}
-                    </Stack>
+                        return (
+                            <>
+                                <Stack key={product.id} direction="row" spacing={1}>
+                                    <a href={thumbnailUrl} target="_blank">
+                                        <Image
+                                            width={75}
+                                            height={75}
+                                            src={thumbnailUrl}
+                                            alt={product.description}/>
+                                    </a>
+                                    <Typography
+                                        className="MuiTypography-alignMiddle">
+                                        {product.name}
+                                    </Typography>
+                                </Stack>
+                            </>
+                        )
+                    })}
                 </Grid>
                 <Grid display="flex" xs={12} justifyContent="center">
                     <TextField
@@ -117,7 +119,6 @@ export default function Summary() {
                         error={!!emailValidationError}
                         helperText={emailValidationError ? emailValidationError : null}
                         placeholder={"Email"}
-                        fullWidth
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </Grid>
