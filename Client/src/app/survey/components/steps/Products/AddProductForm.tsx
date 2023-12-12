@@ -302,7 +302,7 @@ export default function AddProductForm() {
                                         id="product-name"
                                         name={'Name'}
                                         required={true}
-                                        label={'Product Name'}
+                                        // label={"Product Name"}
                                         onChange={handleProductNameChange}
                                     />
                                 </FormControl>
