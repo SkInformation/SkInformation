@@ -6,6 +6,11 @@
     width: 80%;
 }
 
+.titleText {
+    color: black;
+    font-family: Charter, serif;
+}
+
 .survey_card {
     padding: 1em;
     background-color: #F8E8EE;
