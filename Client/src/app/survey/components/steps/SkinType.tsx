@@ -22,7 +22,8 @@ export default function SkinTypes() {
                         Object.keys(SkinType).filter(key => isNaN(Number(key))).map(type => {
                             return (
                                 <Grid key={type} display="flex" xs={1}>
-                                    <Button name={type} onClick={() => handleClick(type)}
+                                    <Button aria-label={`Select ${type} skin type`}
+                                            name={type} onClick={() => handleClick(type)}
                                             className={`
                                             ${styles.survey_big_button} 
                                             ${skinType === SkinType[type as keyof typeof SkinType] ? styles.selected : ""}
