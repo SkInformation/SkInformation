@@ -16,7 +16,7 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({products}) => {
             justifyContent={"center"}
             spacing={3}>
             {products.map((p: Product) => {
-                const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', p.thumbnail)
+                const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', `/images/products/${p.id}.png`)
                 return (
                     <Grid
                         key={p.id}
