@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, SetStateAction, useEffect, useState} from "react";
 import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
 import {
     Alert,
@@ -23,7 +23,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function AddProductForm() {
     const [openProductForm, setOpenProductForm] = useState(false);
-    const [selectedIngredients, setSelectedIngredients] = useState<Number[]>([]);
+    const [selectedIngredients, setSelectedIngredients] = useState<number[]>([]);
     const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
     const [successBox, setSuccessBoxStatus] = useState(false);
     const [errorBox, setErrorBoxStatus] = useState(false);
@@ -213,8 +213,8 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientSelection = (event: SelectChangeEvent) => {
-        setSelectedIngredients([...event.target.value])
+    const handleIngredientSelection = (event: SelectChangeEvent<number[]>) => {
+        setSelectedIngredients(event.target.value as SetStateAction<number[]>)
     }
 
     return (
