@@ -97,8 +97,7 @@ export default function Products() {
                 </Grid>
                 <Grid display="flex" xs={12}>
                     <Typography variant="body1">
-                        To get started, use the search bar below to find products you&apos;ve used. Type the product name,
-                        and the results will appear in real-time.
+                        To get started, use the search bar below to find products you&apos;ve used.
                     </Typography>
                 </Grid>
                 <Grid display="flex" xs={12}>
