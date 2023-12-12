@@ -14,7 +14,8 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({products}) => {
             direction={"row"}
             alignItems={"stretch"}
             justifyContent={"center"}
-            spacing={3}>
+            spacing={3}
+            aria-label={"product grid"}>
             {products.map((p: Product) => {
                 const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', `/images/products/${p.id}.png`)
                 return (
@@ -23,7 +24,8 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({products}) => {
                         item
                         lg={4}
                         md={4}
-                        xs={12}>
+                        xs={12}
+                        role={"listitem"} >
                         <Card sx={{height: "100%"}}>
                             <CardContent>
                                 <CardActionArea href={p.url} target="_blank"
@@ -31,7 +33,8 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({products}) => {
                                                     alignItems: "center",
                                                     justifyContent: "center",
                                                     display: "flex"
-                                                }}>
+                                                }}
+                                                aria-label={`link to ${p.name}`}>
                                     <Image alt={`Product image for ${p.name}`}
                                            width={250}
                                            height={250}
