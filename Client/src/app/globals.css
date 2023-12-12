@@ -1,7 +1,11 @@
 html,
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*height: 100vh; UNCOMMENT FOR VERTICAL CENTER */
   max-width: 100vw;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
   background-color: #FDCEDF;
   color: #E85187;
 }
