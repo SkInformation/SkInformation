@@ -7,13 +7,13 @@ export function getSkinTypeImageSrc(type: SkinType): string {
             src = '/assets/images/survey/skin_type/type_dry.png'
             break;
         case SkinType.Normal:
-            src = '/assets/images/survey/skin_type/type_combination.png'
-            break;
-        case SkinType.Oily:
             src = '/assets/images/survey/skin_type/type_normal.png'
             break;
-        case SkinType.Combination:
+        case SkinType.Oily:
             src = '/assets/images/survey/skin_type/type_oily.png'
+            break;
+        case SkinType.Combination:
+            src = '/assets/images/survey/skin_type/type_combination.png'
             break;
     }
 
