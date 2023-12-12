@@ -5,7 +5,6 @@
     align-items: center;
     padding: 6rem;
     min-height: 93vh;
-    /*border: 1px solid #E85187;*/
 }
 
 .survey_card {
@@ -13,7 +12,6 @@
     background-color: #F8E8EE;
     border-radius: 15px !important;
     box-shadow: 0 10px 10px #888888;
-    /*background-color: #F9F5F6;*/
 }
 
 .survey {
@@ -196,28 +194,3 @@
         grid-template-columns: repeat(2, 50%);
     }
 }
-
-@media (prefers-color-scheme: dark) {
-    .vercelLogo {
-        filter: invert(1);
-    }
-
-    .logo {
-        filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(360deg);
-    }
-    to {
-        transform: rotate(0deg);
-    }
-}
-
-/*.box {*/
-/*  border: 1px solid #E85187;*/
-/*  padding: 10px;*/
-/*  padding-radius: 20px;*/
-/*}*/
