@@ -20,7 +20,7 @@ export default function SkinGoals() {
 
     return (
         <>
-            <Grid display="flex" xs={12}>
+            <Grid display="flex" xs={12} sx={{"padding-bottom": '30px', alignment: 'center'}}>
                 <Typography variant="body1">
                     In order to best help you, please select all of the goals that you have in mind for improving your
                     skin care routine!
