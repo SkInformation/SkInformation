@@ -2,6 +2,9 @@
 appsettings.json
 appsettings.Development.json
 
+# Untrack env
+.env
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

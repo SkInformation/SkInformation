@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, SetStateAction, useEffect, useState} from "react";
 import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
 import {
     Alert,
@@ -23,19 +23,19 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function AddProductForm() {
     const [openProductForm, setOpenProductForm] = useState(false);
-    const [selectedIngredients, setSelectedIngredients] = useState<Number[]>([]);
-    const [ingredientsList, setIngredientsList] = useState<[]>([]);
+    const [selectedIngredients, setSelectedIngredients] = useState<number[]>([]);
+    const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
     const [successBox, setSuccessBoxStatus] = useState(false);
     const [errorBox, setErrorBoxStatus] = useState(false);
 
     //Properties
-    const [productId, setProductId] = useState("");
+    const [productId, setProductId] = useState<Number>(0);
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
-    const [productThumbnail, setProductThumbnail] = useState("");
+    const [productThumbnail, setProductThumbnail] = useState<File | null>(null);
     const [productType, setProductType] = useState("");
     const [productUrl, setProductUrl] = useState("");
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState<String | null>(null)
 
     useEffect(() => {
         if(ingredientsList.length == 0) {
@@ -104,8 +104,8 @@ export default function AddProductForm() {
             const response = await submitMultipartForm<ProductCreateResponse>(formData, '/Product/Create');
 
             // Handle response form API.
-            if(response.id) {
-                setProductId(parseInt(response.id));
+            if (response.id) {
+                setProductId(response.id);
                 handleIngredientsSave(response.id);
             }
         } catch (error) {
@@ -120,7 +120,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientsSave = (productID) => {
+    const handleIngredientsSave = (productID: Number) => {
 
         let response = apiRequest<IngredientResponse>(HttpMethod.POST, '/Product/AddIngredients', {'productId': productID}, selectedIngredients);
 
@@ -151,7 +151,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductNameChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setProductName(event.currentTarget.value)
     }
 
@@ -160,7 +160,7 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductDescriptionChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
         setProductDescription(event.currentTarget.value)
     }
 
@@ -169,11 +169,11 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleProductUrlChange = (event: FormEvent<HTMLInputElement>) => {
+    const handleProductUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
         const urlRegex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
 
         if (urlRegex.test(event.currentTarget.value)) {
-            setErrorMessage(false);
+            setErrorMessage(null);
             setProductUrl(event.currentTarget.value)
         } else {
             setErrorMessage('Is Not Valid URL')
@@ -197,16 +197,14 @@ export default function AddProductForm() {
      * Retrieves the complete list of ingredients from the API.
      * @param input
      */
-    const getIngredients = async (): Promise<Ingredient[]> => {
-        let resp = apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {});
-
-        resp.then((response) => {
-            let list = new Array();
-
+    const getIngredients = (): Promise<Ingredient[]> => {
+        return apiRequest<Ingredient[]>(HttpMethod.GET, '/Ingredient/all', {}).then((response) => {
+            let list: Ingredient[] = [];
             response.forEach((ingredient, index) => {
-                list.push({'id': ingredient.id, 'name': ingredient.name})
+                list.push(ingredient)
             });
             setIngredientsList(list);
+            return list;
         });
     }
 
@@ -215,8 +213,8 @@ export default function AddProductForm() {
      *
      * @param event
      */
-    const handleIngredientSelection = (event: SelectChangeEvent) => {
-        setSelectedIngredients([...event.target.value])
+    const handleIngredientSelection = (event: SelectChangeEvent<number[]>) => {
+        setSelectedIngredients(event.target.value as SetStateAction<number[]>)
     }
 
     return (
@@ -273,7 +271,7 @@ export default function AddProductForm() {
                 >
                     <Box sx={style}>
                         <Box sx={{ width: '100%' }}>
-                            <Collapse in={errorMessage}>
+                            <Collapse in={errorMessage === undefined}>
                                 <Alert
                                     severity="error"
                                     action={
@@ -281,7 +279,7 @@ export default function AddProductForm() {
                                             color="inherit"
                                             size="small"
                                             onClick={() => {
-                                                setErrorMessage(false);
+                                                setErrorMessage(null);
                                             }}
                                         >
                                             <CloseIcon fontSize="inherit" />
@@ -304,7 +302,7 @@ export default function AddProductForm() {
                                         id="product-name"
                                         name={'Name'}
                                         required={true}
-                                        label={'Product Name'}
+                                        // label={"Product Name"}
                                         onChange={handleProductNameChange}
                                     />
                                 </FormControl>
