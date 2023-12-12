@@ -121,9 +121,9 @@ export default function Products() {
                                                         style={{
                                                             minWidth: '75px',
                                                             minHeight: '75px',
-                                                            maxHeight: '150px',
-                                                            maxWidth: '150px'
                                                         }}
+                                                        height={150}
+                                                        width={150}
                                                         src={thumbnailUrl} alt={product.description}
                                                         onClick={(e) => {
                                                             e.stopPropagation();
@@ -147,7 +147,7 @@ export default function Products() {
                                                         {
                                                             Object.keys(Reaction).filter(key => isNaN(Number(key))).map((reaction, index) => (
                                                                 <IconButton
-                                                                    key={index}
+                                                                    key={reaction}
                                                                     style={{
                                                                         borderRadius: '50%',
                                                                         backgroundColor: 'transparent',
@@ -182,7 +182,8 @@ export default function Products() {
                                                             <Table size="small" aria-label="ingredients-table">
                                                                 <TableBody>
                                                                     {(product.ingredients || []).map((ingredient) => (
-                                                                        <TableRow key={ingredient.id}>
+                                                                        <TableRow
+                                                                            key={`${ingredient.id}-${ingredient.name}`}>
                                                                             <TableCell>
                                                                                 <Tooltip title={ingredient.usage} arrow>
                                                                                     <span>{ingredient.name}</span>

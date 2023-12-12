@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import styles from '@/app/page.module.css'
+import styles from '@/app/survey/page.module.css'
 
 interface StepProps {
     children: React.ReactNode;

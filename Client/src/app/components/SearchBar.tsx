@@ -97,10 +97,20 @@ export default function SearchBar<T extends { id: number; name: string }>({
                 <TextField {...params} label="Search a Product" variant="standard" fullWidth/>
             )}
             renderOption={(props, option) => {
+                let key = ''
+                let name = ''
+                if (typeof option !== 'string') {
+                    key = `${option.id}-${option.name}`
+                    name = option.name
+                } else {
+                    key = option
+                    key = name
+                }
+
                 return (
-                    <li {...props}>
+                    <li key={key} {...props}>
                         <Typography variant="body2" color="text.secondary">
-                            {typeof option === 'string' ? option : option.name}
+                            {name}
                         </Typography>
                     </li>
                 );
