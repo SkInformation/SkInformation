@@ -29,16 +29,17 @@ export default function IrritantsAccordion(analysis: IrritantAnalysis) {
                             <AccordionSummary
                                 expandIcon={<ExpandMore/>}
                                 aria-controls={`panel-${i.id}-content`}
-                                id= {`panel-${i.id}-header`}>
+                                id={`panel-${i.id}-header`}
+                                aria-label={i.name}>
                                 <Typography>{i.name}</Typography>
                             </AccordionSummary>
-                            <AccordionDetails>
+                            <AccordionDetails aria-label={`Details about ${i.name}`}>
                                 <Typography>
                                     {i.usage}
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>
-                    )) : <p>No ingredients were found to cause {pi.type}.</p>}
+                    )) : <p aria-label={`No irritants for ${pi.type}`}>No ingredients were found to cause {pi.type}.</p>}
                 </div>
             ))}
         </div>
