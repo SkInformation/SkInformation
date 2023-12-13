@@ -20,14 +20,19 @@ export default function SkinGoals() {
 
     return (
         <>
-            <Grid display="flex" xs={12}>
+            <Grid display="flex" xs={12} sx={{"padding-bottom": '30px', alignment: 'center'}}>
                 <Typography variant="body1">
                     In order to best help you, please select all of the goals that you have in mind for improving your
                     skin care routine!
                 </Typography>
             </Grid>
-            <Grid container spacing={{xs: 2, sm: 3}} columns={{xs: 2, sm: 3}} disableEqualOverflow
-                  justifyContent={"space-evenly"} className={styles.survey}>
+            <Grid container
+                  spacing={{xs: 2, sm: 3}}
+                  columns={{xs: 2, sm: 3}}
+                  disableEqualOverflow
+                  justifyContent={"space-evenly"}
+                  className={styles.survey}
+                  aria-label="Skin care goals">
                 {
                     Object.keys(SkinGoal).filter(key => isNaN(Number(key))).map(goal => {
                         const goalName = getSkinGoalName(SkinGoal[goal as keyof typeof SkinGoal])
@@ -38,6 +43,7 @@ export default function SkinGoals() {
                                         ${styles.survey_big_button}
                                         ${skinGoals.includes(SkinGoal[goal as keyof typeof SkinGoal]) ? styles.selected : ""}
                                     `}
+                                        aria-label={`Select ${goalName}`}
                                 >
                                     <div className={`${styles.imageContainer}`}>
                                         <img src={getSkinGoalImageSrc(SkinGoal[goal as keyof typeof SkinGoal])}

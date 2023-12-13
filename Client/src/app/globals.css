@@ -1,32 +1,14 @@
-/** {*/
-/*  box-sizing: border-box;*/
-/*  padding: 0;*/
-/*  margin: 0;*/
-/*}*/
-
 html,
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*height: 100vh; UNCOMMENT FOR VERTICAL CENTER */
   max-width: 100vw;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
   background-color: #FDCEDF;
   color: #E85187;
 }
-
-/*@font-face {*/
-/*  font-family: overTheRainbow;*/
-/*  src: url('/assets/Over_the_Rainbow/OvertheRainbow-Regular.ttf');*/
-/*}*/
-
-/*a {*/
-/*  color: inherit;*/
-/*  text-decoration: none;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  html {*/
-/*    color-scheme: dark;*/
-/*  }*/
-/*}*/
 
 .description {
   display: inherit;
