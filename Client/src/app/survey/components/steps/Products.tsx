@@ -88,7 +88,7 @@ export default function Products() {
 
     return (
         <>
-            <AddProductForm/>
+            <AddProductForm aria-label="Add a new product form"/>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12}>
                     <Typography variant="body1">
@@ -97,14 +97,15 @@ export default function Products() {
                 </Grid>
                 <Grid display="flex" xs={12}>
                     <Typography variant="body1">
-                        To get started, use the search bar below to find products you&apos;ve used. Type the product name,
-                        and the results will appear in real-time.
+                        To get started, use the search bar below to find products you&apos;ve used.
                     </Typography>
                 </Grid>
                 <Grid display="flex" xs={12}>
-                    <SearchBar<Product> name="product" selectedValues={Object.values(products)}
+                    <SearchBar<Product> name="product"
+                                        selectedValues={Object.values(products)}
                                         setSelectedValue={addProduct}
-                               query={searchProduct}/>
+                                        query={searchProduct}
+                                        aria-label="Search bar for products"/>
                 </Grid>
                 <Grid display="flex">
                     <TableContainer component={Paper}>
@@ -114,7 +115,9 @@ export default function Products() {
                                     const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
 
                                     return (
-                                        <div key={`product-${product.id}`} onClick={() => handleRowClick(product.id)}>
+                                        <div key={`product-${product.id}`}
+                                             onClick={() => handleRowClick(product.id)}
+                                             aria-label={`Toggle detailed view for ${product.name}`}>
                                             <TableRow sx={{'&:last-child td, &:last-child th': {borderBottom: 0}}}>
                                                 <TableCell>
                                                     <Image
@@ -129,6 +132,7 @@ export default function Products() {
                                                             e.stopPropagation();
                                                             window.open(product.url, '_blank');
                                                         }}
+                                                        aria-label={`Open ${product.name} in new tab`}
                                                     />
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
@@ -192,21 +196,27 @@ export default function Products() {
                                                                             <TableCell>
                                                                                 {ingredient.eyeIrritant &&
                                                                                     <Chip label="Eye Irritant"
+                                                                                          aria-label="Eye Irritant"
                                                                                           color="primary"/>}
                                                                                 {ingredient.driesSkin &&
                                                                                     <Chip label="Dries Skin"
+                                                                                          aria-label="Dries Skin"
                                                                                           color="primary"/>}
                                                                                 {ingredient.reducesRedness &&
                                                                                     <Chip label="Reduces Redness"
+                                                                                          aria-label="Reduces Redness"
                                                                                           color="primary"/>}
                                                                                 {ingredient.hydrating &&
                                                                                     <Chip label="Hydrating"
+                                                                                          aria-label="Hydrating"
                                                                                           color="primary"/>}
                                                                                 {ingredient.nonComedogenic &&
                                                                                     <Chip label="Non-Comedogenic"
+                                                                                          aria-label="Non-Comedogenic"
                                                                                           color="primary"/>}
                                                                                 {ingredient.safeForPregnancy &&
                                                                                     <Chip label="Safe for Pregnancy"
+                                                                                          aria-label="Safe for Pregnancy"
                                                                                           color="primary"/>}
                                                                             </TableCell>
                                                                         </TableRow>

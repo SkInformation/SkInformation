@@ -271,7 +271,7 @@ export default function AddProductForm() {
                 >
                     <Box sx={style}>
                         <Box sx={{ width: '100%' }}>
-                            <Collapse in={errorMessage === undefined}>
+                            <Collapse in={errorMessage !== null}>
                                 <Alert
                                     severity="error"
                                     action={
