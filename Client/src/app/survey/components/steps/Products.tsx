@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddProductForm from "@/app/survey/components/steps/Products/AddProductForm";
 import {
+    Avatar,
     Chip,
     Collapse,
     IconButton,
@@ -89,7 +90,6 @@ export default function Products() {
 
     return (
         <>
-            <AddProductForm aria-label="Add a new product form"/>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12} justifyContent={"center"}>
                     <Paper className={styles.productPageAbout}>
@@ -107,6 +107,7 @@ export default function Products() {
                                         setSelectedValue={addProduct}
                                         query={searchProduct}
                                         aria-label="Search bar for products"/>
+                    <AddProductForm aria-label="Add a new product form"/>
                 </Grid>
                 <Grid display="flex" xs={12} paddingTop={"1em"}>
                     <TableContainer component={Paper}>
@@ -140,15 +141,17 @@ export default function Products() {
                                                             <Typography variant="caption"
                                                                         color="textSecondary">{product.description}</Typography>
                                                         </Stack>
-                                                        <Stack direction="row" spacing={1} alignItems="center"
-                                                               textAlign="center">
+                                                        <Stack direction="row" spacing={{xs: 1}} alignItems="center"
+                                                               textAlign="center" useFlexGap flexWrap="wrap" className={styles.productPageReactionIconBox}>
                                                         {
                                                             Object.keys(Reaction).filter(key => isNaN(Number(key))).map((reaction, index) => (
-                                                                <IconButton
+                                                                <Chip
                                                                     key={reaction}
                                                                     style={{
                                                                         borderRadius: '50%',
                                                                         backgroundColor: 'transparent',
+                                                                        display: 'block',
+                                                                        justifyContent: 'center',
                                                                         color: (product.reactions || []).includes(Reaction[reaction as keyof typeof Reaction])
                                                                             ? "red"
                                                                             : "gray",
@@ -160,9 +163,13 @@ export default function Products() {
                                                                         e.stopPropagation()
                                                                         handleReactionClick(product.id, reaction)
                                                                     }}
+                                                                    label={reaction}
+                                                                    avatar={<Avatar
+                                                                        style={{margin: '0px auto'}}
+                                                                        alt={reaction} src={"/assets/images/reactions/" + reaction + ".png"}
+                                                                    />}
                                                                 >
-                                                                    <FlakyIcon/>
-                                                                </IconButton>
+                                                                </Chip>
                                                             ))
                                                         }
                                                         </Stack>

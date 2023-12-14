@@ -92,7 +92,8 @@
 }
 
 .addProductButtonRow {
-    margin-bottom: 10px;
+    bottom: -10px;
+    position: relative;
 }
 
 .productFormRow {
@@ -101,6 +102,12 @@
 
 .productPageAbout {
     padding: 10px;
+    margin-bottom: 10px;
+}
+
+.productPageReactionIconBox {
+    max-width: 250px;
+    float: right;
 }
 
 .productThumbnail {
@@ -109,7 +116,7 @@
 
 .productDescription {
     width: 100%;
-    max-width: 420px;
+    max-width: 390px;
 }
 
 @media (prefers-reduced-motion) {
