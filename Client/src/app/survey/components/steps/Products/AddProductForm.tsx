@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, SetStateAction, useEffect, useState} from "react";
-import {apiRequest, submitMultipartForm, HttpMethod} from "@/app/lib/api"
+import {apiRequest, HttpMethod, submitMultipartForm} from "@/app/lib/api"
 import {
     Alert,
     AlertTitle,
@@ -9,12 +9,12 @@ import {
     IconButton,
     Input,
     InputLabel,
-    TextField,
-    Modal,
     MenuItem,
+    Modal,
+    TextField,
     Typography,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 import Box from "@mui/material/Box";
 import {Ingredient} from "@/app/shared/types";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -41,7 +41,7 @@ export default function AddProductForm() {
         if(ingredientsList.length == 0) {
             getIngredients();
         }
-    }, [])
+    }, [ingredientsList])
 
     // Modal Style
     const style = {

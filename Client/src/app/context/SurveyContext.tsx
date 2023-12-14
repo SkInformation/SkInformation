@@ -135,7 +135,7 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
     }
 
     const clearContext = (): void => {
-        setCurrentStep(0);
+        setCurrentStep(SurveyStep.SkinType);
         setProducts([])
         setSkinGoals([])
         setSkinType(undefined)
