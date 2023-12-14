@@ -49,7 +49,7 @@ export default function SkinGoals() {
                                         <div className={`${styles.imageContainer}`}>
                                             <img src={getSkinGoalImageSrc(SkinGoal[goal as keyof typeof SkinGoal])}
                                                  alt={`${goalName} skin goal button image`}
-                                                 style={{width: '100%', height: 'auto'}}/>
+                                                 style={{width: '100%', height: 'auto', marginBottom: '10px'}}/>
                                             <Typography className={`${styles.overlayText}`}>{goalName}</Typography>
                                         </div>
                                     </Button>

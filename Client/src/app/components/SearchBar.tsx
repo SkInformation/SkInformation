@@ -20,6 +20,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
                                                                           }: SearchBarProps<T>) {
     const [inputValue, setInputValue] = React.useState<string | undefined>();
     const [options, setOptions] = React.useState<readonly T[]>([]);
+    const [dummyKey, setDummyKey] = React.useState<string>('a');
 
     const fetch = useMemo(
         () =>
@@ -70,6 +71,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
             sx={{
                 width: "100%"
             }}
+            key={dummyKey}
             getOptionLabel={(option) => {
                 return typeof option === 'string' ? option : option.name
             }}
@@ -87,6 +89,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
                     return;
                 }
 
+                setDummyKey(prevState => prevState === 'a' ? 'b' : 'a');
                 setInputValue(''); // Clear input value
                 setOptions(newValue ? [newValue, ...options] : options);
                 setSelectedValue(newValue);
