@@ -141,7 +141,7 @@ export default function Products() {
                                                             <Typography variant="caption"
                                                                         color="textSecondary">{product.description}</Typography>
                                                         </Stack>
-                                                        <Stack direction="row" spacing={{xs: 1}} alignItems="center"
+                                                        <Stack direction="row" spacing={1} alignItems="center"
                                                                textAlign="center" useFlexGap flexWrap="wrap" className={styles.productPageReactionIconBox}>
                                                         {
                                                             Object.keys(Reaction).filter(key => isNaN(Number(key))).map((reaction, index) => (
