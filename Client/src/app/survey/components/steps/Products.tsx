@@ -25,6 +25,7 @@ import * as url from "url";
 import Box from "@mui/material/Box";
 import {Product, Reaction} from "@/app/shared/types";
 import Image from 'next/image'
+import styles from '../../page.module.css';
 
 const searchProduct = async (input: string): Promise<Product[]> => {
     if (!input) {
@@ -91,7 +92,7 @@ export default function Products() {
             <AddProductForm aria-label="Add a new product form"/>
             <Grid container alignContent={"space-evenly"} disableEqualOverflow>
                 <Grid display="flex" xs={12} justifyContent={"center"}>
-                    <Paper>
+                    <Paper className={styles.productPageAbout}>
                         <Typography variant="body1" textAlign={"center"}>
                             <strong>Welcome to the Product Selection Page!</strong>
                         </Typography>
@@ -134,11 +135,13 @@ export default function Products() {
                                                             aria-label={`Open ${product.name} in new tab`}
                                                         />
                                                         <Stack direction="column" spacing={1} alignItems="center"
-                                                               textAlign="center">
+                                                               textAlign="center" className={styles.productDescription}>
                                                             <Typography variant="h5">{product.name}</Typography>
                                                             <Typography variant="caption"
                                                                         color="textSecondary">{product.description}</Typography>
                                                         </Stack>
+                                                        <Stack direction="row" spacing={1} alignItems="center"
+                                                               textAlign="center">
                                                         {
                                                             Object.keys(Reaction).filter(key => isNaN(Number(key))).map((reaction, index) => (
                                                                 <IconButton
@@ -162,6 +165,7 @@ export default function Products() {
                                                                 </IconButton>
                                                             ))
                                                         }
+                                                        </Stack>
                                                     </Stack>
                                                     <Grid display="flex" style={{maxHeight: "600px", overflow: "auto"}}
                                                           xs={12}>
@@ -186,7 +190,9 @@ export default function Products() {
                                                                                     {ingredient.eyeIrritant &&
                                                                                         <Chip label="Eye Irritant"
                                                                                               aria-label="Eye Irritant"
-                                                                                              color="primary"/>}
+                                                                                              color="primary"
+                                                                                              avatar={<Avatar alt={"Eye Irritant"} src={"/assets/images/reactions/reaction_eye_irritation.png"} />}
+                                                                                        />}
                                                                                     {ingredient.driesSkin &&
                                                                                         <Chip label="Dries Skin"
                                                                                               aria-label="Dries Skin"

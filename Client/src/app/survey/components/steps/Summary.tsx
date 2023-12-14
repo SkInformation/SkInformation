@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import {useState} from "react";
 import Image from 'next/image'
 import {useRouter} from 'next/navigation';
+import styles from '../../page.module.css';
 
 import {
     getSkinGoalReadableName,
@@ -74,7 +75,7 @@ export default function Summary() {
     return (
         <Grid container disableEqualOverflow margin={"1em"}>
             <Grid display="flex" xs={12} alignItems="center">
-                <Stack direction="column">
+                <Stack direction="column" sx={{ width: '100%' }}>
                     <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
                         <Grid>
                             <Typography variant="h4" component="div">
@@ -100,7 +101,7 @@ export default function Summary() {
                 </Stack>
             </Grid>
             <Grid display="flex" xs={12} alignItems="center">
-                <Stack direction="column">
+                <Stack direction="column" sx={{ width: '100%' }}>
                     <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
                         <Grid>
                             <Typography variant="h4" component="div">
@@ -108,7 +109,7 @@ export default function Summary() {
                             </Typography>
                         </Grid>
                         <Grid>
-                            <Chip onClick={() => navigateTo(SurveyStep.SkinType)} label="Edit"/>
+                            <Chip onClick={() => navigateTo(SurveyStep.SkinGoals)} label="Edit"/>
                         </Grid>
                     </Stack>
                     {skinGoals.map((goal) => (
@@ -128,7 +129,7 @@ export default function Summary() {
                 </Stack>
             </Grid>
             <Grid display="flex" xs={12} paddingTop={"1em"}>
-                <Stack direction="column">
+                <Stack direction="column" sx={{ width: '100%' }}>
                     <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
                         <Grid>
                             <Typography variant="h4" component="div">
@@ -136,7 +137,7 @@ export default function Summary() {
                             </Typography>
                         </Grid>
                         <Grid>
-                            <Chip onClick={() => navigateTo(SurveyStep.SkinType)} label="Edit"/>
+                            <Chip onClick={() => navigateTo(SurveyStep.Products)} label="Edit"/>
                         </Grid>
                     </Stack>
                     {Object.values(products).map((product) => {
@@ -151,7 +152,9 @@ export default function Summary() {
                                             width={150}
                                             height={150}
                                             src={thumbnailUrl}
-                                            alt={product.description}/>
+                                            alt={product.description}
+                                            className={styles.productThumbnail}
+                                        />
                                     </a>
                                 </Grid>
                                 <Grid display="flex" xs={9}>
