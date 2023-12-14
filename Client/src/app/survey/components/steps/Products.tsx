@@ -158,7 +158,7 @@ export default function Products() {
                                                                     }}
                                                                     aria-label={`${product.name} reaction ${index}`}
                                                                     // Handle click event for each reaction button
-                                                                    onClick={(e) => {
+                                                                    onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                                                                         // prevent button click from expanding the ingredient list
                                                                         e.stopPropagation()
                                                                         handleReactionClick(product.id, reaction)
