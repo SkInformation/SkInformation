@@ -9,3 +9,11 @@
     color: black;
     font-family: Charter, serif;
 }
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
