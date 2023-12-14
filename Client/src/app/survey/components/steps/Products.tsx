@@ -8,7 +8,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddProductForm from "@/app/survey/components/steps/Products/AddProductForm";
 import {
-    Avatar,
     Chip,
     Collapse,
     IconButton,
@@ -87,7 +86,7 @@ export default function Products() {
     const handleRowClick = (productId: number) => {
         setOpenProduct((currentProduct) => currentProduct === productId ? null : productId)
     }
-    
+
     return (
         <>
             <AddProductForm aria-label="Add a new product form"/>
