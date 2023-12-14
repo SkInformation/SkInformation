@@ -168,8 +168,7 @@ export default function Products() {
                                                                         style={{margin: '0px auto'}}
                                                                         alt={reaction} src={"/assets/images/reactions/" + reaction + ".png"}
                                                                     />}
-                                                                >
-                                                                </Chip>
+                                                                />
                                                             ))
                                                         }
                                                         </Stack>
