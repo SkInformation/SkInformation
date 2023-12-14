@@ -33,8 +33,8 @@ export default function Survey() {
 
     return (
         <>
-            <Card className={`${styles.survey_card}`}>
-                <Box maxWidth="lg" width={"100%"}>
+            <Card className={`${styles.survey_card} ${styles.container}`}>
+                <Box maxWidth="lg">
                     <Step hidden={currentStep !== SurveyStep.SkinType} title={stepConfig[SurveyStep.SkinType].title}>
                         <SkinType/>
                     </Step>

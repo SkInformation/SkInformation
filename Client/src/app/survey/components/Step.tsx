@@ -17,7 +17,7 @@ export function Step({
             {
                 !hidden ?
                     <>
-                        <Grid container justifyContent={"center"}>
+                        <Grid container justifyContent={"center"} sx={{textAlign: 'center'}}>
                             <h1 className={styles.stepHeader}>{title}</h1>
                         </Grid>
                         {children}

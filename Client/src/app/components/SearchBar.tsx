@@ -65,6 +65,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
         <Autocomplete
             freeSolo
             clearOnEscape
+            clearOnBlur
             id={`${name}-search-bar`}
             sx={{
                 width: "100%"
@@ -108,7 +109,7 @@ export default function SearchBar<T extends { id: number; name: string }>({
                 }
 
                 return (
-                    <li key={key} {...props}>
+                    <li {...props} key={key}>
                         <Typography variant="body2" color="text.secondary">
                             {name}
                         </Typography>
