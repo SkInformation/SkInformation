@@ -191,7 +191,6 @@ export default function Products() {
                                                                                         <Chip label="Eye Irritant"
                                                                                               aria-label="Eye Irritant"
                                                                                               color="primary"
-                                                                                              avatar={<Avatar alt={"Eye Irritant"} src={"/assets/images/reactions/reaction_eye_irritation.png"} />}
                                                                                         />}
                                                                                     {ingredient.driesSkin &&
                                                                                         <Chip label="Dries Skin"
