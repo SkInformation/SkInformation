@@ -54,6 +54,7 @@ export default function AddProductForm() {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+        paddingRight: 6,
     };
 
     const skinTypeSelectData = [
@@ -260,7 +261,7 @@ export default function AddProductForm() {
                         </Alert>
                     </Collapse>
                 </Box>
-                <Grid xs display="flex" justifyContent="right" alignItems="right">
+                <Grid xs display="flex" justifyContent="right" alignItems="right" className={styles.addProductButtonRow}>
                     <Button variant="contained" onClick={handleOpenProductForm}>Add Product</Button>
                 </Grid>
                 <Modal
