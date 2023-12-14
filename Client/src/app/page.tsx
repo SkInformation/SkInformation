@@ -12,20 +12,18 @@ const NoSSRButton = dynamic(() => import('@mui/material/Button'), {
 
 export default function Home() {
     return (
-        <main className={styles.main}>
-            <Grid>
-                <Grid display="flex" justifyContent="center">
-                    <Typography variant="h1">SkI</Typography>
-                </Grid>
-                <Grid display="flex" justifyContent="center">
-                    <Link href="/survey">
-                        {/* Use the NoSSRButton component instead of Button */}
-                        <NoSSRButton variant="contained" color="primary">
-                            Start Survey
-                        </NoSSRButton>
-                    </Link>
-                </Grid>
+        <Grid className={styles.main}>
+            <Grid display="flex" justifyContent="center">
+                <Typography variant="h1" className={styles.title_logo}>SkI</Typography>
             </Grid>
-        </main>
+            <Grid display="flex" justifyContent="center">
+                <Link href="/survey">
+                    {/* Use the NoSSRButton component instead of Button */}
+                    <NoSSRButton variant="contained" color="primary">
+                        Start Survey
+                    </NoSSRButton>
+                </Link>
+            </Grid>
+        </Grid>
     );
 }

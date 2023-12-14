@@ -102,6 +102,7 @@ interface SurveyContextType {
     setSkinGoals: Dispatch<SetStateAction<SkinGoal[]>>,
     products: { [key: number]: Product },
     setProducts: Dispatch<SetStateAction<{ [key: number]: Product }>>,
+    clearContext: () => void,
 }
 
 const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
@@ -131,6 +132,13 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
             return
         }
         setCurrentStep(step);
+    }
+
+    const clearContext = (): void => {
+        setCurrentStep(0);
+        setProducts([])
+        setSkinGoals([])
+        setSkinType(undefined)
     }
 
     // Load initial state from localStorage, if available
@@ -167,7 +175,8 @@ const SurveyProvider: React.FC<SurveyProviderProps> = ({ children }) => {
         skinGoals,
         setSkinGoals,
         products,
-        setProducts
+        setProducts,
+        clearContext,
     };
 
     return (

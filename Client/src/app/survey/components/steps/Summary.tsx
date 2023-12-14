@@ -1,14 +1,22 @@
-import {SkinGoal, SkinType, useSurvey} from "@/app/context/SurveyContext";
-import {Button, Stack, Typography} from "@mui/material";
+import {SkinGoal, SkinType, SurveyStep, useSurvey} from "@/app/context/SurveyContext";
+import {Button, Chip, Stack, Typography} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import url from "url";
 import apiRequest, {HttpMethod} from "@/app/lib/api";
 import TextField from "@mui/material/TextField";
 import {useState} from "react";
 import Image from 'next/image'
-import {getSkinTypeImageSrc, getSkinTypeReadableName} from "@/app/survey/components/helper";
+import {useRouter} from 'next/navigation';
+
+import {
+    getSkinGoalReadableName,
+    getSkinTypeReadableName,
+    skinGoalDescriptions,
+    skinTypeDescriptions
+} from "@/app/survey/components/helper";
 
 interface GenerateReportInput {
+    email: string
     skinType: SkinType
     skinGoals: SkinGoal[]
     products: {
@@ -18,11 +26,14 @@ interface GenerateReportInput {
 }
 
 export default function Summary() {
-    const {skinType, skinGoals, products, navigateTo} = useSurvey();
+    const {skinType, skinGoals, products, navigateTo, clearContext} = useSurvey();
 
     const [email, setEmail] = useState("")
     const [emailValidationError, setEmailValidationError] = useState("")
     const [reportSent, setReportSent] = useState(false)
+
+    const router = useRouter();
+
 
     const submitSurvey = async () => {
         setEmailValidationError("")
@@ -38,99 +49,140 @@ export default function Summary() {
         }
 
         const body: GenerateReportInput = {
+            email,
             skinType: skinType!,
             skinGoals: skinGoals,
             products: mappedProducts
         }
 
+        type GenerateResponse = {
+            id: number
+        }
+
         try {
-            await apiRequest(HttpMethod.POST, '/Report/Generate', {}, body)
+            const {id} = await apiRequest<GenerateResponse>(HttpMethod.POST, '/Report/Generate', {}, body)
+            router.push(`/report/${id}`)
+
             setReportSent(true)
         } catch (err) {
             // render err
+        } finally {
+            clearContext()
         }
     }
 
     return (
-        <>
-            <Grid container disableEqualOverflow>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Skin Type
-                    </Typography>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Stack direction="row" spacing={1}>
-                        <img src={getSkinTypeImageSrc(skinType!)}
-                             alt={`${skinType} skin image`}
-                             style={{minWidth: '75px', height: 'auto', maxWidth: '150px'}}/>
-                        <Typography>
-                            {getSkinTypeReadableName(skinType!)}
-                        </Typography>
+        <Grid container disableEqualOverflow margin={"1em"}>
+            <Grid display="flex" xs={12} alignItems="center">
+                <Stack direction="column">
+                    <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
+                        <Grid>
+                            <Typography variant="h4" component="div">
+                                Skin Type
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <Chip onClick={() => navigateTo(SurveyStep.SkinType)} label="Edit"/>
+                        </Grid>
                     </Stack>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Skin Goals
-                    </Typography>
-                    <Stack direction="row" spacing={1}>
-                        {skinGoals.map((goal) => (
-                            <>
-                                <Typography
-                                    className="MuiTypography-alignMiddle">
-                                    {goal}
+                    <Stack spacing={4} direction="row" alignItems="center" paddingLeft={"2em"}>
+                        <Grid display={"flex"} xs={3}>
+                            <Typography id="selectedSkinType" fontWeight="bold" fontSize={"1.2em"}>
+                                {getSkinTypeReadableName(skinType!)}
+                            </Typography>
+                        </Grid>
+                        <Grid display={"flex"} xs={9}>
+                            <Typography>
+                                {skinTypeDescriptions[skinType!]}
+                            </Typography>
+                        </Grid>
+                    </Stack>
+                </Stack>
+            </Grid>
+            <Grid display="flex" xs={12} alignItems="center">
+                <Stack direction="column">
+                    <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
+                        <Grid>
+                            <Typography variant="h4" component="div">
+                                Skin Goals
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <Chip onClick={() => navigateTo(SurveyStep.SkinType)} label="Edit"/>
+                        </Grid>
+                    </Stack>
+                    {skinGoals.map((goal) => (
+                        <Stack spacing={4} direction="row" alignItems="center" paddingLeft={"2em"} key={goal}>
+                            <Grid display={"flex"} xs={3}>
+                                <Typography id="selectedSkinType" fontWeight="bold" fontSize={"1.2em"}>
+                                    {getSkinGoalReadableName(goal)}
                                 </Typography>
-                            </>
-                        ))}
+                            </Grid>
+                            <Grid display={"flex"} xs={9}>
+                                <Typography>
+                                    {skinGoalDescriptions[goal!]}
+                                </Typography>
+                            </Grid>
+                        </Stack>
+                    ))}
+                </Stack>
+            </Grid>
+            <Grid display="flex" xs={12} paddingTop={"1em"}>
+                <Stack direction="column">
+                    <Stack direction="row" justifyContent={"space-between"} alignItems={"center"}>
+                        <Grid>
+                            <Typography variant="h4" component="div">
+                                Products
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <Chip onClick={() => navigateTo(SurveyStep.SkinType)} label="Edit"/>
+                        </Grid>
                     </Stack>
-                </Grid>
-                <Grid display="flex" xs={12}>
-                    <Typography variant="h5" gutterBottom component="div">
-                        Products
-                    </Typography>
-                </Grid>
-                <Grid display="flex" xs={12}>
                     {Object.values(products).map((product) => {
                         const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
 
                         return (
-                            <>
-                                <Stack key={product.id} direction="row" spacing={1}>
+                            <Stack key={product.id} direction="row" spacing={2} justifyContent="center"
+                                   alignItems={"center"}>
+                                <Grid display="flex" xs={"auto"}>
                                     <a href={thumbnailUrl} target="_blank">
                                         <Image
-                                            width={75}
-                                            height={75}
+                                            width={150}
+                                            height={150}
                                             src={thumbnailUrl}
                                             alt={product.description}/>
                                     </a>
-                                    <Typography
-                                        className="MuiTypography-alignMiddle">
+                                </Grid>
+                                <Grid display="flex" xs={9}>
+                                    <Typography variant={"h5"}>
                                         {product.name}
                                     </Typography>
-                                </Stack>
-                            </>
+                                </Grid>
+                            </Stack>
                         )
                     })}
-                </Grid>
-                <Grid display="flex" xs={12} justifyContent="center">
-                    <TextField
-                        type="email"
-                        required
-                        error={!!emailValidationError}
-                        helperText={emailValidationError ? emailValidationError : null}
-                        placeholder={"Email"}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Grid>
-                <Grid display="flex" xs={12} justifyContent="center">
-                    <Button onClick={() => submitSurvey()} disabled={reportSent} variant={"contained"}>
-                        <Typography
-                            className="MuiTypography-alignMiddle">
-                            Generate Report!
-                        </Typography>
-                    </Button>
-                </Grid>
+                </Stack>
             </Grid>
-        </>
+            <Grid display="flex" xs={8} xsOffset={2} justifyContent="center" paddingTop={"1em"}>
+                <TextField
+                    type="email"
+                    required
+                    error={!!emailValidationError}
+                    helperText={emailValidationError ? emailValidationError : null}
+                    placeholder={"Email"}
+                    fullWidth
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </Grid>
+            <Grid display="flex" xs={12} justifyContent="center" paddingTop={"1em"}>
+                <Button onClick={() => submitSurvey()} disabled={reportSent} variant={"contained"}>
+                    <Typography
+                        className="MuiTypography-alignMiddle">
+                        {reportSent ? "Generating..." : "Generate Report!"}
+                    </Typography>
+                </Button>
+            </Grid>
+        </Grid>
     );
 };
