@@ -1,4 +1,7 @@
 # SkInformation
+![license](https://img.shields.io/badge/license-MIT-green)
+![dotnet version](https://img.shields.io/badge/dotnet-v7.0-blue)
+![nextjs version](https://img.shields.io/badge/nextjs-v14.0.3-purple)
 
 SkInformation is a web app to help improve your skincare health and achieve your goals. Simply fill-out a short survey and get a customized report.
 
