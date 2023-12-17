@@ -1,0 +1,65 @@
+version: '1'
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD_FILE: /run/secrets/sa_password
+      ACCEPT_EULA: Y
+    secrets:
+      - sa_password
+    networks:
+      - staging
+  backend:
+    build:
+      context: ./Backend
+    ports:
+      - "5100:80"
+    depends_on:
+      - database
+    networks:
+      - staging
+  frontend:
+    build:
+     context: ./Client
+     dockerfile: Dockerfile
+    ports:
+     - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - staging
+# Store app secrets such as the database password
+secrets:
+  sa_password:
+    file: ./secrets/sa_password.txt
+# It is necessary to create a network inorder to have
+# a static IP Address for this multi-container app.
+# Reference: https://stackoverflow.com/a/68412358
+#
+# Next.js does not support dynamic environment variables 
+# at runtime. Consequently, the .env file must be defined
+# at compile time.
+# Source: https://github.com/vercel/next.js/discussions/17641
+#
+# Because we cannot rely on the Docker environment variables, 
+# we cannot use service aliases (e.g., http://backend:8080.)
+# This is also complicated by the execution of server-side
+# versus client-side code affecting the visibility of
+# ports.
+#
+# Until there is a better solution that does not:
+# 1. Involve hacky shell scripts that use REGEX to subtitute in configurations
+# 2. Require multiple self-contained (non docker-compose defined) containers
+# 3. Trigger rebuilds which incur additional time and resources
+# 
+# this remains a viable option.
+# Please open an issue if you know of a superior way to handle this!
+networks:
+  staging:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
