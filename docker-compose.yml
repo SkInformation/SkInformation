@@ -24,8 +24,11 @@ services:
     build:
      context: ./Client
      dockerfile: Dockerfile
+     args:
+      NEXT_PUBLIC_API_URL: http://localhost:5100
+      NEXT_PUBLIC_IMG_URL: http://172.28.0.1:5100
     ports:
-     - "3000:3000"
+      - "3000:3000"
     depends_on:
       - backend
     networks:
