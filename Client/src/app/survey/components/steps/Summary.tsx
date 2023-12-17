@@ -141,7 +141,7 @@ export default function Summary() {
                         </Grid>
                     </Stack>
                     {Object.values(products).map((product) => {
-                        const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
+                        const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_IMG_URL ?? '', product.thumbnail)
 
                         return (
                             <Stack key={product.id} direction="row" spacing={2} justifyContent="center"

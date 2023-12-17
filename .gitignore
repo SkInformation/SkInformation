@@ -1,3 +1,6 @@
+# Untrack docker secrets
+Secrets/
+
 # Untrack development config file
 appsettings.json
 appsettings.Development.json

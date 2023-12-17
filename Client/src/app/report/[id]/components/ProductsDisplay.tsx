@@ -17,7 +17,7 @@ const ProductsDisplay: React.FC<ProductDisplayProps> = ({products}) => {
             spacing={3}
             aria-label={"product grid"}>
             {products.map((p: Product) => {
-                const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', `/images/products/${p.id}.png`)
+                const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_IMG_URL ?? '', `/images/products/${p.id}.png`)
                 return (
                     <Grid
                         key={p.id}

@@ -114,7 +114,7 @@ export default function Products() {
                         <Table sx={{minWidth: 650}} stickyHeader size="small" width="100%" aria-label="products table">
                             <TableBody>
                                 {Object.values(products).map((product) => {
-                                    const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_API_URL ?? '', product.thumbnail)
+                                    const thumbnailUrl = url.resolve(process.env.NEXT_PUBLIC_IMG_URL ?? '', product.thumbnail)
 
                                     return (
                                         <TableRow
