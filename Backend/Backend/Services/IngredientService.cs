@@ -23,7 +23,7 @@ namespace Backend.Services
         /// <returns>A list of ingredient attributes</returns>
         public async Task<List<Ingredient>> fillIngredientAttributes(List<string> ingredients)
         {
-            var api = new OpenAI_API.OpenAIAPI(Configuration["ChatGPT:APIKey"]);
+            var api = new OpenAI_API.OpenAIAPI(Configuration["ChatGPT_API_Key"]);
 
             JArray jsonArray = new JArray();
 

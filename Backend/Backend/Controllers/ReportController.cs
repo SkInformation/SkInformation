@@ -68,14 +68,8 @@ public class ReportController : Controller
 
         string email = reportInput.Email;
         int reportId = reportDb.Id;
+        _ = Task.Run(() => { DispatchReportEmail(serviceScopeFactory, email, reportId); });
 
-        List<string> whitelist = new List<string>();
-        _configuration.GetSection("WhitelistedEmails").Bind(whitelist);
-        if (whitelist.Exists(w => w.Equals(email)))
-        {
-             _ = Task.Run(() => { DispatchReportEmail(serviceScopeFactory, email, reportId); });
-        }
-        
         return Json(new IdDto { Id = reportDb.Id });
     }
 
@@ -89,7 +83,7 @@ public class ReportController : Controller
             return;
         }
         
-        string domain = _configuration.GetValue<string>("APP_URL") ?? "http://localhost:3000";
+        string domain = _configuration.GetValue<string>("FrontendUrl") ?? "http://localhost:3000";
         string reportUrl = domain + "/report/" + reportId;
         string bodyHtml = System.IO.File.ReadAllText(emailTemplate).Replace("{%REPORT_ID_LINK%}", reportUrl);
         

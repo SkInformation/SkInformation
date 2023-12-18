@@ -14,8 +14,21 @@ services:
   backend:
     build:
       context: ./Backend
+      dockerfile: Dockerfile
     ports:
       - "5100:80"
+    environment:
+      IS_DOCKER: 1
+      Database__Database: skinformation
+      Database__User: sa
+      Database__Password: /run/secrets/sa_password
+      ChatGPT_API_Key: /run/secrets/chatgpt_api_key
+      Postmark_API_Key: /run/secrets/postmark_api_key
+      FrontendUrl: http://localhost:3000
+    secrets:
+      - sa_password
+      - postmark_api_key
+      - chatgpt_api_key
     depends_on:
       - database
     networks:
@@ -37,6 +50,10 @@ services:
 secrets:
   sa_password:
     file: ./secrets/sa_password.txt
+  postmark_api_key:
+    file: ./secrets/postmark_api_key.txt
+  chatgpt_api_key:
+    file: ./secrets/chatgpt_api_key.txt
 # It is necessary to create a network inorder to have
 # a static IP Address for this multi-container app.
 # Reference: https://stackoverflow.com/a/68412358

@@ -33,7 +33,9 @@ mkdir secrets
 
 Create the [secret file](https://docs.docker.com/compose/use-secrets/)
 ```bash
-echo "MySecretDbPassword" >> secrets/sa_password.txt
+echo "MySecretDbPassword" > secrets/sa_password.txt
+echo "MyApiKey" > secrets/postmark_api_key.txt
+echo "MyApiKey" > secrets/chatgpt_api_key.txt
 ```
 
 ### Build & Run
