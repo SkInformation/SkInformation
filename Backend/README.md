@@ -39,11 +39,6 @@ Create a file in Backend/Backend folder called `appsettings.Development.json` wi
 ```
 
 ### Step 5: Running the project
-Update database
-```bash
-dotnet ef database update
-```
-
 Run backend project
 ```bash
 dotnet run
