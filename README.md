@@ -21,7 +21,7 @@ SkInformation is a web app to help improve your skincare health and achieve your
 
 ## How to Run
 
-### Pre-requesites:
+### Prerequisites:
 1. Install [Docker](https://docs.docker.com/get-docker/)
 2. `cd` to the root directory of this repository.
 
